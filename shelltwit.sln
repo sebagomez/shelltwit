@@ -1,0 +1,97 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C17115A6-B19B-49EF-97C9-802BBC8EE77D}"
+	ProjectSection(SolutionItems) = preProject
+		shelltwit\BuildMergeDeploy.bat = shelltwit\BuildMergeDeploy.bat
+		Local.testsettings = Local.testsettings
+		shelltwit\shelltwit.nrproj = shelltwit\shelltwit.nrproj
+		shelltwit.vsmdi = shelltwit.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{B3E50918-9AC0-4BC3-9D5C-070F34E80B90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitLyHelper", "BitLyHelper\BitLyHelper.csproj", "{4BB68E76-BBBB-40A2-AD64-E33E58427084}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shelltwit", "shelltwit\shelltwit.csproj", "{D6E48BCB-7FB9-4D8A-B8E7-595FAF3767F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shelltwitlib", "shelltwitlib\shelltwitlib.csproj", "{50879BB0-F4CA-4776-865E-05F5741F1404}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shelltwit_tester", "shelltwit_tester\shelltwit_tester.csproj", "{AA17DFE7-00E8-465F-8A55-86217A630B07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebTester", "WebTester\WebTester.csproj", "{A9FDED4D-3E28-43EB-BEFA-FCD131A0E506}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4BB68E76-BBBB-40A2-AD64-E33E58427084}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BB68E76-BBBB-40A2-AD64-E33E58427084}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BB68E76-BBBB-40A2-AD64-E33E58427084}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4BB68E76-BBBB-40A2-AD64-E33E58427084}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4BB68E76-BBBB-40A2-AD64-E33E58427084}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4BB68E76-BBBB-40A2-AD64-E33E58427084}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BB68E76-BBBB-40A2-AD64-E33E58427084}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BB68E76-BBBB-40A2-AD64-E33E58427084}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4BB68E76-BBBB-40A2-AD64-E33E58427084}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4BB68E76-BBBB-40A2-AD64-E33E58427084}.Release|x86.ActiveCfg = Release|Any CPU
+		{D6E48BCB-7FB9-4D8A-B8E7-595FAF3767F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6E48BCB-7FB9-4D8A-B8E7-595FAF3767F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6E48BCB-7FB9-4D8A-B8E7-595FAF3767F2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D6E48BCB-7FB9-4D8A-B8E7-595FAF3767F2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D6E48BCB-7FB9-4D8A-B8E7-595FAF3767F2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D6E48BCB-7FB9-4D8A-B8E7-595FAF3767F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6E48BCB-7FB9-4D8A-B8E7-595FAF3767F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6E48BCB-7FB9-4D8A-B8E7-595FAF3767F2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D6E48BCB-7FB9-4D8A-B8E7-595FAF3767F2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D6E48BCB-7FB9-4D8A-B8E7-595FAF3767F2}.Release|x86.ActiveCfg = Release|Any CPU
+		{50879BB0-F4CA-4776-865E-05F5741F1404}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50879BB0-F4CA-4776-865E-05F5741F1404}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50879BB0-F4CA-4776-865E-05F5741F1404}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{50879BB0-F4CA-4776-865E-05F5741F1404}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{50879BB0-F4CA-4776-865E-05F5741F1404}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{50879BB0-F4CA-4776-865E-05F5741F1404}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50879BB0-F4CA-4776-865E-05F5741F1404}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50879BB0-F4CA-4776-865E-05F5741F1404}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{50879BB0-F4CA-4776-865E-05F5741F1404}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{50879BB0-F4CA-4776-865E-05F5741F1404}.Release|x86.ActiveCfg = Release|Any CPU
+		{AA17DFE7-00E8-465F-8A55-86217A630B07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA17DFE7-00E8-465F-8A55-86217A630B07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA17DFE7-00E8-465F-8A55-86217A630B07}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{AA17DFE7-00E8-465F-8A55-86217A630B07}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{AA17DFE7-00E8-465F-8A55-86217A630B07}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AA17DFE7-00E8-465F-8A55-86217A630B07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA17DFE7-00E8-465F-8A55-86217A630B07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA17DFE7-00E8-465F-8A55-86217A630B07}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{AA17DFE7-00E8-465F-8A55-86217A630B07}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{AA17DFE7-00E8-465F-8A55-86217A630B07}.Release|x86.ActiveCfg = Release|Any CPU
+		{A9FDED4D-3E28-43EB-BEFA-FCD131A0E506}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9FDED4D-3E28-43EB-BEFA-FCD131A0E506}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9FDED4D-3E28-43EB-BEFA-FCD131A0E506}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A9FDED4D-3E28-43EB-BEFA-FCD131A0E506}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A9FDED4D-3E28-43EB-BEFA-FCD131A0E506}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A9FDED4D-3E28-43EB-BEFA-FCD131A0E506}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9FDED4D-3E28-43EB-BEFA-FCD131A0E506}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9FDED4D-3E28-43EB-BEFA-FCD131A0E506}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A9FDED4D-3E28-43EB-BEFA-FCD131A0E506}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A9FDED4D-3E28-43EB-BEFA-FCD131A0E506}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AA17DFE7-00E8-465F-8A55-86217A630B07} = {B3E50918-9AC0-4BC3-9D5C-070F34E80B90}
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = shelltwit.vsmdi
+	EndGlobalSection
+EndGlobal

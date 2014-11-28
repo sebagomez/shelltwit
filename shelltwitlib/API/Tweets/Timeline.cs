@@ -14,6 +14,11 @@ namespace shelltwitlib.API.Tweets
 	{
 		const string HOME_TIMELINE = "https://api.twitter.com/1.1/statuses/home_timeline.json";
 
+		public static List<Status> GetTimeline()
+		{
+			return GetTimeline(null, null);
+		}
+
 		public static List<Status> GetTimeline(TwUser user, string lastTweet)
 		{
 			if (user == null)

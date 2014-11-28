@@ -14,15 +14,16 @@ namespace shelltwit
 		const string CLEAR = "/c";
 		const string TIME_LINE = "/tl";
 		const string HELP = "/?";
+		const string MENTIONS = "/m";
 
-		public const string CONSUMER_KEY = "f6W7fX8X448BmjBassvcdw";
-		public const string CONSUMER_SECRET = "digvPiIlFO2XSrqyfviEsCh899jB95T2jkUmCiAAd4";
+		public const string CONSUMER_KEY = "<<ENTER CONSUMER KEY>>";
+		public const string CONSUMER_SECRET = "<<ENTER CONSuMER SECRET>>";
 
 		static void Main(string[] args)
 		{
 			try
 			{
-				Debug.Assert(false, "Attach VS here!");
+				//Debug.Assert(false, "Attach VS here!");
 
 				//http://blogs.msdn.com/b/microsoft_press/archive/2010/02/03/jeffrey-richter-excerpt-2-from-clr-via-c-third-edition.aspx
 				//AppDomain.CurrentDomain.AssemblyResolve += (sender, arg) => { 
@@ -36,12 +37,14 @@ namespace shelltwit
 				//	}
 				//};
 
+				shelltwitlib.API.OAuth.OAuthHelper.Initilize(CONSUMER_KEY, CONSUMER_SECRET);
 
 				if (args.Length == 0)
 				{
-					ShowUsage();
+					PrintTwits(shelltwitlib.API.Tweets.Timeline.GetTimeline());
 					return;
 				}
+
 
 				if (args[0].StartsWith("/"))
 				{
@@ -56,9 +59,10 @@ namespace shelltwit
 							ShowUsage();
 							return;
 						case TIME_LINE:
-							shelltwitlib.API.OAuth.OAuthHelper.Initilize(CONSUMER_KEY, CONSUMER_SECRET);
-							List<Status> tl = shelltwitlib.API.Tweets.Timeline.GetTimeline(null, null);
-							tl.ForEach(twit => Console.WriteLine("{0} (@{1}): {2}", twit.User.Name, twit.User.ScreenName,  twit.Text));
+							PrintTwits(shelltwitlib.API.Tweets.Timeline.GetTimeline());
+							return;
+						case MENTIONS:
+							PrintTwits(shelltwitlib.API.Tweets.Mentions.GetMentions());
 							return;
 						default:
 							Console.WriteLine("Invalid flag: " + flag);
@@ -127,6 +131,11 @@ namespace shelltwit
 			Environment.Exit(0);
 		}
 
+		static void PrintTwits(List<Status> twits)
+		{
+			twits.ForEach(twit => Console.WriteLine("{0} (@{1}): {2}", twit.User.Name, twit.User.ScreenName,  twit.Text));
+		}
+
 		static void ShowUsage()
 		{
 			Assembly assembly = Assembly.GetExecutingAssembly();
@@ -139,10 +148,11 @@ namespace shelltwit
 			Console.WriteLine(title);
 			Console.WriteLine(string.Format("{0} v{1}", copyRight, version));
 			Console.WriteLine("");
-			Console.WriteLine("Usage: twit /c|/tl|/?|status [<mediaPath>]");
+			Console.WriteLine("Usage: twit [/c|/tl|/m|/?|status] [<mediaPath>]");
 			Console.WriteLine("");
 			Console.WriteLine("/c 		: clears user stored credentials");
 			Console.WriteLine("/tl 		: show user's timeline");
+			Console.WriteLine("/m 		: show user's mentions");
 			Console.WriteLine("/? 		: show this help");
 			Console.WriteLine("status	 	: status to update at twitter.com");
 			Console.WriteLine("mediaPath	: full path, between brackets, to the media file to upload.");

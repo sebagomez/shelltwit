@@ -106,12 +106,16 @@ namespace shelltwitlib
 			foreach (string tok in tokens)
 			{
 				string[] props = tok.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
+				if (props[0] != OAUTH_TOKEN && props[0] != OAUTH_TOKEN_SECRET)
+					continue;
+				
 				if (props[0] == OAUTH_TOKEN)
 					OAuthToken = props[1];
 				else if (props[0] == OAUTH_TOKEN_SECRET)
 					OAuthTokenSecret = props[1];
-				else
-					continue;
+
+				if (!string.IsNullOrEmpty(OAuthToken) && !string.IsNullOrEmpty(OAuthTokenSecret))
+					break;
 			}
 
 			Serialize();

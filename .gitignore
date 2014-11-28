@@ -1,0 +1,17 @@
+BitlyHelper/bin/
+BitlyHelper/obj/
+.svn/
+*.testsettings
+*.suo
+SecureData.txt
+shelltwit/BuildMergeDeploy.bat
+WebTester/
+shelltwit/bin/
+shelltwitlib/bin/
+shelltwit/obj/
+shelltwitlib/obj/
+shelltwit_tester/
+shelltwit/output
+shelltwit/shelltwit.nrproj
+*.user
+
