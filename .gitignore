@@ -1,8 +1,9 @@
-BitlyHelper/bin/
-BitlyHelper/obj/
 .svn/
+.vs/
 *.testsettings
 *.suo
+BitlyHelper/bin/
+BitlyHelper/obj/
 SecureData.txt
 shelltwit/BuildMergeDeploy.bat
 WebTester/

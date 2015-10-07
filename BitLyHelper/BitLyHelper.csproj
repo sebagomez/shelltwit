@@ -55,7 +55,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\..\..\..\Users\sebastian\SkyDrive\Documents\Personales\development\sebagomez.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\..\..\Users\user\OneDrive\Documents\Personales\secure\sebagomez.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -87,7 +87,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\Users\sebastian\SkyDrive\Documents\Personales\development\sebagomez.snk">
+    <None Include="..\..\..\..\Users\user\OneDrive\Documents\Personales\secure\sebagomez.snk">
       <Link>sebagomez.snk</Link>
     </None>
   </ItemGroup>

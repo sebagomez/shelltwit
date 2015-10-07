@@ -1,0 +1,1 @@
+twurl -H upload.twitter.com "/1.1/media/upload.json" -f Noooooooo.jpg -F media -X POST -t
