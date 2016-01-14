@@ -1,9 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 
 namespace shelltwitlib
 {
+	[DataContract]
 	public class TwUser
 	{
 		const string USER_FILE = "twit.usr";
@@ -13,15 +16,19 @@ namespace shelltwitlib
 		static string s_configFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), USER_FILE);
 
 		[XmlAttribute]
+		[DataMember]
 		public string Username { get; set; }
 
 		[XmlAttribute]
+		[DataMember]
 		public string Password { get; set; }
 
 		[XmlAttribute]
+		[DataMember]
 		public string OAuthToken { get; set; }
 
 		[XmlAttribute]
+		[DataMember]
 		public string OAuthTokenSecret { get; set; }
 
 		public TwUser()
@@ -56,13 +63,7 @@ namespace shelltwitlib
 			if (!File.Exists(userPath))
 				return null;
 
-			TwUser twiUser = new TwUser();
-
-			XmlSerializer deserializer = new XmlSerializer(typeof(TwUser));
-			using (StreamReader reader = new StreamReader(userPath))
-				twiUser = (TwUser)deserializer.Deserialize(reader);
-
-			return twiUser;
+			return Deserialize();
 		}
 
 		public void SaveUserCredentials(string username)
@@ -87,9 +88,7 @@ namespace shelltwitlib
 			}
 			else
 			{
-				XmlSerializer deserializer = new XmlSerializer(typeof(TwUser));
-				using (StreamReader reader = new StreamReader(s_configFile))
-					twiUser = (TwUser)deserializer.Deserialize(reader);
+				twiUser = Deserialize();
 			}
 
 			if (string.IsNullOrEmpty(twiUser.OAuthToken) || string.IsNullOrEmpty(twiUser.OAuthTokenSecret))
@@ -132,13 +131,41 @@ namespace shelltwitlib
 			Username = null;
 			Password = null;
 
-			XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
-			namespaces.Add("", "");
-			XmlSerializer serializer = new XmlSerializer(typeof(TwUser));
-			using (StreamWriter writer = new StreamWriter(fileName))
-				serializer.Serialize(writer, this, namespaces);
+			using (FileStream file = File.Open(s_configFile, FileMode.Create))
+			{
+				DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(TwUser));
+				jsonSerializer.WriteObject(file, this);
+			}
+
+			//XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
+			//namespaces.Add("", "");
+			//XmlSerializer serializer = new XmlSerializer(typeof(TwUser));
+			//using (StreamWriter writer = new StreamWriter(fileName))
+			//	serializer.Serialize(writer, this, namespaces);
 		}
 
+		static TwUser Deserialize()
+		{
+			TwUser twiUser = null;
+
+			try
+			{
+				using (FileStream file = File.Open(s_configFile, FileMode.Open))
+				{
+					DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(TwUser));
+					twiUser = (TwUser)jsonSerializer.ReadObject(file);
+				}
+			}
+			catch (SerializationException)
+			{
+				XmlSerializer deserializer = new XmlSerializer(typeof(TwUser));
+				using (StreamReader reader = new StreamReader(s_configFile))
+					twiUser = (TwUser)deserializer.Deserialize(reader);
+
+				twiUser.Serialize();
+			}
+			return twiUser;
+		}
 
 		public static void ClearCredentials()
 		{

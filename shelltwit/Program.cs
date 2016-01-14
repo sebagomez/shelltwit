@@ -85,7 +85,7 @@ namespace shelltwit
 		
 					if (input.Key == ConsoleKey.N)
 					{
-						Console.WriteLine("That's what I thought!");
+						Console.WriteLine("That's what I thought! ;)");
 						return;
 					}
 				}
