@@ -1,12 +1,9 @@
-﻿using shelltwitlib.API.OAuth;
-using shelltwitlib.Helpers;
-using shelltwitlib.Web;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Runtime.Serialization.Json;
-using System.Text;
+using shelltwitlib.API.OAuth;
+using shelltwitlib.Helpers;
+using shelltwitlib.Web;
 
 namespace shelltwitlib.API.Tweets
 {

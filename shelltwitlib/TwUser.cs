@@ -15,12 +15,8 @@ namespace shelltwitlib
 
 		static string s_configFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), USER_FILE);
 
-		[XmlAttribute]
-		[DataMember]
 		public string Username { get; set; }
 
-		[XmlAttribute]
-		[DataMember]
 		public string Password { get; set; }
 
 		[XmlAttribute]
@@ -127,21 +123,11 @@ namespace shelltwitlib
 
 		private void Serialize(string fileName)
 		{
-			//Do not store user credentials
-			Username = null;
-			Password = null;
-
 			using (FileStream file = File.Open(s_configFile, FileMode.Create))
 			{
 				DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(TwUser));
 				jsonSerializer.WriteObject(file, this);
 			}
-
-			//XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
-			//namespaces.Add("", "");
-			//XmlSerializer serializer = new XmlSerializer(typeof(TwUser));
-			//using (StreamWriter writer = new StreamWriter(fileName))
-			//	serializer.Serialize(writer, this, namespaces);
 		}
 
 		static TwUser Deserialize()
