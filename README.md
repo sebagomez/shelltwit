@@ -10,4 +10,4 @@ It's a good example of twitter API calls with xAuth. It also has bit.ly integrat
 
 Little more (?) info about it at the original [blog post](http://sgomez.blogspot.com/2010/06/introducing-shelltwit.html)
 
-You wiil need to remove the references to my sebagomez.snk files in three projects. After removing those you will be able to build the solution. (Now in Visual Studio 2015)
+You wiil need to remove the references to my sebagomez.snk files in three projects. After removing those you will be able to build the solution. (Now in Visual Studio 2015, requiring framework 4.6)
