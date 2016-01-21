@@ -20,11 +20,24 @@ namespace shelltwitlib.API.Tweets
 		const string STATUS = "status";
 		const string MEDIA = "media_ids";
 
+		static Action<string> s_messageFunction;
+
 		#region Update Status
 
 		public static string UpdateStatus(string status)
 		{
 			return UpdateStatus(status, null, null);
+		}
+
+		public static void SetMessageAction(Action<string> func)
+		{
+			s_messageFunction = func;
+		}
+
+		static void WriteMessage(string message)
+		{
+			if (s_messageFunction != null)
+				s_messageFunction(message);
 		}
 
 		public static string UpdateStatus(string status, TwUser user, string replyId)
@@ -93,7 +106,7 @@ namespace shelltwitlib.API.Tweets
 
 			foreach (FileInfo file in media)
 			{
-
+				WriteMessage($"Uploading {file.Name}");
 				HttpWebRequest req = GetMediaUploadStatusRequest(user.OAuthToken, user.OAuthTokenSecret);
 
 				string boundary = GetMultipartBoundary(),

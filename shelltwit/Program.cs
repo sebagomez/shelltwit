@@ -38,6 +38,7 @@ namespace shelltwit
 				//};
 
 				shelltwitlib.API.OAuth.OAuthHelper.Initilize(CONSUMER_KEY, CONSUMER_SECRET);
+				shelltwitlib.API.Tweets.Update.SetMessageAction(message => Console.WriteLine(message));
 
 				if (args.Length == 0)
 				{
