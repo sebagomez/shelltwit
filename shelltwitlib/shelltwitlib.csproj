@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="API\Tweets\Mentions.cs" />
     <Compile Include="API\Tweets\Timeline.cs" />
+    <Compile Include="Helpers\Media.cs" />
     <Compile Include="Helpers\Status.cs" />
     <Compile Include="Helpers\Strings.cs" />
     <Compile Include="Helpers\UpdateError.cs" />
@@ -76,7 +77,7 @@
     <Compile Include="Helpers\WebAccessToken.cs" />
     <Compile Include="API\OAuth\OAuthHelper.cs" />
     <Compile Include="API\Tweets\Update.cs" />
-    <Compile Include="TwUser.cs" />
+    <Compile Include="Helpers\TwUser.cs" />
     <Compile Include="Helpers\Util.cs" />
   </ItemGroup>
   <ItemGroup>

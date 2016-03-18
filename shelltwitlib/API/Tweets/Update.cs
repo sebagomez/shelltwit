@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Xml;
-using shelltwitlib.Web;
-using shelltwitlib.Helpers;
-using shelltwitlib.API.OAuth;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Text;
+using shelltwitlib.API.OAuth;
+using shelltwitlib.Helpers;
+using shelltwitlib.Web;
 
 namespace shelltwitlib.API.Tweets
 {
@@ -27,6 +24,11 @@ namespace shelltwitlib.API.Tweets
 		public static string UpdateStatus(string status)
 		{
 			return UpdateStatus(status, null, null);
+		}
+
+		public static string UpdateStatus(string status, TwUser user)
+		{
+			return UpdateStatus(status, user, null);
 		}
 
 		public static void SetMessageAction(Action<string> func)
@@ -100,11 +102,11 @@ namespace shelltwitlib.API.Tweets
 			return InternalUpdateStatus(user, encodedStatus, replyId, UploadMedia(user, media));
 		}
 
-		private static List<string> UploadMedia(TwUser user, List<FileInfo> media)
+		private static List<string> UploadMedia(TwUser user, List<FileInfo> mediaFiles)
 		{
 			List<string> ids = new List<string>();
 
-			foreach (FileInfo file in media)
+			foreach (FileInfo file in mediaFiles)
 			{
 				WriteMessage($"Uploading {file.Name}");
 				HttpWebRequest req = GetMediaUploadStatusRequest(user.OAuthToken, user.OAuthTokenSecret);
@@ -166,15 +168,9 @@ namespace shelltwitlib.API.Tweets
 
 				HttpWebResponse response = (HttpWebResponse)req.GetResponse();
 
-				string responseBody;
-				using (StreamReader reader = new StreamReader(response.GetResponseStream()))
-					responseBody = reader.ReadToEnd();
+				Media media = Media.FromStream(response.GetResponseStream());
 
-				int start = responseBody.IndexOf("media_id_string") + "media_id_string".Length + 3;
-				int end = responseBody.IndexOf(",", start) - 1;
-				string mediaId = responseBody.Substring(start, end - start);
-
-				ids.Add(mediaId);
+				ids.Add(media.IdString);
 			}
 
 			return ids;

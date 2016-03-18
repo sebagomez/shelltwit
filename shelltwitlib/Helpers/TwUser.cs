@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
-using System.Xml.Serialization;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
+using System.Xml.Serialization;
 
-namespace shelltwitlib
+namespace shelltwitlib.Helpers
 {
 	[DataContract]
 	public class TwUser
@@ -121,7 +121,7 @@ namespace shelltwitlib
 			Serialize(s_configFile);
 		}
 
-		private void Serialize(string fileName)
+		public void Serialize(string fileName)
 		{
 			using (FileStream file = File.Open(s_configFile, FileMode.Create))
 			{
