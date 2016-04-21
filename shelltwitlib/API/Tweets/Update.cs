@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Web;
 using shelltwitlib.API.OAuth;
 using shelltwitlib.Helpers;
 using shelltwitlib.Web;
@@ -38,8 +39,7 @@ namespace shelltwitlib.API.Tweets
 
 		static void WriteMessage(string message)
 		{
-			if (s_messageFunction != null)
-				s_messageFunction(message);
+			s_messageFunction?.Invoke(message);
 		}
 
 		public static string UpdateStatus(string status, TwUser user, string replyId)
@@ -60,7 +60,7 @@ namespace shelltwitlib.API.Tweets
 
 			if (user == null)
 				user = TwUser.LoadCredentials();
-			string encodedStatus = Util.EncodeString(status);
+			string encodedStatus = Util.EncodeString(HttpUtility.HtmlDecode(status));
 			
 			if (media.Count == 0)
 				return InternalUpdateStatus(user, encodedStatus, replyId);
