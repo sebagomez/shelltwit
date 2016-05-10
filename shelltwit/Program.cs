@@ -1,11 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Reflection;
-//using ConsoleAppHelper;
-using shelltwitlib;
 using shelltwitlib.Helpers;
-using System.Collections.Generic;
 
 namespace shelltwit
 {
