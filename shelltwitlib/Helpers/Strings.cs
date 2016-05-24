@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace shelltwitlib.Helpers
+﻿namespace shelltwitlib.Helpers
 {
 	internal static class Strings
 	{

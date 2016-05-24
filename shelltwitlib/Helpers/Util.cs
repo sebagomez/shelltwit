@@ -1,5 +1,7 @@
 ﻿using System.Text;
 using System;
+using System.Net;
+using System.IO;
 
 namespace shelltwitlib.Helpers
 {
@@ -49,6 +51,24 @@ namespace shelltwitlib.Helpers
 		public static string[] GetStringTokens(string fullString)
 		{
 			return fullString.Split(new char[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
+		}
+
+		public static string ExceptionMessage(Exception ex)
+		{
+			string message = ex.Message;
+			WebException wex = ex as WebException;
+			if (wex != null)
+			{
+				HttpWebResponse res = (HttpWebResponse)wex.Response;
+				if (res != null)
+				{
+					using (Stream str = res.GetResponseStream())
+					using (StreamReader reader = new StreamReader(str))
+						message = reader.ReadToEnd();
+				}
+			}
+
+			return message;
 		}
 	}
 }

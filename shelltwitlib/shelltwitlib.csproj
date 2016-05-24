@@ -67,6 +67,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="API\Tweets\Mentions.cs" />
     <Compile Include="API\Tweets\Timeline.cs" />
     <Compile Include="Helpers\Media.cs" />
@@ -97,9 +100,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="..\..\..\..\Users\user\OneDrive\Documents\Personales\secure\sebagomez.snk">
       <Link>sebagomez.snk</Link>

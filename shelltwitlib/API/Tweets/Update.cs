@@ -44,28 +44,35 @@ namespace shelltwitlib.API.Tweets
 
 		public static string UpdateStatus(string status, TwUser user, string replyId)
 		{
-			Regex regex = new Regex(@"\[(.*?)\]");
-			List<FileInfo> media = new List<FileInfo>();
-			foreach (System.Text.RegularExpressions.Match match in regex.Matches(status))
+			try
 			{
-				status = status.Replace(match.Value, "");
-				FileInfo file = new FileInfo(match.Value.Replace("[", "").Replace("]", ""));
-				if (!file.Exists)
-					throw new FileNotFoundException("File not found", file.FullName);
-				media.Add(file);
-            }
+				Regex regex = new Regex(@"\[(.*?)\]");
+				List<FileInfo> media = new List<FileInfo>();
+				foreach (System.Text.RegularExpressions.Match match in regex.Matches(status))
+				{
+					status = status.Replace(match.Value, "");
+					FileInfo file = new FileInfo(match.Value.Replace("[", "").Replace("]", ""));
+					if (!file.Exists)
+						throw new FileNotFoundException("File not found", file.FullName);
+					media.Add(file);
+				}
 
-			if (media.Count > 4) //limited by the twitter API
-				throw new ArgumentOutOfRangeException("media", "Up to 4 media files are allowed per tweet");
+				if (media.Count > 4) //limited by the twitter API
+					throw new ArgumentOutOfRangeException("media", "Up to 4 media files are allowed per tweet");
 
-			if (user == null)
-				user = TwUser.LoadCredentials();
-			string encodedStatus = Util.EncodeString(HttpUtility.HtmlDecode(status));
-			
-			if (media.Count == 0)
-				return InternalUpdateStatus(user, encodedStatus, replyId);
-			else
-				return InternalUpdateWithMedia(user, encodedStatus, replyId, media);
+				if (user == null)
+					user = TwUser.LoadCredentials();
+				string encodedStatus = Util.EncodeString(HttpUtility.HtmlDecode(status));
+
+				if (media.Count == 0)
+					return InternalUpdateStatus(user, encodedStatus, replyId);
+				else
+					return InternalUpdateWithMedia(user, encodedStatus, replyId, media);
+			}
+			catch (Exception ex)
+			{
+				return Util.ExceptionMessage(ex);
+			}
 		}
 
 		private static string InternalUpdateStatus(TwUser user, string encodedStatus, string replyId, List<string> mediaIds = null)
