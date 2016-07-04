@@ -14,3 +14,17 @@ It's a good example of twitter API calls with xAuth. It also has bit.ly integrat
 Little more (?) info about it at the original [blog post](http://sgomez.blogspot.com/2010/06/introducing-shelltwit.html)
 
 You wiil need to remove the references to my sebagomez.snk files in three projects. After removing those you will be able to build the solution. (Now in Visual Studio 2015, requiring framework 4.6)
+
+
+> Command line Twitter status updater  
+> Copyright c 2010-2016 v1.7.1.23510
+
+> Usage: twit /q <query>|/c|/tl|/m|/?|status [<mediaPath>]
+
+>/c              : clears user stored credentials  
+>/tl             : show user's timeline (default)  
+>/q              : query twits containing words  
+>/m              : show user's mentions  
+>/?              : show this help  
+>status          : status to update at twitter.com  
+>mediaPath       : full path, between brackets, to the media files (up to four) to upload.
