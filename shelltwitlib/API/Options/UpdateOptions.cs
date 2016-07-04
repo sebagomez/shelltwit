@@ -17,6 +17,7 @@ namespace shelltwitlib.API.Options
 		{
 			MediaIds = new List<string>();
 			MediaFiles = new List<FileInfo>();
+			AddOOB = true;
 		}
 
 		public bool HasMedia
@@ -30,8 +31,10 @@ namespace shelltwitlib.API.Options
 			if (m_parameters == null)
 			{
 				m_parameters = new Dictionary<string, string>();
+				m_parameters.Add("status", Status);
 				if (!string.IsNullOrEmpty(ReplyId))
 					m_parameters.Add("in_reply_to_status_id", ReplyId);
+
 			}
 
 			return m_parameters;

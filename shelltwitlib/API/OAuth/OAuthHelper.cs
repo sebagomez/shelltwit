@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
+using shelltwitlib.API.Options;
 using shelltwitlib.Helpers;
+using shelltwitlib.Web;
 
 namespace shelltwitlib.API.OAuth
 {
@@ -51,6 +54,53 @@ namespace shelltwitlib.API.OAuth
 			builder = builder.Remove(builder.Length - 3, 3);
 
 			return builder.ToString();
+		}
+
+		internal static HttpWebRequest GetRequest(HttpMethod method, string baseUrl, TwitterOptions options)
+		{
+			string url = baseUrl;
+			if (method == HttpMethod.GET)
+			{
+				url = $"{baseUrl}?{options.GetUrlParameters()}";
+				if (url.EndsWith("?"))
+					url = url.Substring(0, url.Length - 1);
+			}
+
+			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+			request.Method = method.ToString();
+
+			string nonce = OAuthHelper.GetNonce();
+			string timestamp = OAuthHelper.GetTimestamp();
+
+			Dictionary<string, string> parms = GetParms(nonce, timestamp, options);
+			string signatureBase = OAuthHelper.SignatureBsseString(request.Method, baseUrl, parms);
+			string signature = OAuthAuthenticator.SignBaseString(signatureBase, options.User.OAuthTokenSecret);
+			string authHeader = OAuthAuthenticator.AuthorizationHeader(nonce, signature, timestamp, options.User.OAuthToken, options.AddOOB);
+
+			request.Headers.Add(Constants.AUTHORIZATION, authHeader);
+			request.ContentType = Constants.CONTENT_TYPE.X_WWW_FORM_URLENCODED;
+			request.ServicePoint.Expect100Continue = false;
+			request.UserAgent = Constants.USER_AGENT;
+
+			return request;
+		}
+
+		static Dictionary<string, string> GetParms(string nonce, string timestamp, TwitterOptions options)
+		{
+			Dictionary<string, string> dic = new Dictionary<string, string>();
+			if (options.AddOOB)
+				dic.Add("oauth_callback", "oob");
+			dic.Add(OAuthHelper.OAUTH_CONSUMER_KEY, Util.EncodeString(OAuthAuthenticator.CONSUMER_KEY));
+			dic.Add(OAuthHelper.OAUTH_NONCE, nonce);
+			dic.Add(OAuthHelper.OAUTH_SIGNATURE_METHOD, OAuthHelper.HMAC_SHA1);
+			dic.Add(OAuthHelper.OAUTH_TIMESTAMP, timestamp);
+			dic.Add(OAuthHelper.OAUTH_VERSION, OAuthHelper.OAUTH_VERSION_10);
+			dic.Add(OAuthHelper.OAUTH_TOKEN, options.User.OAuthToken);
+
+			foreach (var item in options.GetParameters())
+				dic.Add(item.Key, item.Value);
+
+			return dic;
 		}
 	}
 }

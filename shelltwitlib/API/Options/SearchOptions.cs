@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using shelltwitlib.Helpers;
+﻿using System.Collections.Generic;
 
 namespace shelltwitlib.API.Options
 {
@@ -19,6 +15,8 @@ namespace shelltwitlib.API.Options
 		public int Count { get; set; } = 100;
 		public bool IncludeEntities { get; set; } = false;
 		public ResultTypeOptions ResultType { get; set; } = ResultTypeOptions.Mixed;
+		public int SinceId { get; set; }
+		public int MaxId { get; set; }
 
 		Dictionary<string, string> m_parameters = null;
 		public override Dictionary<string, string> GetParameters()
@@ -32,6 +30,10 @@ namespace shelltwitlib.API.Options
 				m_parameters.Add("include_entities", IncludeEntities.ToString().ToLower());
 				if (ResultType != ResultTypeOptions.Recent)
 					m_parameters.Add("result_type", ResultType.ToString().ToLower());
+				if (SinceId != 0)
+					m_parameters.Add("since_id", SinceId.ToString());
+				if (MaxId != 0)
+					m_parameters.Add("max_id", MaxId.ToString());
 			}
 			return m_parameters;
 		}

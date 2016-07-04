@@ -32,7 +32,7 @@ namespace shelltwit
 				//AppDomain.CurrentDomain.AssemblyResolve += (sender, arg) => { 
 				//	string resourceName = "AssemblyLoadingAndReflection." + 
 				//	new AssemblyName(arg.Name).Name + ".dll"; 
-					
+
 				//	using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName)) { 
 				//		Byte[] assemblyData = new Byte[stream.Length]; 
 				//		stream.Read(assemblyData, 0, assemblyData.Length); 
@@ -69,7 +69,7 @@ namespace shelltwit
 							PrintTwits(shelltwitlib.API.Tweets.Mentions.GetMentions());
 							return;
 						case SEARCH:
-							SearchOptions options = new SearchOptions { Query = string.Join(" ", args).Substring(2), User = AuthenticatedUser.LoadCredentials() }; 
+							SearchOptions options = new SearchOptions { Query = string.Join(" ", args).Substring(2), User = AuthenticatedUser.LoadCredentials() };
 							PrintTwits(shelltwitlib.API.Tweets.Search.SearchTweets(options));
 							return;
 						default:
@@ -90,7 +90,7 @@ namespace shelltwit
 						input = Console.ReadKey();
 					}
 					Console.WriteLine();
-		
+
 					if (input.Key == ConsoleKey.N)
 					{
 						Console.WriteLine("That's what I thought! ;)");

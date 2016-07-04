@@ -9,7 +9,7 @@ namespace shelltwitlib.API.Options
 	public abstract class TwitterOptions
 	{
 		public AuthenticatedUser User { get; set; }
-
+		public bool AddOOB { get; set; }
 		public abstract Dictionary<string, string> GetParameters();
 
 		public string GetUrlParameters()
@@ -18,7 +18,10 @@ namespace shelltwitlib.API.Options
 			foreach (var item in GetParameters())
 				builder.Append($"&{item.Key}={item.Value}");
 
-			return builder.ToString().Substring(1);
+			if (builder.Length > 0)
+				return builder.ToString().Substring(1);
+			else
+				return string.Empty;
 		}
 	}
 }
