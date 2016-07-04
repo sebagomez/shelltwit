@@ -1,5 +1,6 @@
 .svn/
 .vs/
+packages/
 *.testsettings
 *.suo
 BitlyHelper/bin/
@@ -19,4 +20,4 @@ shelltwit/shelltwit.nrproj
 shelltwit.sln
 BitlyHelper/BitlyHelper.csproj
 shelltwitlib/shelltwitlib.csproj
-shelltwit\shelltwit.csproj
+shelltwit/shelltwit.csproj
