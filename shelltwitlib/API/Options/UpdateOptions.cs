@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using shelltwitlib.Helpers;
 
 namespace shelltwitlib.API.Options
 {
@@ -34,7 +35,8 @@ namespace shelltwitlib.API.Options
 				m_parameters.Add("status", Status);
 				if (!string.IsNullOrEmpty(ReplyId))
 					m_parameters.Add("in_reply_to_status_id", ReplyId);
-
+				if (HasMedia)
+					m_parameters.Add("media_ids", Util.EncodeString(string.Join(",", MediaIds.ToArray())));
 			}
 
 			return m_parameters;

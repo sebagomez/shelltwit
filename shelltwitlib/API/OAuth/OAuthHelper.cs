@@ -34,7 +34,7 @@ namespace shelltwitlib.API.OAuth
 
 		internal static string GetNonce()
 		{
-			return Util.EncodeString(Guid.NewGuid().ToString());
+			return Util.EncodeString(Guid.NewGuid().ToString().Replace("-",""));
 		}
 
 		internal static string GetTimestamp()
@@ -47,9 +47,9 @@ namespace shelltwitlib.API.OAuth
 		{
 			IEnumerable<KeyValuePair<string,string>> sortedParms = parms.OrderBy(parm => parm.Key);
 
-			StringBuilder builder = new StringBuilder(method + "&" + Util.EncodeString(url) + "&");
+			StringBuilder builder = new StringBuilder($"{method}&{Util.EncodeString(url)}&");
 			foreach (KeyValuePair<string, string> p in sortedParms)
-				builder.AppendFormat("{0}%3D{1}%26", p.Key, Util.EncodeString(p.Value));
+				builder.Append($"{p.Key}%3D{Util.EncodeString(p.Value)}%26");
 
 			builder = builder.Remove(builder.Length - 3, 3);
 
@@ -57,6 +57,10 @@ namespace shelltwitlib.API.OAuth
 		}
 
 		internal static HttpWebRequest GetRequest(HttpMethod method, string baseUrl, TwitterOptions options)
+		{
+			return GetRequest(method, baseUrl, options, false);
+		}
+		internal static HttpWebRequest GetRequest(HttpMethod method, string baseUrl, TwitterOptions options, bool imageUpload)
 		{
 			string url = baseUrl;
 			if (method == HttpMethod.GET)
@@ -72,10 +76,10 @@ namespace shelltwitlib.API.OAuth
 			string nonce = OAuthHelper.GetNonce();
 			string timestamp = OAuthHelper.GetTimestamp();
 
-			Dictionary<string, string> parms = GetParms(nonce, timestamp, options);
+			Dictionary<string, string> parms = GetParms(nonce, timestamp, options, imageUpload);
 			string signatureBase = OAuthHelper.SignatureBsseString(request.Method, baseUrl, parms);
 			string signature = OAuthAuthenticator.SignBaseString(signatureBase, options.User.OAuthTokenSecret);
-			string authHeader = OAuthAuthenticator.AuthorizationHeader(nonce, signature, timestamp, options.User.OAuthToken, options.AddOOB);
+			string authHeader = OAuthAuthenticator.AuthorizationHeader(nonce, signature, timestamp, options.User.OAuthToken, options.AddOOB && !imageUpload);
 
 			request.Headers.Add(Constants.AUTHORIZATION, authHeader);
 			request.ContentType = Constants.CONTENT_TYPE.X_WWW_FORM_URLENCODED;
@@ -85,10 +89,10 @@ namespace shelltwitlib.API.OAuth
 			return request;
 		}
 
-		static Dictionary<string, string> GetParms(string nonce, string timestamp, TwitterOptions options)
+		static Dictionary<string, string> GetParms(string nonce, string timestamp, TwitterOptions options, bool imageUpload)
 		{
 			Dictionary<string, string> dic = new Dictionary<string, string>();
-			if (options.AddOOB)
+			if (options.AddOOB && !imageUpload)
 				dic.Add("oauth_callback", "oob");
 			dic.Add(OAuthHelper.OAUTH_CONSUMER_KEY, Util.EncodeString(OAuthAuthenticator.CONSUMER_KEY));
 			dic.Add(OAuthHelper.OAUTH_NONCE, nonce);
@@ -97,8 +101,11 @@ namespace shelltwitlib.API.OAuth
 			dic.Add(OAuthHelper.OAUTH_VERSION, OAuthHelper.OAUTH_VERSION_10);
 			dic.Add(OAuthHelper.OAUTH_TOKEN, options.User.OAuthToken);
 
-			foreach (var item in options.GetParameters())
-				dic.Add(item.Key, item.Value);
+			if (!imageUpload)
+			{
+				foreach (var item in options.GetParameters())
+					dic.Add(item.Key, item.Value);
+			}
 
 			return dic;
 		}

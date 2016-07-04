@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -76,7 +75,7 @@ namespace shelltwitlib.API.Tweets
 			if (options.HasMedia)
 				media = Util.EncodeString( string.Join(",", options.MediaIds.ToArray()));
 
-			HttpWebRequest req = OAuthHelper.GetRequest(HttpMethod.POST, UPDATE_STATUS, options);//  GetUpdateStatusRequest(options.User.OAuthToken, options.User.OAuthTokenSecret, options.Status, options.ReplyId, media);
+			HttpWebRequest req = OAuthHelper.GetRequest(HttpMethod.POST, UPDATE_STATUS, options);
 
 			byte[] bytes;
 			using (Stream str = req.GetRequestStream())
@@ -104,7 +103,9 @@ namespace shelltwitlib.API.Tweets
 			foreach (FileInfo file in options.MediaFiles)
 			{
 				WriteMessage($"Uploading {file.Name}");
-				HttpWebRequest req = GetMediaUploadStatusRequest(options.User.OAuthToken, options.User.OAuthTokenSecret);
+				HttpWebRequest req = OAuthHelper.GetRequest(HttpMethod.POST, MEDIA_UPLOAD, options, true);
+
+				req.ContentType = Constants.CONTENT_TYPE.FORM_DATA;
 
 				string boundary = GetMultipartBoundary(),
 					separator = "--" + boundary,
@@ -186,93 +187,6 @@ namespace shelltwitlib.API.Tweets
 				? regKey.GetValue("Content Type").ToString()
 				: "image/unknown";
 			return result;
-		}
-
-		//static HttpWebRequest GetUpdateStatusRequest(string oAuthToken, string oAuthSecret, string encodedStatus, string replyId, string media = null)
-		//{
-		//	string url = UPDATE_STATUS;
-		//	if (!string.IsNullOrEmpty(replyId))
-		//		url += "?in_reply_to_status_id=" + replyId;
-
-		//	HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-		//	request.Method = HttpMethod.POST.ToString();
-
-		//	string nonce = OAuthHelper.GetNonce();
-		//	string timestamp = OAuthHelper.GetTimestamp();
-
-		//	Dictionary<string, string> parms = GetUpdateStatusParms(nonce, timestamp, oAuthToken, encodedStatus, replyId, media);
-		//	string signatureBase = OAuthHelper.SignatureBsseString(request.Method, UPDATE_STATUS, parms);
-		//	string signature = OAuthAuthenticator.SignBaseString(signatureBase, oAuthSecret);
-		//	string authHeader = OAuthAuthenticator.AuthorizationHeader(nonce, signature, timestamp, oAuthToken, true);
-
-		//	request.Headers.Add(Constants.AUTHORIZATION, authHeader);
-		//	request.ContentType = Constants.CONTENT_TYPE.X_WWW_FORM_URLENCODED;
-		//	request.ServicePoint.Expect100Continue = false;
-		//	request.UserAgent = Constants.USER_AGENT;
-
-		//	return request;
-		//}
-
-		static Dictionary<string, string> GetUpdateStatusParms(string nonce, string timestamp, string oAuthToken, string status, string replyId, string media = null)
-		{
-			Dictionary<string, string> dic = new Dictionary<string, string>();
-			dic.Add("oauth_callback", "oob");
-			dic.Add(OAuthHelper.OAUTH_CONSUMER_KEY, Util.EncodeString(OAuthAuthenticator.CONSUMER_KEY));
-			dic.Add(OAuthHelper.OAUTH_NONCE, nonce);
-			dic.Add(OAuthHelper.OAUTH_SIGNATURE_METHOD, OAuthHelper.HMAC_SHA1);
-			dic.Add(OAuthHelper.OAUTH_TIMESTAMP, timestamp);
-			dic.Add(OAuthHelper.OAUTH_VERSION, OAuthHelper.OAUTH_VERSION_10);
-			dic.Add(OAuthHelper.OAUTH_TOKEN, oAuthToken);
-			if (!string.IsNullOrEmpty(status))
-				dic.Add(STATUS, status);
-			if (!string.IsNullOrEmpty(media))
-				dic.Add(MEDIA, media);
-			if (!string.IsNullOrEmpty(replyId))
-				dic.Add("in_reply_to_status_id", replyId);
-
-			return dic;
-		}
-
-		static HttpWebRequest GetMediaUploadStatusRequest(string oAuthToken, string oAuthSecret)
-		{
-			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(MEDIA_UPLOAD);
-			request.Method = HttpMethod.POST.ToString();
-
-			string nonce = OAuthHelper.GetNonce();
-			string timestamp = OAuthHelper.GetTimestamp();
-
-			Dictionary<string, string> parms = GetUpdateStatusParms(nonce, timestamp, oAuthToken, null, null);
-			string signatureBase = OAuthHelper.SignatureBsseString(request.Method, MEDIA_UPLOAD, parms);
-			string signature = OAuthAuthenticator.SignBaseString(signatureBase, oAuthSecret);
-			string authHeader = OAuthAuthenticator.AuthorizationHeader(nonce, signature, timestamp, oAuthToken, true);
-
-			request.Headers.Add(Constants.AUTHORIZATION, authHeader);
-			request.ContentType = Constants.CONTENT_TYPE.FORM_DATA;
-			request.ServicePoint.Expect100Continue = false;
-			request.UserAgent = Constants.USER_AGENT;
-
-			return request;
-		}
-
-		static HttpWebRequest GetUpdateMediaStatusRequest(string oAuthToken, string oAuthSecret)
-		{
-			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(UPDATE_MEDIA_STATUS);
-			request.Method = HttpMethod.POST.ToString();
-
-			string nonce = OAuthHelper.GetNonce();
-			string timestamp = OAuthHelper.GetTimestamp();
-
-			Dictionary<string, string> parms = GetUpdateStatusParms(nonce, timestamp, oAuthToken, null, null);
-			string signatureBase = OAuthHelper.SignatureBsseString(request.Method, UPDATE_MEDIA_STATUS, parms);
-			string signature = OAuthAuthenticator.SignBaseString(signatureBase, oAuthSecret);
-			string authHeader = OAuthAuthenticator.AuthorizationHeader(nonce, signature, timestamp, oAuthToken, true);
-
-			request.Headers.Add(Constants.AUTHORIZATION, authHeader);
-			request.ContentType = Constants.CONTENT_TYPE.FORM_DATA;
-			request.ServicePoint.Expect100Continue = false;
-			request.UserAgent = Constants.USER_AGENT;
-
-			return request;
 		}
 
 		#endregion
