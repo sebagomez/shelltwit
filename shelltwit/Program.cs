@@ -19,8 +19,8 @@ namespace shelltwit
 		const string HELP = "/?";
 		const string MENTIONS = "/m";
 
-		//public const string CONSUMER_KEY = "<CONSUMER_KEY HERE>";
-		//public const string CONSUMER_SECRET = "<CONSUMER_SECRET HERE>";
+		public const string CONSUMER_KEY = "<CONSUMER_KEY HERE>";
+		public const string CONSUMER_SECRET = "<CONSUMER_SECRET HERE>";
 
 		static void Main(string[] args)
 		{
