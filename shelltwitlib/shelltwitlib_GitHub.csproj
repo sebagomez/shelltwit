@@ -75,6 +75,7 @@
     <Compile Include="API\OAuth\OAuthAuthenticator.cs" />
     <Compile Include="API\Options\MentionsOptions.cs" />
     <Compile Include="API\Options\SearchOptions.cs" />
+    <Compile Include="API\Options\TimelineOptions.cs" />
     <Compile Include="API\Options\TwitterOptions.cs" />
     <Compile Include="API\Options\UpdateOptions.cs" />
     <Compile Include="API\Tweets\Mentions.cs" />
