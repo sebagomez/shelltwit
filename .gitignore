@@ -17,3 +17,6 @@ shelltwit/shelltwit.nrproj
 *.user
 
 shelltwit.sln
+BitlyHelper/BitlyHelper.csproj
+shelltwitlib/shelltwitlib.csproj
+shelltwit\shelltwit.csproj

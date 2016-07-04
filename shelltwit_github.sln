@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitLyHelper", "BitLyHelper\BitLyHelper.csproj", "{4BB68E76-BBBB-40A2-AD64-E33E58427084}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitLyHelper_GitHub", "BitLyHelper\BitLyHelper_GitHub.csproj", "{4BB68E76-BBBB-40A2-AD64-E33E58427084}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shelltwit", "shelltwit\shelltwit.csproj", "{D6E48BCB-7FB9-4D8A-B8E7-595FAF3767F2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shelltwit_GitHub", "shelltwit\shelltwit_GitHub.csproj", "{D6E48BCB-7FB9-4D8A-B8E7-595FAF3767F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shelltwitlib", "shelltwitlib\shelltwitlib.csproj", "{50879BB0-F4CA-4776-865E-05F5741F1404}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shelltwitlib_GitHub", "shelltwitlib\shelltwitlib_GitHub.csproj", "{50879BB0-F4CA-4776-865E-05F5741F1404}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
