@@ -13,7 +13,6 @@ namespace shelltwitlib.API.Tweets
 	public class Update
 	{
 		const string UPDATE_STATUS = "https://api.twitter.com/1.1/statuses/update.json";
-		const string UPDATE_MEDIA_STATUS = "https://api.twitter.com/1.1/statuses/update_with_media.json";
 		const string MEDIA_UPLOAD = "https://upload.twitter.com/1.1/media/upload.json";
 		const string STATUS = "status";
 		const string MEDIA = "media_ids";
