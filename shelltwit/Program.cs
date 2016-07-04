@@ -164,15 +164,15 @@ namespace shelltwit
 			Console.WriteLine(title);
 			Console.WriteLine(string.Format("{0} v{1}", copyRight, version));
 			Console.WriteLine("");
-			Console.WriteLine("Usage: twit [/c|/tl|/m|/?|status] [<mediaPath>]");
+			Console.WriteLine("Usage: twit /q <query>|/c|/tl|/m|/?|status [<mediaPath>]");
 			Console.WriteLine("");
 			Console.WriteLine("/c 		: clears user stored credentials");
-			Console.WriteLine("/tl 		: show user's timeline");
+			Console.WriteLine("/tl 		: show user's timeline (default)");
 			Console.WriteLine("/q 		: query twits containing words");
 			Console.WriteLine("/m 		: show user's mentions");
 			Console.WriteLine("/? 		: show this help");
 			Console.WriteLine("status	 	: status to update at twitter.com");
-			Console.WriteLine("mediaPath	: full path, between brackets, to the media file to upload.");
+			Console.WriteLine("mediaPath	: full path, between brackets, to the media files (up to four) to upload.");
 			Console.WriteLine("");
 
 		}
