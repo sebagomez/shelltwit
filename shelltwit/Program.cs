@@ -6,6 +6,8 @@ using System.Net;
 using System.Reflection;
 using shelltwitlib.Helpers;
 using shelltwitlib.API.Options;
+using shelltwitlib.API.OAuth;
+using shelltwitlib.API.Tweets;
 
 namespace shelltwit
 {
@@ -19,10 +21,6 @@ namespace shelltwit
 
 		//public const string CONSUMER_KEY = "<CONSUMER_KEY HERE>";
 		//public const string CONSUMER_SECRET = "<CONSUMER_SECRET HERE>";
-
-		public const string CONSUMER_KEY = "QgwWArPhuWbmsDppoMOcwwES5";
-		public const string CONSUMER_SECRET = "Q7pPo5sgT7rMFehy9SLFqciC9BHWkD7Oy7CkcFs2p50NevykuC";
-
 
 		static void Main(string[] args)
 		{
@@ -42,8 +40,8 @@ namespace shelltwit
 				//	}
 				//};
 
-				shelltwitlib.API.OAuth.OAuthHelper.Initilize(CONSUMER_KEY, CONSUMER_SECRET);
-				shelltwitlib.API.Tweets.Update.SetMessageAction(message => Console.WriteLine(message));
+				OAuthAuthenticator.Initilize(CONSUMER_KEY, CONSUMER_SECRET);
+				Update.SetMessageAction(message => Console.WriteLine(message));
 
 				if (args.Length == 0)
 				{
@@ -100,7 +98,7 @@ namespace shelltwit
 					}
 				}
 
-				shelltwitlib.API.OAuth.OAuthHelper.Initilize(CONSUMER_KEY, CONSUMER_SECRET);
+				OAuthAuthenticator.Initilize(CONSUMER_KEY, CONSUMER_SECRET);
 				string status = BitLyHelper.Util.GetShortenString(args);
 				string response = shelltwitlib.API.Tweets.Update.UpdateStatus(status);
 
