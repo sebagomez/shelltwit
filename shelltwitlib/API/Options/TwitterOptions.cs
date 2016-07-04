@@ -12,6 +12,13 @@ namespace shelltwitlib.API.Options
 
 		public abstract Dictionary<string, string> GetParameters();
 
-		public abstract string GetUrlParameters();
+		public string GetUrlParameters()
+		{
+			StringBuilder builder = new StringBuilder();
+			foreach (var item in GetParameters())
+				builder.Append($"&{item.Key}={item.Value}");
+
+			return builder.ToString().Substring(1);
+		}
 	}
 }

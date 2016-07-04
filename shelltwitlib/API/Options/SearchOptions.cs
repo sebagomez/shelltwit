@@ -35,14 +35,5 @@ namespace shelltwitlib.API.Options
 			}
 			return m_parameters;
 		}
-
-		public override string GetUrlParameters()
-		{
-			StringBuilder builder = new StringBuilder();
-			foreach (var item in GetParameters())
-				builder.Append($"&{item.Key}={item.Value}");
-
-			return builder.ToString().Substring(1);
-		}
 	}
 }

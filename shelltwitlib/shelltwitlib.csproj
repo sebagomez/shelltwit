@@ -70,8 +70,11 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="API\OAuth\OAuthAuthenticator.cs" />
+    <Compile Include="API\Options\MentionsOptions.cs" />
     <Compile Include="API\Options\SearchOptions.cs" />
     <Compile Include="API\Options\TwitterOptions.cs" />
+    <Compile Include="API\Options\UpdateOptions.cs" />
     <Compile Include="API\Tweets\Mentions.cs" />
     <Compile Include="API\Tweets\Search.cs" />
     <Compile Include="API\Tweets\Timeline.cs" />

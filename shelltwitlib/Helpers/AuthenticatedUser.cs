@@ -3,6 +3,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Xml.Serialization;
+using shelltwitlib.API.OAuth;
 
 namespace shelltwitlib.Helpers
 {
@@ -95,7 +96,7 @@ namespace shelltwitlib.Helpers
 
 		public void SetOAuthCredentials()
 		{
-			string accessToken = shelltwitlib.API.OAuth.OAuthHelper.GetAccessToken(Username, Password);
+			string accessToken = OAuthAuthenticator.GetAccessToken(Username, Password);
 			string[] tokens = accessToken.Split(new char[] {'&'},StringSplitOptions.RemoveEmptyEntries);
 
 			foreach (string tok in tokens)

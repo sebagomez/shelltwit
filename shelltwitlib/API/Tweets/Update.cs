@@ -5,6 +5,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Web;
 using shelltwitlib.API.OAuth;
+using shelltwitlib.API.Options;
 using shelltwitlib.Helpers;
 using shelltwitlib.Web;
 
@@ -24,12 +25,7 @@ namespace shelltwitlib.API.Tweets
 
 		public static string UpdateStatus(string status)
 		{
-			return UpdateStatus(status, null, null);
-		}
-
-		public static string UpdateStatus(string status, AuthenticatedUser user)
-		{
-			return UpdateStatus(status, user, null);
+			return UpdateStatus(new UpdateOptions { Status = status });
 		}
 
 		public static void SetMessageAction(Action<string> func)
@@ -42,32 +38,31 @@ namespace shelltwitlib.API.Tweets
 			s_messageFunction?.Invoke(message);
 		}
 
-		public static string UpdateStatus(string status, AuthenticatedUser user, string replyId)
+		public static string UpdateStatus(UpdateOptions options)
 		{
 			try
 			{
 				Regex regex = new Regex(@"\[(.*?)\]");
-				List<FileInfo> media = new List<FileInfo>();
-				foreach (System.Text.RegularExpressions.Match match in regex.Matches(status))
+				foreach (System.Text.RegularExpressions.Match match in regex.Matches(options.Status))
 				{
-					status = status.Replace(match.Value, "");
+					options.Status = options.Status.Replace(match.Value, "");
 					FileInfo file = new FileInfo(match.Value.Replace("[", "").Replace("]", ""));
 					if (!file.Exists)
 						throw new FileNotFoundException("File not found", file.FullName);
-					media.Add(file);
+					options.MediaFiles.Add(file);
 				}
 
-				if (media.Count > 4) //limited by the twitter API
+				if (options.MediaFiles.Count > 4) //limited by the twitter API
 					throw new ArgumentOutOfRangeException("media", "Up to 4 media files are allowed per tweet");
 
-				if (user == null)
-					user = AuthenticatedUser.LoadCredentials();
-				string encodedStatus = Util.EncodeString(HttpUtility.HtmlDecode(status));
+				if (options.User == null)
+					options.User = AuthenticatedUser.LoadCredentials();
+				options.Status = Util.EncodeString(HttpUtility.HtmlDecode(options.Status));
 
-				if (media.Count == 0)
-					return InternalUpdateStatus(user, encodedStatus, replyId);
-				else
-					return InternalUpdateWithMedia(user, encodedStatus, replyId, media);
+				if (options.HasMedia)
+					UploadMedia(options);
+
+				return InternalUpdateStatus(options);
 			}
 			catch (Exception ex)
 			{
@@ -75,18 +70,18 @@ namespace shelltwitlib.API.Tweets
 			}
 		}
 
-		private static string InternalUpdateStatus(AuthenticatedUser user, string encodedStatus, string replyId, List<string> mediaIds = null)
+		private static string InternalUpdateStatus(UpdateOptions options)
 		{
 			string media = null;
-			if (mediaIds != null)
-				media = Util.EncodeString( string.Join(",", mediaIds.ToArray()));
+			if (options.HasMedia)
+				media = Util.EncodeString( string.Join(",", options.MediaIds.ToArray()));
 
-			HttpWebRequest req = GetUpdateStatusRequest(user.OAuthToken, user.OAuthTokenSecret, encodedStatus, replyId, media);
+			HttpWebRequest req = GetUpdateStatusRequest(options.User.OAuthToken, options.User.OAuthTokenSecret, options.Status, options.ReplyId, media);
 
 			byte[] bytes;
 			using (Stream str = req.GetRequestStream())
 			{
-				bytes = Util.GetUTF8EncodingBytes($"{STATUS}={encodedStatus}");
+				bytes = Util.GetUTF8EncodingBytes($"{STATUS}={options.Status}");
 				str.Write(bytes, 0, bytes.Length);
 
 				if (!string.IsNullOrEmpty(media))
@@ -104,19 +99,12 @@ namespace shelltwitlib.API.Tweets
 			return response.StatusDescription;
 		}
 
-		private static string InternalUpdateWithMedia(AuthenticatedUser user, string encodedStatus, string replyId, List<FileInfo> media)
+		private static void UploadMedia(UpdateOptions options)
 		{
-			return InternalUpdateStatus(user, encodedStatus, replyId, UploadMedia(user, media));
-		}
-
-		private static List<string> UploadMedia(AuthenticatedUser user, List<FileInfo> mediaFiles)
-		{
-			List<string> ids = new List<string>();
-
-			foreach (FileInfo file in mediaFiles)
+			foreach (FileInfo file in options.MediaFiles)
 			{
 				WriteMessage($"Uploading {file.Name}");
-				HttpWebRequest req = GetMediaUploadStatusRequest(user.OAuthToken, user.OAuthTokenSecret);
+				HttpWebRequest req = GetMediaUploadStatusRequest(options.User.OAuthToken, options.User.OAuthTokenSecret);
 
 				string boundary = GetMultipartBoundary(),
 					separator = "--" + boundary,
@@ -177,10 +165,8 @@ namespace shelltwitlib.API.Tweets
 
 				Media media = Media.FromStream(response.GetResponseStream());
 
-				ids.Add(media.IdString);
+				options.MediaIds.Add(media.IdString);
 			}
-
-			return ids;
 		}
 
 		private static string GetMultipartBoundary()
@@ -216,8 +202,8 @@ namespace shelltwitlib.API.Tweets
 
 			Dictionary<string, string> parms = GetUpdateStatusParms(nonce, timestamp, oAuthToken, encodedStatus, replyId, media);
 			string signatureBase = OAuthHelper.SignatureBsseString(request.Method, UPDATE_STATUS, parms);
-			string signature = OAuthHelper.SignBaseString(signatureBase, oAuthSecret);
-			string authHeader = OAuthHelper.AuthorizationHeader(nonce, signature, timestamp, oAuthToken, true);
+			string signature = OAuthAuthenticator.SignBaseString(signatureBase, oAuthSecret);
+			string authHeader = OAuthAuthenticator.AuthorizationHeader(nonce, signature, timestamp, oAuthToken, true);
 
 			request.Headers.Add(Constants.AUTHORIZATION, authHeader);
 			request.ContentType = Constants.CONTENT_TYPE.X_WWW_FORM_URLENCODED;
@@ -231,7 +217,7 @@ namespace shelltwitlib.API.Tweets
 		{
 			Dictionary<string, string> dic = new Dictionary<string, string>();
 			dic.Add("oauth_callback", "oob");
-			dic.Add(OAuthHelper.OAUTH_CONSUMER_KEY, Util.EncodeString(OAuthHelper.CONSUMER_KEY));
+			dic.Add(OAuthHelper.OAUTH_CONSUMER_KEY, Util.EncodeString(OAuthAuthenticator.CONSUMER_KEY));
 			dic.Add(OAuthHelper.OAUTH_NONCE, nonce);
 			dic.Add(OAuthHelper.OAUTH_SIGNATURE_METHOD, OAuthHelper.HMAC_SHA1);
 			dic.Add(OAuthHelper.OAUTH_TIMESTAMP, timestamp);
@@ -257,8 +243,8 @@ namespace shelltwitlib.API.Tweets
 
 			Dictionary<string, string> parms = GetUpdateStatusParms(nonce, timestamp, oAuthToken, null, null);
 			string signatureBase = OAuthHelper.SignatureBsseString(request.Method, MEDIA_UPLOAD, parms);
-			string signature = OAuthHelper.SignBaseString(signatureBase, oAuthSecret);
-			string authHeader = OAuthHelper.AuthorizationHeader(nonce, signature, timestamp, oAuthToken, true);
+			string signature = OAuthAuthenticator.SignBaseString(signatureBase, oAuthSecret);
+			string authHeader = OAuthAuthenticator.AuthorizationHeader(nonce, signature, timestamp, oAuthToken, true);
 
 			request.Headers.Add(Constants.AUTHORIZATION, authHeader);
 			request.ContentType = Constants.CONTENT_TYPE.FORM_DATA;
@@ -278,8 +264,8 @@ namespace shelltwitlib.API.Tweets
 
 			Dictionary<string, string> parms = GetUpdateStatusParms(nonce, timestamp, oAuthToken, null, null);
 			string signatureBase = OAuthHelper.SignatureBsseString(request.Method, UPDATE_MEDIA_STATUS, parms);
-			string signature = OAuthHelper.SignBaseString(signatureBase, oAuthSecret);
-			string authHeader = OAuthHelper.AuthorizationHeader(nonce, signature, timestamp, oAuthToken, true);
+			string signature = OAuthAuthenticator.SignBaseString(signatureBase, oAuthSecret);
+			string authHeader = OAuthAuthenticator.AuthorizationHeader(nonce, signature, timestamp, oAuthToken, true);
 
 			request.Headers.Add(Constants.AUTHORIZATION, authHeader);
 			request.ContentType = Constants.CONTENT_TYPE.FORM_DATA;

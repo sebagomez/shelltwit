@@ -55,8 +55,8 @@ namespace shelltwitlib.API.Tweets
 
 			Dictionary<string, string> parms = GetSearchParms(nonce, timestamp, options);
 			string signatureBase = OAuthHelper.SignatureBsseString(request.Method, SEARCH_URL, parms);
-			string signature = OAuthHelper.SignBaseString(signatureBase, options.User.OAuthTokenSecret);
-			string authHeader = OAuthHelper.AuthorizationHeader(nonce, signature, timestamp, options.User.OAuthToken);
+			string signature = OAuthAuthenticator.SignBaseString(signatureBase, options.User.OAuthTokenSecret);
+			string authHeader = OAuthAuthenticator.AuthorizationHeader(nonce, signature, timestamp, options.User.OAuthToken);
 
 			request.Headers.Add(Constants.AUTHORIZATION, authHeader);
 			request.ContentType = Constants.CONTENT_TYPE.X_WWW_FORM_URLENCODED;
@@ -69,7 +69,7 @@ namespace shelltwitlib.API.Tweets
 		static Dictionary<string, string> GetSearchParms(string nonce, string timestamp, SearchOptions options)
 		{
 			Dictionary<string, string> dic = new Dictionary<string, string>();
-			dic.Add(OAuthHelper.OAUTH_CONSUMER_KEY, Util.EncodeString(OAuthHelper.CONSUMER_KEY));
+			dic.Add(OAuthHelper.OAUTH_CONSUMER_KEY, Util.EncodeString(OAuthAuthenticator.CONSUMER_KEY));
 			dic.Add(OAuthHelper.OAUTH_SIGNATURE_METHOD, OAuthHelper.HMAC_SHA1);
 			dic.Add(OAuthHelper.OAUTH_TIMESTAMP, timestamp);
 			dic.Add(OAuthHelper.OAUTH_NONCE, nonce);

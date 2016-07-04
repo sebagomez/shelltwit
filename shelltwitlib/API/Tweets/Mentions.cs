@@ -4,6 +4,7 @@ using System.Net;
 using System.Runtime.Serialization.Json;
 using System.Xml.Serialization;
 using shelltwitlib.API.OAuth;
+using shelltwitlib.API.Options;
 using shelltwitlib.Helpers;
 using shelltwitlib.Web;
 
@@ -15,15 +16,15 @@ namespace shelltwitlib.API.Tweets
 
 		public static List<Status> GetMentions()
 		{
-			return GetMentions(null,string.Empty);
+			return GetMentions(new MentionsOptions());
 		}
 
-		public static List<Status> GetMentions(AuthenticatedUser user, string lastTweet)
+		public static List<Status> GetMentions(MentionsOptions options)
 		{
-			if (user == null)
-				user = AuthenticatedUser.LoadCredentials();
+			if (options.User == null)
+				options.User = AuthenticatedUser.LoadCredentials();
 
-			HttpWebRequest req = GetMentionsRequest(user.OAuthToken, user.OAuthTokenSecret, lastTweet);
+			HttpWebRequest req = GetMentionsRequest(options);
 			HttpWebResponse response = (HttpWebResponse)req.GetResponse();
 
 			if (response.StatusCode != HttpStatusCode.OK)
@@ -35,11 +36,11 @@ namespace shelltwitlib.API.Tweets
 			return ss;
 		}
 
-		static HttpWebRequest GetMentionsRequest(string oAuthToken, string oAuthSecret, string lastTweet)
+		static HttpWebRequest GetMentionsRequest(MentionsOptions options)
 		{
 			string url = MENTIONS_STATUS;
-			if (!string.IsNullOrEmpty(lastTweet))
-				url += "?since_id=" + lastTweet.Trim();
+			if (!string.IsNullOrEmpty(options.Since))
+				url += "?since_id=" + options.Since.Trim();
 
 			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 			request.Method = HttpMethod.GET.ToString();
@@ -47,10 +48,10 @@ namespace shelltwitlib.API.Tweets
 			string nonce = OAuthHelper.GetNonce();
 			string timestamp = OAuthHelper.GetTimestamp();
 
-			Dictionary<string, string> parms = GetMentionsParms(nonce, timestamp, oAuthToken, lastTweet);
+			Dictionary<string, string> parms = GetMentionsParms(nonce, timestamp, options.User.OAuthToken, options.Since);
 			string signatureBase = OAuthHelper.SignatureBsseString(request.Method, MENTIONS_STATUS, parms);
-			string signature = OAuthHelper.SignBaseString(signatureBase, oAuthSecret);
-			string authHeader = OAuthHelper.AuthorizationHeader(nonce, signature, timestamp, oAuthToken);
+			string signature =  OAuthAuthenticator.SignBaseString(signatureBase, options.User.OAuthTokenSecret);
+			string authHeader = OAuthAuthenticator.AuthorizationHeader(nonce, signature, timestamp, options.User.OAuthToken);
 
 			request.Headers.Add(Constants.AUTHORIZATION, authHeader);
 			request.ContentType = Constants.CONTENT_TYPE.X_WWW_FORM_URLENCODED;
@@ -63,7 +64,7 @@ namespace shelltwitlib.API.Tweets
 		static Dictionary<string, string> GetMentionsParms(string nonce, string timestamp, string oAuthToken, string lastTweet)
 		{
 			Dictionary<string, string> dic = new Dictionary<string, string>();
-			dic.Add(OAuthHelper.OAUTH_CONSUMER_KEY, Util.EncodeString(OAuthHelper.CONSUMER_KEY));
+			dic.Add(OAuthHelper.OAUTH_CONSUMER_KEY, Util.EncodeString(OAuthAuthenticator.CONSUMER_KEY));
 			dic.Add(OAuthHelper.OAUTH_SIGNATURE_METHOD, OAuthHelper.HMAC_SHA1);
 			dic.Add(OAuthHelper.OAUTH_TIMESTAMP, timestamp);
 			dic.Add(OAuthHelper.OAUTH_NONCE, nonce);
