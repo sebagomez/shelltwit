@@ -16,10 +16,10 @@ namespace shelltwitlib.API.Tweets
 			return GetTimeline(null, null);
 		}
 
-		public static List<Status> GetTimeline(TwUser user, string lastTweet)
+		public static List<Status> GetTimeline(AuthenticatedUser user, string lastTweet)
 		{
 			if (user == null)
-				user = TwUser.LoadCredentials();
+				user = AuthenticatedUser.LoadCredentials();
 
 			HttpWebRequest req = GetTimelineRequest(user.OAuthToken, user.OAuthTokenSecret, lastTweet);
 			HttpWebResponse response = (HttpWebResponse)req.GetResponse();

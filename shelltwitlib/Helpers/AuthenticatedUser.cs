@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 namespace shelltwitlib.Helpers
 {
 	[DataContract]
-	public class TwUser
+	public class AuthenticatedUser
 	{
 		const string USER_FILE = "twit.usr";
 		const string OAUTH_TOKEN = "oauth_token";
@@ -27,11 +27,11 @@ namespace shelltwitlib.Helpers
 		[DataMember]
 		public string OAuthTokenSecret { get; set; }
 
-		public TwUser()
+		public AuthenticatedUser()
 		{
 		}
 
-		public TwUser(string user, string password, string token, string tokensecret)
+		public AuthenticatedUser(string user, string password, string token, string tokensecret)
 		{
 			Username = user;
 			Password = password;
@@ -50,7 +50,7 @@ namespace shelltwitlib.Helpers
 		}
 
 
-		public static TwUser GetUserCrdentials(string username)
+		public static AuthenticatedUser GetUserCrdentials(string username)
 		{
 			username = username.Replace(Path.DirectorySeparatorChar, '.');
 
@@ -71,9 +71,9 @@ namespace shelltwitlib.Helpers
 			Serialize(userPath);
 		}
 
-		public static TwUser LoadCredentials()
+		public static AuthenticatedUser LoadCredentials()
 		{
-			TwUser twiUser = new TwUser();
+			AuthenticatedUser twiUser = new AuthenticatedUser();
 			if (!File.Exists(s_configFile))
 			{
 				Console.WriteLine("Enter Twitter username...");
@@ -125,28 +125,28 @@ namespace shelltwitlib.Helpers
 		{
 			using (FileStream file = File.Open(s_configFile, FileMode.Create))
 			{
-				DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(TwUser));
+				DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(AuthenticatedUser));
 				jsonSerializer.WriteObject(file, this);
 			}
 		}
 
-		static TwUser Deserialize()
+		static AuthenticatedUser Deserialize()
 		{
-			TwUser twiUser = null;
+			AuthenticatedUser twiUser = null;
 
 			try
 			{
 				using (FileStream file = File.Open(s_configFile, FileMode.Open))
 				{
-					DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(TwUser));
-					twiUser = (TwUser)jsonSerializer.ReadObject(file);
+					DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(AuthenticatedUser));
+					twiUser = (AuthenticatedUser)jsonSerializer.ReadObject(file);
 				}
 			}
 			catch (SerializationException)
 			{
-				XmlSerializer deserializer = new XmlSerializer(typeof(TwUser));
+				XmlSerializer deserializer = new XmlSerializer(typeof(AuthenticatedUser));
 				using (StreamReader reader = new StreamReader(s_configFile))
-					twiUser = (TwUser)deserializer.Deserialize(reader);
+					twiUser = (AuthenticatedUser)deserializer.Deserialize(reader);
 
 				twiUser.Serialize();
 			}

@@ -70,6 +70,8 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="API\Options\SearchOptions.cs" />
+    <Compile Include="API\Options\TwitterOptions.cs" />
     <Compile Include="API\Tweets\Mentions.cs" />
     <Compile Include="API\Tweets\Search.cs" />
     <Compile Include="API\Tweets\Timeline.cs" />
@@ -82,7 +84,7 @@
     <Compile Include="Helpers\WebAccessToken.cs" />
     <Compile Include="API\OAuth\OAuthHelper.cs" />
     <Compile Include="API\Tweets\Update.cs" />
-    <Compile Include="Helpers\TwUser.cs" />
+    <Compile Include="Helpers\AuthenticatedUser.cs" />
     <Compile Include="Helpers\Util.cs" />
   </ItemGroup>
   <ItemGroup>

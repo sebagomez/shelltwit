@@ -27,7 +27,7 @@ namespace shelltwitlib.API.Tweets
 			return UpdateStatus(status, null, null);
 		}
 
-		public static string UpdateStatus(string status, TwUser user)
+		public static string UpdateStatus(string status, AuthenticatedUser user)
 		{
 			return UpdateStatus(status, user, null);
 		}
@@ -42,7 +42,7 @@ namespace shelltwitlib.API.Tweets
 			s_messageFunction?.Invoke(message);
 		}
 
-		public static string UpdateStatus(string status, TwUser user, string replyId)
+		public static string UpdateStatus(string status, AuthenticatedUser user, string replyId)
 		{
 			try
 			{
@@ -61,7 +61,7 @@ namespace shelltwitlib.API.Tweets
 					throw new ArgumentOutOfRangeException("media", "Up to 4 media files are allowed per tweet");
 
 				if (user == null)
-					user = TwUser.LoadCredentials();
+					user = AuthenticatedUser.LoadCredentials();
 				string encodedStatus = Util.EncodeString(HttpUtility.HtmlDecode(status));
 
 				if (media.Count == 0)
@@ -75,7 +75,7 @@ namespace shelltwitlib.API.Tweets
 			}
 		}
 
-		private static string InternalUpdateStatus(TwUser user, string encodedStatus, string replyId, List<string> mediaIds = null)
+		private static string InternalUpdateStatus(AuthenticatedUser user, string encodedStatus, string replyId, List<string> mediaIds = null)
 		{
 			string media = null;
 			if (mediaIds != null)
@@ -86,12 +86,12 @@ namespace shelltwitlib.API.Tweets
 			byte[] bytes;
 			using (Stream str = req.GetRequestStream())
 			{
-				bytes = Util.GetUTF8EncodingBytes(string.Format("{0}={1}", STATUS, encodedStatus));
+				bytes = Util.GetUTF8EncodingBytes($"{STATUS}={encodedStatus}");
 				str.Write(bytes, 0, bytes.Length);
 
 				if (!string.IsNullOrEmpty(media))
 				{
-					bytes = Util.GetUTF8EncodingBytes(string.Format("&{0}={1}", MEDIA, media));
+					bytes = Util.GetUTF8EncodingBytes($"&{MEDIA}={media}");
 					str.Write(bytes, 0, bytes.Length);
 				}
 			}
@@ -104,12 +104,12 @@ namespace shelltwitlib.API.Tweets
 			return response.StatusDescription;
 		}
 
-		private static string InternalUpdateWithMedia(TwUser user, string encodedStatus, string replyId, List<FileInfo> media)
+		private static string InternalUpdateWithMedia(AuthenticatedUser user, string encodedStatus, string replyId, List<FileInfo> media)
 		{
 			return InternalUpdateStatus(user, encodedStatus, replyId, UploadMedia(user, media));
 		}
 
-		private static List<string> UploadMedia(TwUser user, List<FileInfo> mediaFiles)
+		private static List<string> UploadMedia(AuthenticatedUser user, List<FileInfo> mediaFiles)
 		{
 			List<string> ids = new List<string>();
 

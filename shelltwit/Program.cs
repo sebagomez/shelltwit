@@ -1,21 +1,28 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Reflection;
 using shelltwitlib.Helpers;
+using shelltwitlib.API.Options;
 
 namespace shelltwit
 {
 	class Program
 	{
 		const string CLEAR = "/c";
+		const string SEARCH = "/q";
 		const string TIME_LINE = "/tl";
 		const string HELP = "/?";
 		const string MENTIONS = "/m";
 
-		public const string CONSUMER_KEY = "<CONSUMER_KEY HERE>";
-		public const string CONSUMER_SECRET = "<CONSUMER_SECRET HERE>";
+		//public const string CONSUMER_KEY = "<CONSUMER_KEY HERE>";
+		//public const string CONSUMER_SECRET = "<CONSUMER_SECRET HERE>";
+
+		public const string CONSUMER_KEY = "QgwWArPhuWbmsDppoMOcwwES5";
+		public const string CONSUMER_SECRET = "Q7pPo5sgT7rMFehy9SLFqciC9BHWkD7Oy7CkcFs2p50NevykuC";
+
 
 		static void Main(string[] args)
 		{
@@ -51,7 +58,7 @@ namespace shelltwit
 					switch (flag)
 					{
 						case CLEAR:
-							TwUser.ClearCredentials();
+							AuthenticatedUser.ClearCredentials();
 							Console.WriteLine("User credentials cleared!");
 							return;
 						case HELP:
@@ -62,6 +69,10 @@ namespace shelltwit
 							return;
 						case MENTIONS:
 							PrintTwits(shelltwitlib.API.Tweets.Mentions.GetMentions());
+							return;
+						case SEARCH:
+							SearchOptions options = new SearchOptions { Query = string.Join(" ", args).Substring(2), User = AuthenticatedUser.LoadCredentials() }; 
+							PrintTwits(shelltwitlib.API.Tweets.Search.SearchTweets(options));
 							return;
 						default:
 							Console.WriteLine("Invalid flag: " + flag);
@@ -132,7 +143,15 @@ namespace shelltwit
 
 		static void PrintTwits(List<Status> twits)
 		{
-			twits.ForEach(twit => Console.WriteLine("{0} (@{1}): {2}", twit.User.Name, twit.User.ScreenName,  twit.Text));
+			twits.ForEach(twit => Console.WriteLine($"{twit.User.Name} (@{twit.User.ScreenName}): {twit.Text}"));
+		}
+
+		static void PrintTwits(SearchResult results)
+		{
+			if (results.statuses.Length == 0)
+				Console.WriteLine("Sorry, no tweets found :(");
+			else
+				PrintTwits(results.statuses.ToList<Status>());
 		}
 
 		static void ShowUsage()
@@ -151,6 +170,7 @@ namespace shelltwit
 			Console.WriteLine("");
 			Console.WriteLine("/c 		: clears user stored credentials");
 			Console.WriteLine("/tl 		: show user's timeline");
+			Console.WriteLine("/q 		: query twits containing words");
 			Console.WriteLine("/m 		: show user's mentions");
 			Console.WriteLine("/? 		: show this help");
 			Console.WriteLine("status	 	: status to update at twitter.com");

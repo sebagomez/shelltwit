@@ -18,10 +18,10 @@ namespace shelltwitlib.API.Tweets
 			return GetMentions(null,string.Empty);
 		}
 
-		public static List<Status> GetMentions(TwUser user, string lastTweet)
+		public static List<Status> GetMentions(AuthenticatedUser user, string lastTweet)
 		{
 			if (user == null)
-				user = TwUser.LoadCredentials();
+				user = AuthenticatedUser.LoadCredentials();
 
 			HttpWebRequest req = GetMentionsRequest(user.OAuthToken, user.OAuthTokenSecret, lastTweet);
 			HttpWebResponse response = (HttpWebResponse)req.GetResponse();

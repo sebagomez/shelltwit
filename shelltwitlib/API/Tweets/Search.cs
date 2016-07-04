@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Web;
 using shelltwitlib.API.OAuth;
+using shelltwitlib.API.Options;
 using shelltwitlib.Helpers;
 using shelltwitlib.Web;
 
@@ -14,21 +15,23 @@ namespace shelltwitlib.API.Tweets
 {
 	public class Search
 	{
+		const int MAX_QUERY_LENGTH = 500;
 		const string SEARCH_URL = "https://api.twitter.com/1.1/search/tweets.json";
 
-		public static SearchResult SearchTweets(string pattern)
+		public static SearchResult SearchTweets(SearchOptions options)
 		{
-			return SearchTweets(null, pattern);
-		}
+			if (string.IsNullOrEmpty(options.Query))
+				throw new ArgumentNullException("query","The text query cannot be null");
 
-		public static SearchResult SearchTweets(TwUser user, string pattern)
-		{
-			if (user == null)
-				user = TwUser.LoadCredentials();
+			if (options.Query.Length > MAX_QUERY_LENGTH)
+				throw new IndexOutOfRangeException($"Query too long. The query string cannot exceed {MAX_QUERY_LENGTH} chars.");
 
-			pattern = Util.EncodeString(HttpUtility.HtmlDecode(pattern));
+			if (options.User == null)
+				options.User = AuthenticatedUser.LoadCredentials();
 
-			HttpWebRequest req = GetSearchRequest(user.OAuthToken, user.OAuthTokenSecret, pattern);
+			options.Query = Util.EncodeString(HttpUtility.HtmlDecode(options.Query));
+
+			HttpWebRequest req = GetSearchRequest(options);
 			HttpWebResponse response = (HttpWebResponse)req.GetResponse();
 
 			if (response.StatusCode != HttpStatusCode.OK)
@@ -40,9 +43,9 @@ namespace shelltwitlib.API.Tweets
 			return result;
 		}
 
-		static HttpWebRequest GetSearchRequest(string oAuthToken, string oAuthSecret, string search)
+		static HttpWebRequest GetSearchRequest(SearchOptions options)
 		{
-			string url = $"{SEARCH_URL}?q={search}&include_entities=0";
+			string url = $"{SEARCH_URL}?{options.GetUrlParameters()}";
 
 			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 			request.Method = HttpMethod.GET.ToString();
@@ -50,10 +53,10 @@ namespace shelltwitlib.API.Tweets
 			string nonce = OAuthHelper.GetNonce();
 			string timestamp = OAuthHelper.GetTimestamp();
 
-			Dictionary<string, string> parms = GetSearchParms(nonce, timestamp, oAuthToken, search);
+			Dictionary<string, string> parms = GetSearchParms(nonce, timestamp, options);
 			string signatureBase = OAuthHelper.SignatureBsseString(request.Method, SEARCH_URL, parms);
-			string signature = OAuthHelper.SignBaseString(signatureBase, oAuthSecret);
-			string authHeader = OAuthHelper.AuthorizationHeader(nonce, signature, timestamp, oAuthToken);
+			string signature = OAuthHelper.SignBaseString(signatureBase, options.User.OAuthTokenSecret);
+			string authHeader = OAuthHelper.AuthorizationHeader(nonce, signature, timestamp, options.User.OAuthToken);
 
 			request.Headers.Add(Constants.AUTHORIZATION, authHeader);
 			request.ContentType = Constants.CONTENT_TYPE.X_WWW_FORM_URLENCODED;
@@ -63,7 +66,7 @@ namespace shelltwitlib.API.Tweets
 			return request;
 		}
 
-		static Dictionary<string, string> GetSearchParms(string nonce, string timestamp, string oAuthToken, string search)
+		static Dictionary<string, string> GetSearchParms(string nonce, string timestamp, SearchOptions options)
 		{
 			Dictionary<string, string> dic = new Dictionary<string, string>();
 			dic.Add(OAuthHelper.OAUTH_CONSUMER_KEY, Util.EncodeString(OAuthHelper.CONSUMER_KEY));
@@ -71,10 +74,10 @@ namespace shelltwitlib.API.Tweets
 			dic.Add(OAuthHelper.OAUTH_TIMESTAMP, timestamp);
 			dic.Add(OAuthHelper.OAUTH_NONCE, nonce);
 			dic.Add(OAuthHelper.OAUTH_VERSION, OAuthHelper.OAUTH_VERSION_10);
-			dic.Add(OAuthHelper.OAUTH_TOKEN, oAuthToken);
-			if (!string.IsNullOrEmpty(search))
-				dic.Add("q", search);
-			dic.Add("include_entities", "0");
+			dic.Add(OAuthHelper.OAUTH_TOKEN, options.User.OAuthToken);
+
+			foreach (var item in options.GetParameters())
+				dic.Add(item.Key, item.Value);
 
 			return dic;
 		}
