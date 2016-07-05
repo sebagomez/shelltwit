@@ -3,9 +3,9 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Xml.Serialization;
-using shelltwitlib.API.OAuth;
+using Sebagomez.ShelltwitLib.API.OAuth;
 
-namespace shelltwitlib.Helpers
+namespace Sebagomez.ShelltwitLib.Helpers
 {
 	[DataContract]
 	public class AuthenticatedUser

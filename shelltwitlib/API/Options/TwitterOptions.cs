@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using shelltwitlib.Helpers;
+using Sebagomez.ShelltwitLib.Helpers;
 
-namespace shelltwitlib.API.Options
+namespace Sebagomez.ShelltwitLib.API.Options
 {
 	public abstract class TwitterOptions
 	{
 		public AuthenticatedUser User { get; set; }
-		public bool AddOOB { get; set; }
 		public abstract Dictionary<string, string> GetParameters();
 
 		public string GetUrlParameters()

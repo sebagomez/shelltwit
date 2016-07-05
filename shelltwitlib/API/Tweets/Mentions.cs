@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Runtime.Serialization.Json;
-using shelltwitlib.API.OAuth;
-using shelltwitlib.API.Options;
-using shelltwitlib.Helpers;
-using shelltwitlib.Web;
+using Sebagomez.ShelltwitLib.API.OAuth;
+using Sebagomez.ShelltwitLib.API.Options;
+using Sebagomez.ShelltwitLib.Entities;
+using Sebagomez.ShelltwitLib.Helpers;
+using Sebagomez.ShelltwitLib.Web;
 
-namespace shelltwitlib.API.Tweets
+namespace Sebagomez.ShelltwitLib.API.Tweets
 {
 	public class Mentions
 	{
@@ -28,10 +29,7 @@ namespace shelltwitlib.API.Tweets
 			if (response.StatusCode != HttpStatusCode.OK)
 				return null;
 
-			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Statuses));
-			Statuses ss = (Statuses)serializer.ReadObject(response.GetResponseStream());
-
-			return ss;
+			return Util.Deserialize<Statuses>(response.GetResponseStream());
 		}
 	}
 }

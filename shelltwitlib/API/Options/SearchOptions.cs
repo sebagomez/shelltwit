@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace shelltwitlib.API.Options
+namespace Sebagomez.ShelltwitLib.API.Options
 {
 	public class SearchOptions : TwitterOptions
 	{
@@ -15,8 +15,8 @@ namespace shelltwitlib.API.Options
 		public int Count { get; set; } = 100;
 		public bool IncludeEntities { get; set; } = false;
 		public ResultTypeOptions ResultType { get; set; } = ResultTypeOptions.Mixed;
-		public int SinceId { get; set; }
-		public int MaxId { get; set; }
+		public long SinceId { get; set; }
+		public long MaxId { get; set; }
 
 		Dictionary<string, string> m_parameters = null;
 		public override Dictionary<string, string> GetParameters()

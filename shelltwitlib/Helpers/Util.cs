@@ -2,8 +2,9 @@
 using System;
 using System.Net;
 using System.IO;
+using System.Runtime.Serialization.Json;
 
-namespace shelltwitlib.Helpers
+namespace Sebagomez.ShelltwitLib.Helpers
 {
 	public class Util
 	{
@@ -69,6 +70,27 @@ namespace shelltwitlib.Helpers
 			}
 
 			return message;
+		}
+
+		public static T Deserialize<T>(Stream stream)
+		{
+#if DEBUG
+			string strData;
+			using (StreamReader reader = new StreamReader(stream))
+				strData = reader.ReadToEnd();
+
+			System.Diagnostics.Debug.Write(strData);
+
+			using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(strData)))
+			{
+				DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
+				return (T)serializer.ReadObject(ms);
+			}
+#else
+
+			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
+			return (T)serializer.ReadObject(stream);
+#endif
 		}
 	}
 }

@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace shelltwitlib.Helpers
+namespace Sebagomez.ShelltwitLib.Helpers
 {
-	//oauth_token=9096202-oHRbJplko3a0gySDhIFITTohc5X8RC4fyzMGerdBU
-	//oauth_token_secret=5yRSqkAKJ0gHDygOCd0WbL1QDvDoRQrBY5je0TieM
-	//user_id=9096202
-	//screen_name=sebagomez
 	public class WebAccessToken
 	{
 		public const string SessionID = "WebAccessToken";
@@ -17,7 +13,6 @@ namespace shelltwitlib.Helpers
 		public string OAuthTokenSecret { get; private set; }
 		public string UserId { get; private set; }
 		public string ScreenName { get; private set; }
-		//enum TokenKey {oauth_token , oauth_token_secret, user_id, screen_name};
 
 		const string OAUTH_TOKEN = "oauth_token";
 		const string OAUTH_TOKEN_SECRET = "oauth_token_secret";

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace shelltwitlib.API.Options
+namespace Sebagomez.ShelltwitLib.API.Options
 {
 	public class MentionsOptions : TwitterOptions
 	{

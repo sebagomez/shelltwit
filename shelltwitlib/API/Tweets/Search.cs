@@ -2,12 +2,13 @@
 using System.Net;
 using System.Runtime.Serialization.Json;
 using System.Web;
-using shelltwitlib.API.OAuth;
-using shelltwitlib.API.Options;
-using shelltwitlib.Helpers;
-using shelltwitlib.Web;
+using Sebagomez.ShelltwitLib.API.OAuth;
+using Sebagomez.ShelltwitLib.API.Options;
+using Sebagomez.ShelltwitLib.Entities;
+using Sebagomez.ShelltwitLib.Helpers;
+using Sebagomez.ShelltwitLib.Web;
 
-namespace shelltwitlib.API.Tweets
+namespace Sebagomez.ShelltwitLib.API.Tweets
 {
 	public class Search
 	{
@@ -33,10 +34,7 @@ namespace shelltwitlib.API.Tweets
 			if (response.StatusCode != HttpStatusCode.OK)
 				return null;
 
-			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(SearchResult));
-			SearchResult result = (SearchResult)serializer.ReadObject(response.GetResponseStream());
-
-			return result;
+			return Util.Deserialize<SearchResult>(response.GetResponseStream());
 		}
 	}
 }

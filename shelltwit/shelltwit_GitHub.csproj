@@ -8,8 +8,8 @@
     <ProjectGuid>{D6E48BCB-7FB9-4D8A-B8E7-595FAF3767F2}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>shelltwit</RootNamespace>
-    <AssemblyName>twit</AssemblyName>
+    <RootNamespace>Sebagomez.Shelltwit</RootNamespace>
+    <AssemblyName>Sebagomez.Shelltwit</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ApplicationIcon>twit.ico</ApplicationIcon>

@@ -1,5 +1,5 @@
 ﻿
-namespace shelltwitlib.Web
+namespace Sebagomez.ShelltwitLib.Web
 {
 	internal class Constants
 	{

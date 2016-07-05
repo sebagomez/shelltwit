@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using shelltwitlib.Helpers;
+using Sebagomez.ShelltwitLib.Helpers;
 
-namespace shelltwitlib.API.Options
+namespace Sebagomez.ShelltwitLib.API.Options
 {
 	public class UpdateOptions : TwitterOptions
 	{
@@ -18,7 +18,6 @@ namespace shelltwitlib.API.Options
 		{
 			MediaIds = new List<string>();
 			MediaFiles = new List<FileInfo>();
-			AddOOB = true;
 		}
 
 		public bool HasMedia

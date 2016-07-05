@@ -8,8 +8,8 @@
     <ProjectGuid>{50879BB0-F4CA-4776-865E-05F5741F1404}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>shelltwitlib</RootNamespace>
-    <AssemblyName>shelltwitlib</AssemblyName>
+    <RootNamespace>Sebagomez.ShelltwitLib</RootNamespace>
+    <AssemblyName>Sebagomez.ShelltwitLib</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -81,11 +81,12 @@
     <Compile Include="API\Tweets\Mentions.cs" />
     <Compile Include="API\Tweets\Search.cs" />
     <Compile Include="API\Tweets\Timeline.cs" />
-    <Compile Include="Helpers\Media.cs" />
-    <Compile Include="Helpers\SearchResult.cs" />
-    <Compile Include="Helpers\Status.cs" />
-    <Compile Include="Helpers\Strings.cs" />
-    <Compile Include="Helpers\UpdateError.cs" />
+    <Compile Include="Entities\SearchMetadata.cs" />
+    <Compile Include="Entities\SearchResult.cs" />
+    <Compile Include="Entities\Status.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\Media.cs" />
+    <Compile Include="Entities\UpdateError.cs" />
     <Compile Include="Web\Constants.cs" />
     <Compile Include="Helpers\WebAccessToken.cs" />
     <Compile Include="API\OAuth\OAuthHelper.cs" />

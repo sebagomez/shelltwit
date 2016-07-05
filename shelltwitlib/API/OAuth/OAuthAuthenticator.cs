@@ -4,10 +4,10 @@ using System.IO;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-using shelltwitlib.Helpers;
-using shelltwitlib.Web;
+using Sebagomez.ShelltwitLib.Helpers;
+using Sebagomez.ShelltwitLib.Web;
 
-namespace shelltwitlib.API.OAuth
+namespace Sebagomez.ShelltwitLib.API.OAuth
 {
 	public class OAuthAuthenticator
 	{

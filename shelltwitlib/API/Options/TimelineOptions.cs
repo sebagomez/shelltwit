@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace shelltwitlib.API.Options
+namespace Sebagomez.ShelltwitLib.API.Options
 {
 	public class TimelineOptions : TwitterOptions
 	{

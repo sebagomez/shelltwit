@@ -6,7 +6,7 @@ using System.Text;
 using System.Web;
 using System.Xml.Linq;
 
-namespace BitLyHelper
+namespace Sebagomez.BitLyHelper
 {
 	public class Util
 	{

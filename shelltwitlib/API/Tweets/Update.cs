@@ -3,12 +3,13 @@ using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Web;
-using shelltwitlib.API.OAuth;
-using shelltwitlib.API.Options;
-using shelltwitlib.Helpers;
-using shelltwitlib.Web;
+using Sebagomez.ShelltwitLib.API.OAuth;
+using Sebagomez.ShelltwitLib.API.Options;
+using Sebagomez.ShelltwitLib.Entities;
+using Sebagomez.ShelltwitLib.Helpers;
+using Sebagomez.ShelltwitLib.Web;
 
-namespace shelltwitlib.API.Tweets
+namespace Sebagomez.ShelltwitLib.API.Tweets
 {
 	public class Update
 	{
@@ -74,7 +75,7 @@ namespace shelltwitlib.API.Tweets
 			if (options.HasMedia)
 				media = Util.EncodeString( string.Join(",", options.MediaIds.ToArray()));
 
-			HttpWebRequest req = OAuthHelper.GetRequest(HttpMethod.POST, UPDATE_STATUS, options);
+			HttpWebRequest req = OAuthHelper.GetRequest(HttpMethod.POST, UPDATE_STATUS, options, true, false);
 
 			byte[] bytes;
 			using (Stream str = req.GetRequestStream())
@@ -102,7 +103,7 @@ namespace shelltwitlib.API.Tweets
 			foreach (FileInfo file in options.MediaFiles)
 			{
 				WriteMessage($"Uploading {file.Name}");
-				HttpWebRequest req = OAuthHelper.GetRequest(HttpMethod.POST, MEDIA_UPLOAD, options, true);
+				HttpWebRequest req = OAuthHelper.GetRequest(HttpMethod.POST, MEDIA_UPLOAD, options, true, true);
 
 				req.ContentType = Constants.CONTENT_TYPE.FORM_DATA;
 
@@ -163,9 +164,9 @@ namespace shelltwitlib.API.Tweets
 
 				HttpWebResponse response = (HttpWebResponse)req.GetResponse();
 
-				Media media = Media.FromStream(response.GetResponseStream());
+				Media media = Util.Deserialize<Media>(response.GetResponseStream());
 
-				options.MediaIds.Add(media.IdString);
+				options.MediaIds.Add(media.media_id_string);
 			}
 		}
 

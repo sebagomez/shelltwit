@@ -8,8 +8,8 @@
     <ProjectGuid>{4BB68E76-BBBB-40A2-AD64-E33E58427084}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BitLyHelper</RootNamespace>
-    <AssemblyName>BitLyHelper</AssemblyName>
+    <RootNamespace>Sebagomez.BitLyHelper</RootNamespace>
+    <AssemblyName>Sebagomez.BitLyHelper</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>

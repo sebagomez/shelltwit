@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Reflection;
-using shelltwitlib.Helpers;
-using shelltwitlib.API.Options;
-using shelltwitlib.API.OAuth;
-using shelltwitlib.API.Tweets;
+using Sebagomez.ShelltwitLib.API.OAuth;
+using Sebagomez.ShelltwitLib.API.Options;
+using Sebagomez.ShelltwitLib.API.Tweets;
+using Sebagomez.ShelltwitLib.Entities;
+using Sebagomez.ShelltwitLib.Helpers;
 
-namespace shelltwit
+namespace Sebagomez.Shelltwit
 {
 	class Program
 	{
@@ -45,7 +46,7 @@ namespace shelltwit
 
 				if (args.Length == 0)
 				{
-					PrintTwits(shelltwitlib.API.Tweets.Timeline.GetTimeline());
+					PrintTwits(Timeline.GetTimeline());
 					return;
 				}
 
@@ -63,14 +64,14 @@ namespace shelltwit
 							ShowUsage();
 							return;
 						case TIME_LINE:
-							PrintTwits(shelltwitlib.API.Tweets.Timeline.GetTimeline());
+							PrintTwits(Timeline.GetTimeline());
 							return;
 						case MENTIONS:
-							PrintTwits(shelltwitlib.API.Tweets.Mentions.GetMentions());
+							PrintTwits(Mentions.GetMentions());
 							return;
 						case SEARCH:
 							SearchOptions options = new SearchOptions { Query = string.Join(" ", args).Substring(2), User = AuthenticatedUser.LoadCredentials() };
-							PrintTwits(shelltwitlib.API.Tweets.Search.SearchTweets(options));
+							PrintTwits(Search.SearchTweets(options));
 							return;
 						default:
 							Console.WriteLine("Invalid flag: " + flag);
@@ -100,27 +101,24 @@ namespace shelltwit
 
 				OAuthAuthenticator.Initilize(CONSUMER_KEY, CONSUMER_SECRET);
 				string status = BitLyHelper.Util.GetShortenString(args);
-				string response = shelltwitlib.API.Tweets.Update.UpdateStatus(status);
+				string response = Update.UpdateStatus(status);
 
 				if (response != "OK")
 					Console.WriteLine("Response was not OK: " + response);
-				//ConsoleWriter.WriteWarning("Response was not OK: " + response);
 			}
 			catch (WebException wex)
 			{
-				//ConsoleWriter.WriteError(wex.Message);
 				Console.WriteLine(wex.Message);
 
 				HttpWebResponse res = (HttpWebResponse)wex.Response;
 				if (res != null)
 				{
-					UpdateError errors = UpdateError.GetFromStream(res.GetResponseStream());
-					errors.Errors.ForEach(e => Console.WriteLine(e.ToString())/* ConsoleWriter.WriteWarning(e.ToString())*/);
+					UpdateError errors = ShelltwitLib.Helpers.Util.Deserialize<UpdateError>(res.GetResponseStream());
+					errors.errors.ForEach(e => Console.WriteLine(e.ToString()));
 				}
 			}
 			catch (Exception ex)
 			{
-				//ConsoleWriter.WriteError(ex.Message);
 				Console.WriteLine(ex.Message);
 			}
 			finally
@@ -128,7 +126,6 @@ namespace shelltwit
 #if DEBUG
 				if (Debugger.IsAttached)
 				{
-					//ConsoleWriter.WriteWarning("Press <enter> to exit...");
 					Console.WriteLine("Press <enter> to exit...");
 					Console.ReadLine();
 
@@ -141,7 +138,7 @@ namespace shelltwit
 
 		static void PrintTwits(List<Status> twits)
 		{
-			twits.ForEach(twit => Console.WriteLine($"{twit.User.Name} (@{twit.User.ScreenName}): {twit.Text}"));
+			twits.ForEach(twit => Console.WriteLine($"{twit.user.name} (@{twit.user.screen_name}): {twit.text}"));
 		}
 
 		static void PrintTwits(SearchResult results)
