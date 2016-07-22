@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net;
-using System.Runtime.Serialization.Json;
 using System.Web;
 using Sebagomez.ShelltwitLib.API.OAuth;
 using Sebagomez.ShelltwitLib.API.Options;

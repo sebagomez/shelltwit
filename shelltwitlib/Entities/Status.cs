@@ -3,6 +3,7 @@
 namespace Sebagomez.ShelltwitLib.Entities
 {
 	public class Statuses : List<Status> { }
+
 	public class Status
 	{
 		public string created_at { get; set; }

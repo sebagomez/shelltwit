@@ -43,5 +43,10 @@
 		public bool following { get; set; }
 		public bool follow_request_sent { get; set; }
 		public bool notifications { get; set; }
+
+		public override string ToString()
+		{
+			return $"{name} ({screen_name})";
+		}
 	}
 }

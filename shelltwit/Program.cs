@@ -74,7 +74,7 @@ namespace Sebagomez.Shelltwit
 							PrintTwits(Search.SearchTweets(options));
 							return;
 						default:
-							Console.WriteLine("Invalid flag: " + flag);
+							Console.WriteLine($"Invalid flag: {flag}");
 							ShowUsage();
 							return;
 					}

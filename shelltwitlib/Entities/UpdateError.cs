@@ -1,7 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Json;
-using Sebagomez.ShelltwitLib.Helpers;
 
 namespace Sebagomez.ShelltwitLib.Entities
 {
