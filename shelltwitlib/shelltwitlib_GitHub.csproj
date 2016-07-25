@@ -78,9 +78,11 @@
     <Compile Include="API\Options\TimelineOptions.cs" />
     <Compile Include="API\Options\TwitterOptions.cs" />
     <Compile Include="API\Options\UpdateOptions.cs" />
+    <Compile Include="API\Options\UserTimelineOptions.cs" />
     <Compile Include="API\Tweets\Mentions.cs" />
     <Compile Include="API\Tweets\Search.cs" />
     <Compile Include="API\Tweets\Timeline.cs" />
+    <Compile Include="API\Tweets\UserTimeline.cs" />
     <Compile Include="Entities\SearchMetadata.cs" />
     <Compile Include="Entities\SearchResult.cs" />
     <Compile Include="Entities\Status.cs" />
