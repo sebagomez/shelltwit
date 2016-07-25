@@ -19,6 +19,7 @@ namespace Sebagomez.Shelltwit
 		const string TIME_LINE = "/tl";
 		const string HELP = "/?";
 		const string MENTIONS = "/m";
+		const string USER = "/u";
 
 		public const string CONSUMER_KEY = "<CONSUMER_KEY HERE>";
 		public const string CONSUMER_SECRET = "<CONSUMER_SECRET HERE>";
@@ -73,6 +74,12 @@ namespace Sebagomez.Shelltwit
 							SearchOptions options = new SearchOptions { Query = string.Join(" ", args).Substring(2), User = AuthenticatedUser.LoadCredentials() };
 							PrintTwits(Search.SearchTweets(options));
 							return;
+						case USER:
+							if (args.Length != 2)
+								throw new ArgumentNullException("screenname","The user' screen name must be provided");
+							UserTimelineOptions usrOptions = new UserTimelineOptions { ScreenName = args[1] };
+							PrintTwits(UserTimeline.GetUserTimeline(usrOptions));
+							return;
 						default:
 							Console.WriteLine($"Invalid flag: {flag}");
 							ShowUsage();
@@ -104,7 +111,7 @@ namespace Sebagomez.Shelltwit
 				string response = Update.UpdateStatus(status);
 
 				if (response != "OK")
-					Console.WriteLine("Response was not OK: " + response);
+					Console.WriteLine($"Response was not OK: {response}");
 			}
 			catch (WebException wex)
 			{
@@ -159,19 +166,19 @@ namespace Sebagomez.Shelltwit
 			string version = assembly.GetName().Version.ToString();
 
 			Console.WriteLine(title);
-			Console.WriteLine(string.Format("{0} v{1}", copyRight, version));
+			Console.WriteLine($"{copyRight} v{version}");
 			Console.WriteLine("");
-			Console.WriteLine("Usage: twit /q <query>|/c|/tl|/m|/?|status [<mediaPath>]");
+			Console.WriteLine("Usage: twit /q <query>|/c|/tl|/m|/u <user>|/?|<status> [<mediaPath>]");
 			Console.WriteLine("");
 			Console.WriteLine("/c 		: clears user stored credentials");
 			Console.WriteLine("/tl 		: show user's timeline (default)");
 			Console.WriteLine("/q 		: query twits containing words");
 			Console.WriteLine("/m 		: show user's mentions");
+			Console.WriteLine("/u user		: show another user's timeline");
 			Console.WriteLine("/? 		: show this help");
 			Console.WriteLine("status	 	: status to update at twitter.com");
 			Console.WriteLine("mediaPath	: full path, between brackets, to the media files (up to four) to upload.");
 			Console.WriteLine("");
-
 		}
 	}
 }

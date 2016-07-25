@@ -18,7 +18,7 @@ namespace Sebagomez.ShelltwitLib.API.Options
 			if (UserId != 0)
 				parameters.Add("user_id", UserId.ToString());
 			if (!string.IsNullOrEmpty(ScreenName))
-				parameters.Add("screen_name", ScreenName);
+				parameters.Add("screen_name", ScreenName.Trim());
 			if (SinceId != 0)
 				parameters.Add("since_id", SinceId.ToString());
 			if (Count != 0)
