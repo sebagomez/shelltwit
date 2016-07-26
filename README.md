@@ -13,7 +13,17 @@ It's a good example of twitter API calls with xAuth. It also has bit.ly integrat
 
 Little more (?) info about it at the original [blog post](http://sgomez.blogspot.com/2010/06/introducing-shelltwit.html)
 
-You wiil need to remove the references to my sebagomez.snk files in three projects. After removing those you will be able to build the solution. (Now in Visual Studio 2015, requiring framework 4.6)
+Implemented Twitter APIs
+------------------------
+- [Status Update](https://dev.twitter.com/rest/reference/post/statuses/update)
+- [Status Mentions](https://dev.twitter.com/rest/reference/get/statuses/mentions_timeline)
+- [Status Home Timeline](https://dev.twitter.com/rest/reference/get/statuses/home_timeline)
+- [Status User Timeline](https://dev.twitter.com/rest/reference/get/statuses/user_timeline)
+- [Search](https://dev.twitter.com/rest/public/search)
+
+Build
+-----
+After downloading the source files build the sln with Visual Studio 2015 (framework 4.6)
 
 ```
 Command line Twitter status updater
