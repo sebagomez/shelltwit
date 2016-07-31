@@ -20,6 +20,7 @@ Implemented Twitter APIs
 - [Status Home Timeline](https://dev.twitter.com/rest/reference/get/statuses/home_timeline)
 - [Status User Timeline](https://dev.twitter.com/rest/reference/get/statuses/user_timeline)
 - [Search](https://dev.twitter.com/rest/public/search)
+- [Favorites List](https://dev.twitter.com/rest/reference/get/favorites/list)
 
 Build
 -----
@@ -27,15 +28,16 @@ After downloading the source files build the sln with Visual Studio 2015 (framew
 
 ```
 Command line Twitter status updater
-Copyright c 2010-2016 v2.1.0.x
+Copyright c 2010-2016 v2.2.0.x
 
-Usage: twit /q <query>|/c|/tl|/m|/u <user>|/?|<status> [<mediaPath>]
+Usage: twit /q <query>|/c|/tl|/m|/l|/u <user>|/?|<status> [<mediaPath>]
 
 /c              : clears user stored credentials
 /tl             : show user's timeline (default)
 /q              : query twits containing words
 /m              : show user's mentions
 /u user         : show another user's timeline
+/l              : user's likes (fka favorites)
 /?              : show this help
 status          : status to update at twitter.com
 mediaPath       : full path, between brackets, to the media files (up to four) to upload.
