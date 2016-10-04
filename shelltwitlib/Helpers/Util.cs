@@ -3,11 +3,26 @@ using System;
 using System.Net;
 using System.IO;
 using System.Runtime.Serialization.Json;
+using System.Net.Http;
+using Sebagomez.ShelltwitLib.Web;
 
 namespace Sebagomez.ShelltwitLib.Helpers
 {
 	public class Util
 	{
+		static HttpClient s_client = new HttpClient();
+
+		static Util()
+		{
+			s_client.DefaultRequestHeaders.ExpectContinue = false;
+			s_client.DefaultRequestHeaders.Add(Constants.HEADERS.USER_AGENT, Constants.HEADERS.USER_AGENT_VALUE);
+		}
+	
+		public static HttpClient Client
+		{
+			get { return s_client; }
+		}
+
 		static string UNRESERVED_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~";
 
 		//http://en.wikipedia.org/wiki/Percent-encoding

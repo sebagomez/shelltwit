@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
+using System.Net.Http;
 using System.Text;
 using Sebagomez.ShelltwitLib.API.Options;
 using Sebagomez.ShelltwitLib.Helpers;
@@ -56,37 +56,33 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 			return builder.ToString();
 		}
 
-		internal static HttpWebRequest GetRequest(HttpMethod method, string baseUrl, TwitterOptions options)
+		internal static HttpRequestMessage GetRequest(HttpMethod method, string baseUrl, TwitterOptions options)
 		{
 			return GetRequest(method, baseUrl, options, false, false);
 		}
-		internal static HttpWebRequest GetRequest(HttpMethod method, string baseUrl, TwitterOptions options, bool callBack, bool imageUpload)
+
+		internal static HttpRequestMessage GetRequest(HttpMethod method, string baseUrl, TwitterOptions options, bool callBack, bool imageUpload)
 		{
 			string url = baseUrl;
-			if (method == HttpMethod.GET)
+			if (method == HttpMethod.Get)
 			{
 				url = $"{baseUrl}?{options.GetUrlParameters()}";
 				if (url.EndsWith("?"))
 					url = url.Substring(0, url.Length - 1);
 			}
 
-			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-			request.Method = method.ToString();
-
-			string nonce = OAuthHelper.GetNonce();
-			string timestamp = OAuthHelper.GetTimestamp();
+			string nonce = GetNonce();
+			string timestamp = GetTimestamp();
 
 			Dictionary<string, string> parms = GetParms(nonce, timestamp, options, callBack, imageUpload);
-			string signatureBase = OAuthHelper.SignatureBsseString(request.Method, baseUrl, parms);
+			string signatureBase = SignatureBsseString(method.Method, baseUrl, parms);
 			string signature = OAuthAuthenticator.SignBaseString(signatureBase, options.User.OAuthTokenSecret);
 			string authHeader = OAuthAuthenticator.AuthorizationHeader(nonce, signature, timestamp, options.User.OAuthToken, callBack);
 
-			request.Headers.Add(Constants.AUTHORIZATION, authHeader);
-			request.ContentType = Constants.CONTENT_TYPE.X_WWW_FORM_URLENCODED;
-			request.ServicePoint.Expect100Continue = false;
-			request.UserAgent = Constants.USER_AGENT;
+			HttpRequestMessage reqMsg = new HttpRequestMessage(method, url);
+			reqMsg.Headers.Add(Constants.HEADERS.AUTHORIZATION, authHeader);
 
-			return request;
+			return reqMsg;
 		}
 
 		static Dictionary<string, string> GetParms(string nonce, string timestamp, TwitterOptions options, bool callBack, bool imageUpload)
@@ -94,12 +90,12 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 			Dictionary<string, string> dic = new Dictionary<string, string>();
 			if (callBack)
 				dic.Add("oauth_callback", "oob");
-			dic.Add(OAuthHelper.OAUTH_CONSUMER_KEY, Util.EncodeString(OAuthAuthenticator.CONSUMER_KEY));
-			dic.Add(OAuthHelper.OAUTH_NONCE, nonce);
-			dic.Add(OAuthHelper.OAUTH_SIGNATURE_METHOD, OAuthHelper.HMAC_SHA1);
-			dic.Add(OAuthHelper.OAUTH_TIMESTAMP, timestamp);
-			dic.Add(OAuthHelper.OAUTH_VERSION, OAuthHelper.OAUTH_VERSION_10);
-			dic.Add(OAuthHelper.OAUTH_TOKEN, options.User.OAuthToken);
+			dic.Add(OAUTH_CONSUMER_KEY, Util.EncodeString(OAuthAuthenticator.CONSUMER_KEY));
+			dic.Add(OAUTH_NONCE, nonce);
+			dic.Add(OAUTH_SIGNATURE_METHOD, HMAC_SHA1);
+			dic.Add(OAUTH_TIMESTAMP, timestamp);
+			dic.Add(OAUTH_VERSION, OAUTH_VERSION_10);
+			dic.Add(OAUTH_TOKEN, options.User.OAuthToken);
 
 			if (!imageUpload)
 			{

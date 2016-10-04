@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web;
 using Sebagomez.ShelltwitLib.API.OAuth;
 using Sebagomez.ShelltwitLib.API.Options;
@@ -11,7 +14,7 @@ using Sebagomez.ShelltwitLib.Web;
 
 namespace Sebagomez.ShelltwitLib.API.Tweets
 {
-	public class Update
+	public class Update : BaseAPI
 	{
 		const string UPDATE_STATUS = "https://api.twitter.com/1.1/statuses/update.json";
 		const string MEDIA_UPLOAD = "https://upload.twitter.com/1.1/media/upload.json";
@@ -22,9 +25,9 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 
 		#region Update Status
 
-		public static string UpdateStatus(string status)
+		public static async Task<string> UpdateStatus(string status)
 		{
-			return UpdateStatus(new UpdateOptions { Status = status });
+			return await UpdateStatus(new UpdateOptions { Status = status });
 		}
 
 		public static void SetMessageAction(Action<string> func)
@@ -37,7 +40,7 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 			s_messageFunction?.Invoke(message);
 		}
 
-		public static string UpdateStatus(UpdateOptions options)
+		public static async Task<string> UpdateStatus(UpdateOptions options)
 		{
 			try
 			{
@@ -56,12 +59,15 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 
 				if (options.User == null)
 					options.User = AuthenticatedUser.LoadCredentials();
+				if (string.IsNullOrEmpty(options.OriginalSatatus))
+					options.OriginalSatatus = options.Status;
+
 				options.Status = Util.EncodeString(HttpUtility.HtmlDecode(options.Status));
 
 				if (options.HasMedia)
-					UploadMedia(options);
+					await UploadMedia(options);
 
-				return InternalUpdateStatus(options);
+				return await InternalUpdateStatus(options);
 			}
 			catch (Exception ex)
 			{
@@ -69,102 +75,45 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 			}
 		}
 
-		private static string InternalUpdateStatus(UpdateOptions options)
+		private static async Task<string> InternalUpdateStatus(UpdateOptions options)
 		{
 			string media = null;
 			if (options.HasMedia)
-				media = Util.EncodeString( string.Join(",", options.MediaIds.ToArray()));
+				media = string.Join(",", options.MediaIds.ToArray());
 
-			HttpWebRequest req = OAuthHelper.GetRequest(HttpMethod.POST, UPDATE_STATUS, options, true, false);
+			HttpRequestMessage reqMsg = OAuthHelper.GetRequest(HttpMethod.Post, UPDATE_STATUS, options, true, false);
+			var postData = new List<KeyValuePair<string, string>>();
+			postData.Add(new KeyValuePair<string, string>(STATUS, HttpUtility.HtmlDecode(options.OriginalSatatus)));
+			if (options.HasMedia)
+				postData.Add(new KeyValuePair<string, string>(MEDIA, media));
 
-			byte[] bytes;
-			using (Stream str = req.GetRequestStream())
-			{
-				bytes = Util.GetUTF8EncodingBytes($"{STATUS}={options.Status}");
-				str.Write(bytes, 0, bytes.Length);
+			reqMsg.Content = new FormUrlEncodedContent(postData);
+			reqMsg.Content.Headers.ContentType = new MediaTypeHeaderValue(Constants.CONTENT_TYPE.X_WWW_FORM_URLENCODED);
 
-				if (options.HasMedia)
-				{
-					bytes = Util.GetUTF8EncodingBytes($"&{MEDIA}={media}");
-					str.Write(bytes, 0, bytes.Length);
-				}
-			}
+			WriteMessage($"Updating status...");
+			HttpResponseMessage response = await Util.Client.SendAsync(reqMsg);
 
-			req.PreAuthenticate = true;
-			req.AllowWriteStreamBuffering = true;
+			if (response.IsSuccessStatusCode)
+				return response.ReasonPhrase;
 
-			HttpWebResponse response = (HttpWebResponse)req.GetResponse();
-
-			return response.StatusDescription;
+			return await response.Content.ReadAsStringAsync();
 		}
 
-		private static void UploadMedia(UpdateOptions options)
+		private static async Task UploadMedia(UpdateOptions options)
 		{
 			foreach (FileInfo file in options.MediaFiles)
 			{
 				WriteMessage($"Uploading {file.Name}");
-				HttpWebRequest req = OAuthHelper.GetRequest(HttpMethod.POST, MEDIA_UPLOAD, options, true, true);
+				HttpRequestMessage reqMsg = OAuthHelper.GetRequest(HttpMethod.Post, MEDIA_UPLOAD, options, true, true);
 
-				req.ContentType = Constants.CONTENT_TYPE.FORM_DATA;
+				MultipartFormDataContent content = new MultipartFormDataContent(GetMultipartBoundary());
+				StreamContent streamContent = new StreamContent(File.Open(file.FullName, FileMode.Open));
+				streamContent.Headers.Add(Constants.HEADERS.CONTENT_TYPE, Constants.CONTENT_TYPE.OCTET_STREAM);
+				streamContent.Headers.Add(Constants.HEADERS.CONTENT_DISPOSITION, string.Format(Constants.FORM_DATA, file.Name));
+				content.Add(streamContent);
 
-				string boundary = GetMultipartBoundary(),
-					separator = "--" + boundary,
-					footer = separator + "--",
-					shortFileName = file.Name,
-					fileContentType = GetMimeType(shortFileName),
-					fileHeader = string.Format("Content-Disposition: form-data; name=\"media\"; filename=\"{0}\"", shortFileName),
-					contentType = "Content-Type: application/octet-stream";
-
-				var encoding = System.Text.Encoding.UTF8;
-
-				req.KeepAlive = false;
-				req.ContentType = string.Format("multipart/form-data, boundary=\"{0}\"", boundary);
-
-				string newLine = "\r\n";
-				byte[] bytes;
-				using (var s = req.GetRequestStream())
-				{
-					bytes = encoding.GetBytes(separator);
-					s.Write(bytes, 0, bytes.Length);
-
-					bytes = encoding.GetBytes(newLine);
-					s.Write(bytes, 0, bytes.Length);
-
-					bytes = encoding.GetBytes(fileHeader);
-					s.Write(bytes, 0, bytes.Length);
-
-					bytes = encoding.GetBytes(newLine);
-					s.Write(bytes, 0, bytes.Length);
-
-					bytes = encoding.GetBytes(contentType);
-					s.Write(bytes, 0, bytes.Length);
-
-					bytes = encoding.GetBytes(newLine);
-					s.Write(bytes, 0, bytes.Length);
-
-					bytes = encoding.GetBytes(newLine);
-					s.Write(bytes, 0, bytes.Length);
-
-					bytes = File.ReadAllBytes(file.FullName);
-					s.Write(bytes, 0, bytes.Length);
-
-					bytes = encoding.GetBytes(newLine);
-					s.Write(bytes, 0, bytes.Length);
-
-					bytes = encoding.GetBytes(footer);
-					s.Write(bytes, 0, bytes.Length);
-
-					bytes = encoding.GetBytes(newLine);
-					s.Write(bytes, 0, bytes.Length);
-
-				}
-
-				req.PreAuthenticate = true;
-				req.AllowWriteStreamBuffering = true;
-
-				HttpWebResponse response = (HttpWebResponse)req.GetResponse();
-
-				Media media = Util.Deserialize<Media>(response.GetResponseStream());
+				reqMsg.Content = content;
+				Media media = await GetData<Media>(reqMsg);
 
 				options.MediaIds.Add(media.media_id_string);
 			}
@@ -172,21 +121,7 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 
 		private static string GetMultipartBoundary()
 		{
-			return "======" +
-				Guid.NewGuid().ToString().Substring(18).Replace("-", "") +
-				"======";
-		}
-
-		private static string GetMimeType(String filename)
-		{
-			var extension = System.IO.Path.GetExtension(filename).ToLower();
-			var regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(extension);
-
-			string result =
-				((regKey != null) && (regKey.GetValue("Content Type") != null))
-				? regKey.GetValue("Content Type").ToString()
-				: "image/unknown";
-			return result;
+			return $"======{Guid.NewGuid().ToString().Substring(18).Replace("-", "")}======";
 		}
 
 		#endregion

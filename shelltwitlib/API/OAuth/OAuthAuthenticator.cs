@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using Sebagomez.ShelltwitLib.Helpers;
@@ -30,8 +31,8 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 			string decodedPwd = Util.EncodeString(password);
 
 			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ACCESS_TOKEN);
-			request.Method = HttpMethod.POST.ToString();
-			request.UserAgent = Constants.USER_AGENT;
+			request.Method = HttpMethod.Post.Method;
+			request.Headers.Set(HttpRequestHeader.UserAgent, Constants.HEADERS.USER_AGENT_VALUE);
 			request.ContentType = Constants.CONTENT_TYPE.X_WWW_FORM_URLENCODED;
 
 			byte[] body = Util.GetUTF8EncodingBytes(AccessTokenRequestBody(decodedUsr, decodedPwd));
@@ -47,8 +48,7 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 			string signatureBase = OAuthHelper.SignatureBsseString(request.Method, ACCESS_TOKEN, parms);
 			string signature = SignBaseString(signatureBase, string.Empty);
 			string authHeader = AuthorizationHeader(nonce, signature, timestamp, string.Empty);
-			request.Headers.Add(Constants.AUTHORIZATION, authHeader);
-			request.ServicePoint.Expect100Continue = false;
+			request.Headers.Add(Constants.HEADERS.AUTHORIZATION, authHeader);
 
 			return GetResponseString(request);
 		}
@@ -106,83 +106,15 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 				token = OAuthHelper.OAUTH_TOKEN + "=\"" + Util.EncodeString(oAuthToken) + "\", ";
 
 			if (withCallback)
-				return string.Format("OAuth oauth_callback=\"oob\", oauth_consumer_key=\"{0}\", oauth_nonce=\"{1}\", oauth_signature=\"{2}\", oauth_signature_method=\"HMAC-SHA1\", oauth_timestamp=\"{3}\", " + token + "oauth_version=\"1.0\"", Util.EncodeString(CONSUMER_KEY), nonce, Util.EncodeString(signature), timestamp);
+				return $"OAuth oauth_callback=\"oob\", oauth_consumer_key=\"{Util.EncodeString(CONSUMER_KEY)}\", oauth_nonce=\"{nonce}\", oauth_signature=\"{Util.EncodeString(signature)}\", oauth_signature_method=\"HMAC-SHA1\", oauth_timestamp=\"{timestamp}\", {token}oauth_version=\"1.0\"";
 
-			return string.Format("OAuth oauth_nonce=\"{0}\", oauth_signature_method=\"{1}\", oauth_timestamp=\"{2}\", oauth_consumer_key=\"{3}\", " + token + "oauth_signature=\"{4}\", oauth_version=\"1.0\"", nonce, OAuthHelper.HMAC_SHA1, timestamp, Util.EncodeString(CONSUMER_KEY), Util.EncodeString(signature));
+			return $"OAuth oauth_nonce=\"{nonce}\", oauth_signature_method=\"{OAuthHelper.HMAC_SHA1}\", oauth_timestamp=\"{timestamp}\", oauth_consumer_key=\"{Util.EncodeString(CONSUMER_KEY)}\", {token} oauth_signature=\"{Util.EncodeString(signature)}\", oauth_version=\"1.0\"";
 		}
 
 		internal static string WebAuthorizationHeader(string nonce, string signature, string timestamp, string callback)
 		{
-			return string.Format("OAuth oauth_nonce=\"{0}\", oauth_callback=\"{1}\", oauth_signature_method=\"{2}\", oauth_timestamp=\"{3}\", oauth_consumer_key=\"{4}\", oauth_signature=\"{5}\", oauth_version=\"1.0\"", nonce, Util.EncodeString(callback), OAuthHelper.HMAC_SHA1, timestamp, Util.EncodeString(CONSUMER_KEY), Util.EncodeString(signature));
+			return $"OAuth oauth_nonce=\"{nonce}\", oauth_callback=\"{Util.EncodeString(callback)}\", oauth_signature_method=\"{OAuthHelper.HMAC_SHA1}\", oauth_timestamp=\"{timestamp}\", oauth_consumer_key=\"{Util.EncodeString(CONSUMER_KEY)}\", oauth_signature=\"{Util.EncodeString(signature)}\", oauth_version=\"1.0\"";
 		}
-
-		#region Web
-
-		public static string GetWebAccessToken(string oAuthToken, string oAuthTokenSecret, string oAuthVerifier)
-		{
-			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ACCESS_TOKEN);
-			request.Method = HttpMethod.POST.ToString();
-			request.UserAgent = Constants.USER_AGENT;
-			request.ContentType = Constants.CONTENT_TYPE.X_WWW_FORM_URLENCODED;
-
-			//byte[] body = Util.GetUTF8EncodingBytes(AccessTokenRequestBody(decodedUsr, decodedPwd));
-
-			//using (Stream str = request.GetRequestStream())
-			//    str.Write(body, 0, body.Length);
-
-
-			string nonce = OAuthHelper.GetNonce();
-			string timestamp = Util.EncodeString(OAuthHelper.GetTimestamp());
-
-			Dictionary<string, string> parms = GetWebRequestTokenParms(nonce, timestamp, oAuthVerifier);
-			string signatureBase = OAuthHelper.SignatureBsseString(request.Method, ACCESS_TOKEN, parms);
-			string signature = SignBaseString(signatureBase, oAuthTokenSecret);
-			string authHeader = AuthorizationHeader(nonce, signature, timestamp, oAuthToken);
-			request.Headers.Add(Constants.AUTHORIZATION, authHeader);
-			request.ServicePoint.Expect100Continue = false;
-
-			return GetResponseString(request);
-		}
-
-		private static Dictionary<string, string> GetWebRequestTokenParms(string nonce, string timestamp, string oAuthVerifier)
-		{
-			Dictionary<string, string> dic = new Dictionary<string, string>();
-			dic.Add(OAuthHelper.OAUTH_CONSUMER_KEY, Util.EncodeString(CONSUMER_KEY));
-			dic.Add(OAuthHelper.OAUTH_NONCE, nonce);
-			dic.Add(OAuthHelper.OAUTH_SIGNATURE_METHOD, OAuthHelper.HMAC_SHA1);
-			dic.Add(OAuthHelper.OAUTH_TIMESTAMP, timestamp);
-			dic.Add(OAuthHelper.OAUTH_VERIFIER, oAuthVerifier);
-			dic.Add(OAuthHelper.OAUTH_VERSION, OAuthHelper.OAUTH_VERSION_10);
-
-			return dic;
-		}
-
-		public static string GetWebRequestToken(string callback)
-		{
-			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(REQUEST_TOKEN);
-			request.Method = HttpMethod.POST.ToString();
-			request.UserAgent = Constants.USER_AGENT;
-			request.ContentType = Constants.CONTENT_TYPE.X_WWW_FORM_URLENCODED;
-
-			string nonce = OAuthHelper.GetNonce();
-			string timestamp = Util.EncodeString(OAuthHelper.GetTimestamp());
-
-			Dictionary<string, string> parms = GetWebAccessTokenParms(nonce, timestamp, callback);
-			string signatureBase = OAuthHelper.SignatureBsseString(request.Method, REQUEST_TOKEN, parms);
-			string signature = SignBaseString(signatureBase, null);
-			string authHeader = WebAuthorizationHeader(nonce, signature, timestamp, callback);
-			request.Headers.Add(Constants.AUTHORIZATION, authHeader);
-			request.ServicePoint.Expect100Continue = false;
-
-			return GetResponseString(request);
-		}
-
-		public static string GetWebAuthorizationUrl(string oAuthToken)
-		{
-			return $"{AUTHORIZE}?{OAuthHelper.OAUTH_TOKEN}={oAuthToken}";
-		}
-
-		#endregion
 
 		#region utils
 

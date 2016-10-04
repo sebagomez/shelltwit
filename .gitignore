@@ -16,7 +16,7 @@ shelltwit_tester/
 shelltwit/output
 shelltwit/shelltwit.nrproj
 *.user
-
+PortabilityAnalysis*.html
 shelltwit.sln
 BitlyHelper/BitlyHelper.csproj
 shelltwitlib/shelltwitlib.csproj

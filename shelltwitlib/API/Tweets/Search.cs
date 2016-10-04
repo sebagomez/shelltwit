@@ -1,20 +1,20 @@
 ﻿using System;
-using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using Sebagomez.ShelltwitLib.API.OAuth;
 using Sebagomez.ShelltwitLib.API.Options;
 using Sebagomez.ShelltwitLib.Entities;
 using Sebagomez.ShelltwitLib.Helpers;
-using Sebagomez.ShelltwitLib.Web;
 
 namespace Sebagomez.ShelltwitLib.API.Tweets
 {
-	public class Search
+	public class Search : BaseAPI
 	{
 		const int MAX_QUERY_LENGTH = 500;
 		const string SEARCH_URL = "https://api.twitter.com/1.1/search/tweets.json";
 
-		public static SearchResult SearchTweets(SearchOptions options)
+		public static async Task<SearchResult> SearchTweets(SearchOptions options)
 		{
 			if (string.IsNullOrEmpty(options.Query))
 				throw new ArgumentNullException("query","The text query cannot be null");
@@ -27,13 +27,9 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 
 			options.Query = Util.EncodeString(HttpUtility.HtmlDecode(options.Query));
 
-			HttpWebRequest req = OAuthHelper.GetRequest(HttpMethod.GET, SEARCH_URL, options);
-			HttpWebResponse response = (HttpWebResponse)req.GetResponse();
+			HttpRequestMessage reqMsg = OAuthHelper.GetRequest(HttpMethod.Get, SEARCH_URL, options);
 
-			if (response.StatusCode != HttpStatusCode.OK)
-				return null;
-
-			return Util.Deserialize<SearchResult>(response.GetResponseStream());
+			return await GetData<SearchResult>(reqMsg);
 		}
 	}
 }

@@ -48,7 +48,7 @@ namespace Sebagomez.Shelltwit
 
 				if (args.Length == 0)
 				{
-					PrintTwits(Timeline.GetTimeline());
+					PrintTwits(Timeline.GetTimeline().Result);
 					return;
 				}
 
@@ -66,23 +66,23 @@ namespace Sebagomez.Shelltwit
 							ShowUsage();
 							return;
 						case TIME_LINE:
-							PrintTwits(Timeline.GetTimeline());
+							PrintTwits(Timeline.GetTimeline().Result);
 							return;
 						case MENTIONS:
-							PrintTwits(Mentions.GetMentions());
+							PrintTwits(Mentions.GetMentions().Result);
 							return;
 						case SEARCH:
 							SearchOptions options = new SearchOptions { Query = string.Join(" ", args).Substring(2), User = AuthenticatedUser.LoadCredentials() };
-							PrintTwits(Search.SearchTweets(options));
+							PrintTwits(Search.SearchTweets(options).Result);
 							return;
 						case LIKES:
-							PrintTwits(Likes.GetUserLikes(new LikesOptions()));
+							PrintTwits(Likes.GetUserLikes(new LikesOptions()).Result);
 							return;
 						case USER:
 							if (args.Length != 2)
 								throw new ArgumentNullException("screenname","The user' screen name must be provided");
 							UserTimelineOptions usrOptions = new UserTimelineOptions { ScreenName = args[1] };
-							PrintTwits(UserTimeline.GetUserTimeline(usrOptions));
+							PrintTwits(UserTimeline.GetUserTimeline(usrOptions).Result);
 							return;
 						default:
 							Console.WriteLine($"Invalid flag: {flag}");
@@ -112,7 +112,7 @@ namespace Sebagomez.Shelltwit
 
 				OAuthAuthenticator.Initilize(CONSUMER_KEY, CONSUMER_SECRET);
 				string status = BitLyHelper.Util.GetShortenString(args);
-				string response = Update.UpdateStatus(status);
+				string response = Update.UpdateStatus(status).Result;
 
 				if (response != "OK")
 					Console.WriteLine($"Response was not OK: {response}");

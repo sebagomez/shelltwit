@@ -146,7 +146,7 @@ namespace Sebagomez.ShelltwitLib.Helpers
 			catch (SerializationException)
 			{
 				XmlSerializer deserializer = new XmlSerializer(typeof(AuthenticatedUser));
-				using (StreamReader reader = new StreamReader(s_configFile))
+				using (StreamReader reader = File.OpenText(s_configFile))
 					twiUser = (AuthenticatedUser)deserializer.Deserialize(reader);
 
 				twiUser.Serialize();
