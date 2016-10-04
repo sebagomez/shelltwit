@@ -63,6 +63,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web" />
@@ -80,6 +81,7 @@
     <Compile Include="API\Options\TwitterOptions.cs" />
     <Compile Include="API\Options\UpdateOptions.cs" />
     <Compile Include="API\Options\UserTimelineOptions.cs" />
+    <Compile Include="API\Tweets\BaseAPI.cs" />
     <Compile Include="API\Tweets\Likes.cs" />
     <Compile Include="API\Tweets\Mentions.cs" />
     <Compile Include="API\Tweets\Search.cs" />

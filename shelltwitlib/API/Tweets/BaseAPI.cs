@@ -1,5 +1,7 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Sebagomez.ShelltwitLib.Entities;
 using Sebagomez.ShelltwitLib.Helpers;
 
 namespace Sebagomez.ShelltwitLib.API.Tweets
@@ -11,7 +13,10 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 			HttpResponseMessage response = await Util.Client.SendAsync(reqMsg);
 
 			if (!response.IsSuccessStatusCode)
-				return default(T);
+			{
+				UpdateError err = Util.Deserialize<UpdateError>(await response.Content.ReadAsStreamAsync());
+				throw new ApplicationException(err.ToString());
+			}
 
 			return Util.Deserialize<T>(await response.Content.ReadAsStreamAsync());
 		}

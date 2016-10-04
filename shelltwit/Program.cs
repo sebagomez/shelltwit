@@ -130,7 +130,7 @@ namespace Sebagomez.Shelltwit
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex.Message);
+				PrintException(ex);
 			}
 			finally
 			{
@@ -147,9 +147,23 @@ namespace Sebagomez.Shelltwit
 			Environment.Exit(0);
 		}
 
+		private static void PrintException(Exception ex)
+		{
+			Console.WriteLine(ex.Message);
+			Exception inner = ex.InnerException;
+			while (inner != null)
+			{
+				PrintException(inner);
+				inner = inner.InnerException;
+			}
+		}
+
 		static void PrintTwits(List<Status> twits)
 		{
-			twits.ForEach(twit => Console.WriteLine($"{twit.user.name} (@{twit.user.screen_name}): {twit.text}"));
+			if (twits == null)
+				Console.WriteLine("No twits :(");
+			else
+				twits.ForEach(twit => Console.WriteLine($"{twit.user.name} (@{twit.user.screen_name}): {twit.text}"));
 		}
 
 		static void PrintTwits(SearchResult results)
