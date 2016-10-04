@@ -2,4 +2,4 @@
 
 [assembly: AssemblyCompany("Sebastián Gómez (@sebagomez)")]
 [assembly: AssemblyCopyright("Copyright © 2010-2016")]
-[assembly: AssemblyVersion("3.0.1.*")]
+[assembly: AssemblyVersion("3.1.0.*")]

@@ -32,7 +32,7 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 
 			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ACCESS_TOKEN);
 			request.Method = HttpMethod.Post.Method;
-			request.Headers.Set(HttpRequestHeader.UserAgent, Constants.HEADERS.USER_AGENT_VALUE);
+			request.UserAgent = Constants.HEADERS.USER_AGENT_VALUE;
 			request.ContentType = Constants.CONTENT_TYPE.X_WWW_FORM_URLENCODED;
 
 			byte[] body = Util.GetUTF8EncodingBytes(AccessTokenRequestBody(decodedUsr, decodedPwd));
