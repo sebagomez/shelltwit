@@ -111,8 +111,7 @@ namespace Sebagomez.Shelltwit
 				}
 
 				OAuthAuthenticator.Initilize(CONSUMER_KEY, CONSUMER_SECRET);
-				string status = BitLyHelper.Util.GetShortenString(args);
-				string response = Update.UpdateStatus(status).Result;
+				string response = Update.UpdateStatus(string.Join("", args)).Result;
 
 				if (response != "OK")
 					Console.WriteLine($"Response was not OK: {response}");

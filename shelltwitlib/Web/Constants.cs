@@ -1,5 +1,6 @@
 ﻿
-using System.Web;
+using System.Net;
+
 
 namespace Sebagomez.ShelltwitLib.Web
 {
@@ -17,7 +18,7 @@ namespace Sebagomez.ShelltwitLib.Web
 		public class HEADERS
 		{
 			public const string AUTHORIZATION = "Authorization";
-			public static readonly string USER_AGENT_VALUE = HttpUtility.UrlEncode("@sebagomez shelltwit");
+			public static readonly string USER_AGENT_VALUE = WebUtility.UrlEncode("@sebagomez shelltwit");
 			public const string USER_AGENT = "User-Agent";
 			public const string CONTENT_TYPE = "Content-Type";
 			public const string CONTENT_DISPOSITION = "Content-Disposition";

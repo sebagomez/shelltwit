@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Web;
 using Sebagomez.ShelltwitLib.API.OAuth;
 using Sebagomez.ShelltwitLib.API.Options;
 using Sebagomez.ShelltwitLib.Entities;
@@ -44,8 +44,10 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 		{
 			try
 			{
+				options.Status = await BitLyHelper.Util.GetShortenString(options.Status);
+
 				Regex regex = new Regex(@"\[(.*?)\]");
-				foreach (System.Text.RegularExpressions.Match match in regex.Matches(options.Status))
+				foreach (Match match in regex.Matches(options.Status))
 				{
 					options.Status = options.Status.Replace(match.Value, "");
 					FileInfo file = new FileInfo(match.Value.Replace("[", "").Replace("]", ""));
@@ -62,7 +64,7 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 				if (string.IsNullOrEmpty(options.OriginalSatatus))
 					options.OriginalSatatus = options.Status;
 
-				options.Status = Util.EncodeString(HttpUtility.HtmlDecode(options.Status));
+				options.Status = Util.EncodeString(WebUtility.HtmlDecode(options.Status));
 
 				if (options.HasMedia)
 					await UploadMedia(options);
@@ -83,7 +85,7 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 
 			HttpRequestMessage reqMsg = OAuthHelper.GetRequest(HttpMethod.Post, UPDATE_STATUS, options, true, false);
 			var postData = new List<KeyValuePair<string, string>>();
-			postData.Add(new KeyValuePair<string, string>(STATUS, HttpUtility.HtmlDecode(options.OriginalSatatus)));
+			postData.Add(new KeyValuePair<string, string>(STATUS, WebUtility.HtmlDecode(options.OriginalSatatus)));
 			if (options.HasMedia)
 				postData.Add(new KeyValuePair<string, string>(MEDIA, media));
 

@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using Sebagomez.ShelltwitLib.API.OAuth;
 using Sebagomez.ShelltwitLib.API.Options;
 using Sebagomez.ShelltwitLib.Entities;
@@ -25,7 +25,7 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 			if (options.User == null)
 				options.User = AuthenticatedUser.LoadCredentials();
 
-			options.Query = Util.EncodeString(HttpUtility.HtmlDecode(options.Query));
+			options.Query = Util.EncodeString(WebUtility.HtmlDecode(options.Query));
 
 			HttpRequestMessage reqMsg = OAuthHelper.GetRequest(HttpMethod.Get, SEARCH_URL, options);
 

@@ -15,7 +15,7 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 			if (!response.IsSuccessStatusCode)
 			{
 				UpdateError err = Util.Deserialize<UpdateError>(await response.Content.ReadAsStreamAsync());
-				throw new ApplicationException(err.ToString());
+				throw new Exception(err.ToString());
 			}
 
 			return Util.Deserialize<T>(await response.Content.ReadAsStreamAsync());
