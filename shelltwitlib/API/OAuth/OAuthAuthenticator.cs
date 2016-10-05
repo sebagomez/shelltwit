@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using Sebagomez.ShelltwitLib.Helpers;
 using Sebagomez.ShelltwitLib.Web;
 
@@ -25,37 +25,34 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 			CONSUMER_SECRET = consumerSecret;
 		}
 
-		public static string GetAccessToken(string username, string password)
+		public static async Task<string> GetAccessToken(string username, string password)
 		{
 			string decodedUsr = Util.EncodeString(username);
 			string decodedPwd = Util.EncodeString(password);
 
-			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ACCESS_TOKEN);
-			request.Method = HttpMethod.Post.Method;
-			request.UserAgent = Constants.HEADERS.USER_AGENT_VALUE;
-			request.ContentType = Constants.CONTENT_TYPE.X_WWW_FORM_URLENCODED;
+			HttpRequestMessage reqMsg = new HttpRequestMessage(HttpMethod.Post, ACCESS_TOKEN);
 
-			byte[] body = Util.GetUTF8EncodingBytes(AccessTokenRequestBody(decodedUsr, decodedPwd));
+			var postData = new List<KeyValuePair<string, string>>();
+			postData.Add(new KeyValuePair<string, string>("x_auth_mode", OAuthHelper.CLIENT_AUTH));
+			postData.Add(new KeyValuePair<string, string>("x_auth_password", password));
+			postData.Add(new KeyValuePair<string, string>("x_auth_username", username));
 
-			using (Stream str = request.GetRequestStream())
-				str.Write(body, 0, body.Length);
-
+			reqMsg.Content = new FormUrlEncodedContent(postData);
+			reqMsg.Content.Headers.ContentType = new MediaTypeHeaderValue(Constants.CONTENT_TYPE.X_WWW_FORM_URLENCODED);
 
 			string nonce = OAuthHelper.GetNonce();
 			string timestamp = Util.EncodeString(OAuthHelper.GetTimestamp());
 
 			Dictionary<string, string> parms = GetAccessTokenParms(nonce, timestamp, decodedUsr, decodedPwd);
-			string signatureBase = OAuthHelper.SignatureBsseString(request.Method, ACCESS_TOKEN, parms);
+			string signatureBase = OAuthHelper.SignatureBsseString(HttpMethod.Post.Method, ACCESS_TOKEN, parms);
 			string signature = SignBaseString(signatureBase, string.Empty);
 			string authHeader = AuthorizationHeader(nonce, signature, timestamp, string.Empty);
-			request.Headers.Add(Constants.HEADERS.AUTHORIZATION, authHeader);
 
-			return GetResponseString(request);
-		}
+			reqMsg.Headers.Add(Constants.HEADERS.AUTHORIZATION, authHeader);
 
-		static string AccessTokenRequestBody(string username, string password)
-		{
-			return $"x_auth_mode={OAuthHelper.CLIENT_AUTH}&x_auth_password={password}&x_auth_username={username}";
+			HttpResponseMessage response = await Util.Client.SendAsync(reqMsg);
+
+			return await response.Content.ReadAsStringAsync();
 		}
 
 		private static Dictionary<string, string> GetAccessTokenParms(string nonce, string timestamp, string username, string password)
@@ -80,18 +77,6 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 			dic.Add(OAuthHelper.OAUTH_VERSION, OAuthHelper.OAUTH_VERSION_10);
 
 			return dic;
-		}
-
-		private static string GetResponseString(HttpWebRequest request)
-		{
-			string responseData = null;
-
-			HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-			using (Stream str = response.GetResponseStream())
-			using (StreamReader reader = new StreamReader(str))
-				responseData = reader.ReadToEnd();
-
-			return responseData;
 		}
 
 		internal static string AuthorizationHeader(string nonce, string signature, string timestamp, string oAuthToken)

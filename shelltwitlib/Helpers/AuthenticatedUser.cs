@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Sebagomez.ShelltwitLib.API.OAuth;
 
@@ -89,14 +90,14 @@ namespace Sebagomez.ShelltwitLib.Helpers
 			}
 
 			if (string.IsNullOrEmpty(twiUser.OAuthToken) || string.IsNullOrEmpty(twiUser.OAuthTokenSecret))
-				twiUser.SetOAuthCredentials();
+				twiUser.SetOAuthCredentials().Wait();
 
 			return twiUser;
 		}
 
-		public void SetOAuthCredentials()
+		public async Task SetOAuthCredentials()
 		{
-			string accessToken = OAuthAuthenticator.GetAccessToken(Username, Password);
+			string accessToken = await OAuthAuthenticator.GetAccessToken(Username, Password);
 			string[] tokens = accessToken.Split(new char[] {'&'},StringSplitOptions.RemoveEmptyEntries);
 
 			foreach (string tok in tokens)
