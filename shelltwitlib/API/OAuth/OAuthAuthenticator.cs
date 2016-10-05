@@ -27,6 +27,9 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 
 		public static async Task<string> GetAccessToken(string username, string password)
 		{
+			if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+				throw new Exception("Empty user and/or password");
+
 			string decodedUsr = Util.EncodeString(username);
 			string decodedPwd = Util.EncodeString(password);
 
@@ -51,6 +54,8 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 			reqMsg.Headers.Add(Constants.HEADERS.AUTHORIZATION, authHeader);
 
 			HttpResponseMessage response = await Util.Client.SendAsync(reqMsg);
+			if (!response.IsSuccessStatusCode)
+				throw new Exception(await response.Content.ReadAsStringAsync());
 
 			return await response.Content.ReadAsStringAsync();
 		}

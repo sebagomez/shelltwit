@@ -175,14 +175,14 @@ namespace Sebagomez.Shelltwit
 
 		static void ShowUsage()
 		{
-			Assembly assembly = Assembly.GetExecutingAssembly();
-			object[] assemblyAtt = assembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-			object[] assemblyCop = assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
-			string title = ((AssemblyTitleAttribute)assemblyAtt[0]).Title;
-			string copyRight = ((AssemblyCopyrightAttribute)assemblyCop[0]).Copyright;
+			Assembly assembly = Assembly.GetEntryAssembly();
+			IEnumerable<Attribute> assemblyAtt = assembly.GetCustomAttributes(typeof(AssemblyTitleAttribute));
+			IEnumerable<Attribute> assemblyCop = assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute));
+			string title = ((AssemblyTitleAttribute)assemblyAtt.First()).Title;
+			string copyRight = ((AssemblyCopyrightAttribute)assemblyCop.First()).Copyright;
 			string version = assembly.GetName().Version.ToString();
 
-			Console.WriteLine(title);
+			Console.WriteLine($"{title} running on {System.Runtime.InteropServices.RuntimeInformation.OSDescription}");
 			Console.WriteLine($"{copyRight} v{version}");
 			Console.WriteLine("");
 			Console.WriteLine("Usage: twit /q <query>|/c|/tl|/m|/l|/u <user>|/?|<status> [<mediaPath>]");
