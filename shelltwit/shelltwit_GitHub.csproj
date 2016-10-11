@@ -63,6 +63,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -77,10 +81,6 @@
     <Content Include="twit.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BitLyHelper\BitLyHelper_GitHub.csproj">
-      <Project>{4BB68E76-BBBB-40A2-AD64-E33E58427084}</Project>
-      <Name>BitLyHelper_GitHub</Name>
-    </ProjectReference>
     <ProjectReference Include="..\shelltwitlib\shelltwitlib_GitHub.csproj">
       <Project>{50879BB0-F4CA-4776-865E-05F5741F1404}</Project>
       <Name>shelltwitlib_GitHub</Name>
@@ -102,6 +102,10 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -8,7 +8,9 @@ packages/
 *.suo
 *.user
 
+
 SecureData.txt
+shelltwit/private.config
 shelltwit/BuildMergeDeploy.bat
 WebTester/
 shelltwit_tester/

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
@@ -16,8 +17,8 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 		const string REQUEST_TOKEN = "https://api.twitter.com/oauth/request_token";
 		const string AUTHORIZE = "https://api.twitter.com/oauth/authorize";
 
-		internal static string CONSUMER_KEY = "";
-		internal static string CONSUMER_SECRET = "";
+		internal static string CONSUMER_KEY = ConfigurationManager.AppSettings["CONSUMER_KEY"];
+		internal static string CONSUMER_SECRET = ConfigurationManager.AppSettings["CONSUMER_SECRET"];
 
 		public static void Initilize(string consumerKey, string consumerSecret)
 		{
@@ -25,8 +26,16 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 			CONSUMER_SECRET = consumerSecret;
 		}
 
+		static void OnAuthenticationNeeded()
+		{
+			if (string.IsNullOrEmpty(CONSUMER_KEY) || string.IsNullOrEmpty(CONSUMER_SECRET))
+				throw new Exception("Missing Twitter app credentials (Key and/or Secret)");
+		}
+
 		public static async Task<string> GetAccessToken(string username, string password)
 		{
+			OnAuthenticationNeeded();
+
 			if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
 				throw new Exception("Empty user and/or password");
 
@@ -91,6 +100,8 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 
 		internal static string AuthorizationHeader(string nonce, string signature, string timestamp, string oAuthToken, bool withCallback)
 		{
+			OnAuthenticationNeeded();
+
 			string token = string.Empty;
 			if (!string.IsNullOrEmpty(oAuthToken))
 				token = OAuthHelper.OAUTH_TOKEN + "=\"" + Util.EncodeString(oAuthToken) + "\", ";
@@ -103,6 +114,8 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 
 		internal static string WebAuthorizationHeader(string nonce, string signature, string timestamp, string callback)
 		{
+			OnAuthenticationNeeded();
+
 			return $"OAuth oauth_nonce=\"{nonce}\", oauth_callback=\"{Util.EncodeString(callback)}\", oauth_signature_method=\"{OAuthHelper.HMAC_SHA1}\", oauth_timestamp=\"{timestamp}\", oauth_consumer_key=\"{Util.EncodeString(CONSUMER_KEY)}\", oauth_signature=\"{Util.EncodeString(signature)}\", oauth_version=\"1.0\"";
 		}
 
@@ -110,6 +123,8 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 
 		public static string SignBaseString(string signatureBase, string oAuthSecret)
 		{
+			OnAuthenticationNeeded();
+
 			HMACSHA1 hmacsha1 = new HMACSHA1();
 			hmacsha1.Key = Util.GetUTF8EncodingBytes(string.Format("{0}&{1}", Util.EncodeString(CONSUMER_SECRET), string.IsNullOrEmpty(oAuthSecret) ? "" : Util.EncodeString(oAuthSecret)));
 

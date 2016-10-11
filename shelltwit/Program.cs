@@ -31,19 +31,6 @@ namespace Sebagomez.Shelltwit
 			{
 				//Debug.Assert(false, "Attach VS here!");
 
-				//http://blogs.msdn.com/b/microsoft_press/archive/2010/02/03/jeffrey-richter-excerpt-2-from-clr-via-c-third-edition.aspx
-				//AppDomain.CurrentDomain.AssemblyResolve += (sender, arg) => { 
-				//	string resourceName = "AssemblyLoadingAndReflection." + 
-				//	new AssemblyName(arg.Name).Name + ".dll"; 
-
-				//	using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName)) { 
-				//		Byte[] assemblyData = new Byte[stream.Length]; 
-				//		stream.Read(assemblyData, 0, assemblyData.Length); 
-				//		return Assembly.Load(assemblyData); 
-				//	}
-				//};
-
-				OAuthAuthenticator.Initilize(CONSUMER_KEY, CONSUMER_SECRET);
 				Update.SetMessageAction(message => Console.WriteLine(message));
 
 				if (args.Length == 0)
