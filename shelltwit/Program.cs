@@ -22,14 +22,11 @@ namespace Sebagomez.Shelltwit
 		const string USER = "/u";
 		const string LIKES = "/l";
 
-		public const string CONSUMER_KEY = "<CONSUMER_KEY HERE>";
-		public const string CONSUMER_SECRET = "<CONSUMER_SECRET HERE>";
-
 		static void Main(string[] args)
 		{
 			try
 			{
-				//Debug.Assert(false, "Attach VS here!");
+				Debug.Assert(false, "Attach VS here!");
 
 				Update.SetMessageAction(message => Console.WriteLine(message));
 
@@ -78,7 +75,7 @@ namespace Sebagomez.Shelltwit
 					}
 				}
 
-				if (args[0].StartsWith("\\"))
+				if (args[0].StartsWith("\\") || args[0].Length == 1)
 				{
 					Console.WriteLine("Really? do you really wanna twit that?. [T]wit, or [N]o sorry, I messed up...");
 					ConsoleKeyInfo input = Console.ReadKey();
@@ -97,7 +94,6 @@ namespace Sebagomez.Shelltwit
 					}
 				}
 
-				OAuthAuthenticator.Initilize(CONSUMER_KEY, CONSUMER_SECRET);
 				string response = Update.UpdateStatus(string.Join(" ", args)).Result;
 
 				if (response != "OK")

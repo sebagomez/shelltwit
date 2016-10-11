@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
@@ -17,8 +16,8 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 		const string REQUEST_TOKEN = "https://api.twitter.com/oauth/request_token";
 		const string AUTHORIZE = "https://api.twitter.com/oauth/authorize";
 
-		internal static string CONSUMER_KEY = ConfigurationManager.AppSettings["CONSUMER_KEY"];
-		internal static string CONSUMER_SECRET = ConfigurationManager.AppSettings["CONSUMER_SECRET"];
+		internal static string CONSUMER_KEY = Settings.Instance.ConsumerKey;
+		internal static string CONSUMER_SECRET = Settings.Instance.ConsumerSecret;
 
 		public static void Initilize(string consumerKey, string consumerSecret)
 		{

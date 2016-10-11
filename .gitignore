@@ -10,7 +10,7 @@ packages/
 
 
 SecureData.txt
-shelltwit/private.config
+shelltwit/private.twit.data
 shelltwit/BuildMergeDeploy.bat
 WebTester/
 shelltwit_tester/

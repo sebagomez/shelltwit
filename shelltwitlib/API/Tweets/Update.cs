@@ -21,23 +21,12 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 		const string STATUS = "status";
 		const string MEDIA = "media_ids";
 
-		static Action<string> s_messageFunction;
 
 		#region Update Status
 
 		public static async Task<string> UpdateStatus(string status)
 		{
 			return await UpdateStatus(new UpdateOptions { Status = status });
-		}
-
-		public static void SetMessageAction(Action<string> func)
-		{
-			s_messageFunction = func;
-		}
-
-		static void WriteMessage(string message)
-		{
-			s_messageFunction?.Invoke(message);
 		}
 
 		public static async Task<string> UpdateStatus(UpdateOptions options)

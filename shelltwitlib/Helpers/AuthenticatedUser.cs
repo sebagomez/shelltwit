@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
@@ -15,9 +14,8 @@ namespace Sebagomez.ShelltwitLib.Helpers
 		const string USER_FILE = "twit.usr";
 		const string OAUTH_TOKEN = "oauth_token";
 		const string OAUTH_TOKEN_SECRET = "oauth_token_secret";
-		const string MICROSOFT_WINDOWS = "Microsoft Windows";
 
-		static string s_configFile = Path.Combine(FilesLocation, USER_FILE);
+		static string s_configFile = Path.Combine(Util.FilesLocation, USER_FILE);
 
 		public string Username { get; set; }
 
@@ -43,38 +41,11 @@ namespace Sebagomez.ShelltwitLib.Helpers
 			OAuthTokenSecret = tokensecret;
 		}
 
-		static string FilesLocation
-		{
-			get
-			{
-				if (System.Runtime.InteropServices.RuntimeInformation.OSDescription.StartsWith(MICROSOFT_WINDOWS))
-					return Environment.GetEnvironmentVariable("LOCALAPPDATA"); //Windows
-				else //MacOs or Linux
-				{
-					string home = Environment.GetEnvironmentVariable("HOME");
-					if (!string.IsNullOrEmpty(home))
-						return home;
-					else
-						return new System.IO.FileInfo(Assembly.GetEntryAssembly().Location).Directory.FullName;
-				}
-			}
-		}
-
-		public string GetUrlData()
-		{
-			return Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes($"{Username}:{Password}"));
-		}
-
-		public string GetKey(string consumerKey)
-		{
-			return "";
-		}
-
 		public static AuthenticatedUser GetUserCrdentials(string username)
 		{
 			username = username.Replace(Path.DirectorySeparatorChar, '.');
 
-			string userPath = Path.Combine(FilesLocation, username);
+			string userPath = Path.Combine(Util.FilesLocation, username);
 
 			if (!File.Exists(userPath))
 				return null;
@@ -86,7 +57,7 @@ namespace Sebagomez.ShelltwitLib.Helpers
 		{
 			username = username.Replace(Path.DirectorySeparatorChar, '.');
 
-			string userPath = Path.Combine(FilesLocation, username);
+			string userPath = Path.Combine(Util.FilesLocation, username);
 
 			Serialize(userPath);
 		}

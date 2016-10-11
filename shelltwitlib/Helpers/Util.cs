@@ -5,11 +5,14 @@ using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Net.Http;
 using Sebagomez.ShelltwitLib.Web;
+using System.Reflection;
 
 namespace Sebagomez.ShelltwitLib.Helpers
 {
 	public class Util
 	{
+		const string MICROSOFT_WINDOWS = "Microsoft Windows";
+
 		static HttpClient s_client = new HttpClient();
 
 		static Util()
@@ -67,6 +70,23 @@ namespace Sebagomez.ShelltwitLib.Helpers
 		public static string[] GetStringTokens(string fullString)
 		{
 			return fullString.Split(new char[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
+		}
+
+		public static string FilesLocation
+		{
+			get
+			{
+				if (System.Runtime.InteropServices.RuntimeInformation.OSDescription.StartsWith(MICROSOFT_WINDOWS))
+					return Environment.GetEnvironmentVariable("LOCALAPPDATA"); //Windows
+				else //MacOs or Linux
+				{
+					string home = Environment.GetEnvironmentVariable("HOME");
+					if (!string.IsNullOrEmpty(home))
+						return home;
+					else
+						return new FileInfo(Assembly.GetEntryAssembly().Location).Directory.FullName;
+				}
+			}
 		}
 
 		public static string ExceptionMessage(Exception ex)
