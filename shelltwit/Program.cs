@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using Sebagomez.ShelltwitLib.API.OAuth;
 using Sebagomez.ShelltwitLib.API.Options;
 using Sebagomez.ShelltwitLib.API.Tweets;
 using Sebagomez.ShelltwitLib.Entities;
@@ -26,9 +25,9 @@ namespace Sebagomez.Shelltwit
 		{
 			try
 			{
-				Debug.Assert(false, "Attach VS here!");
+				//Debug.Assert(false, "Attach VS here!");
 
-				Update.SetMessageAction(message => Console.WriteLine(message));
+				BaseAPI.SetMessageAction(message => Console.WriteLine(message));
 
 				if (args.Length == 0)
 				{
