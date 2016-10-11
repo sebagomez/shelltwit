@@ -17,5 +17,10 @@
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
+
+    <PropertyGroup>
+      <BeforeBuildEvent>copy *.dat $(TargetDir)</BeforeBuildEvent>
+  </PropertyGroup>
+
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>
