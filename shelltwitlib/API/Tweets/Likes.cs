@@ -1,29 +1,25 @@
 ﻿using System.Collections.Generic;
-using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Sebagomez.ShelltwitLib.API.OAuth;
 using Sebagomez.ShelltwitLib.API.Options;
 using Sebagomez.ShelltwitLib.Entities;
 using Sebagomez.ShelltwitLib.Helpers;
-using Sebagomez.ShelltwitLib.Web;
 
 namespace Sebagomez.ShelltwitLib.API.Tweets
 {
-	public class Likes
+	public class Likes : BaseAPI
 	{
 		const string USER_LIKES = "https://api.twitter.com/1.1/favorites/list.json";
 
-		public static List<Status> GetUserLikes(LikesOptions options)
+		public static async Task<List<Status>> GetUserLikes(LikesOptions options)
 		{
 			if (options.User == null)
 				options.User = AuthenticatedUser.LoadCredentials();
 
-			HttpWebRequest req = OAuthHelper.GetRequest(HttpMethod.GET, USER_LIKES, options);
-			HttpWebResponse response = (HttpWebResponse)req.GetResponse();
+			HttpRequestMessage reqMsg = OAuthHelper.GetRequest(HttpMethod.Get, USER_LIKES, options);
 
-			if (response.StatusCode != HttpStatusCode.OK)
-				return null;
-
-			return Util.Deserialize<Statuses>(response.GetResponseStream());
+			return await GetData<Statuses>(reqMsg);
 		}
 	}
 }

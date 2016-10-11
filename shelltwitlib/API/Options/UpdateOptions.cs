@@ -10,6 +10,7 @@ namespace Sebagomez.ShelltwitLib.API.Options
 		public string ReplyId { get; set; }
 		public List<string> MediaIds { get; set; }
 		public List<FileInfo> MediaFiles { get; set; }
+		public string OriginalSatatus { get; set; }
 
 		public UpdateOptions()
 		{

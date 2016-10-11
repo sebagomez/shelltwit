@@ -25,10 +25,11 @@ Implemented Twitter APIs
 Build
 -----
 After downloading the source files build the sln with Visual Studio 2015 (framework 4.6)
+There's also a .net core branch. It uses the same files from the framework 4.6 projects, use the build.bat to copy the files into the project.
 
 ```
-Command line Twitter status updater
-Copyright c 2010-2016 v2.2.0.x
+Command line Twitter client running on Microsoft Windows 10.0.14393
+Copyright c 2010-2016 v4.0.0.25009
 
 Usage: twit /q <query>|/c|/tl|/m|/l|/u <user>|/?|<status> [<mediaPath>]
 

@@ -1,9 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
-using System.Web;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace Sebagomez.BitLyHelper
@@ -15,7 +15,9 @@ namespace Sebagomez.BitLyHelper
 		const string API_LOGIN = "sebagomez";
 		const string API_KEY = "R_bdaed2b56fd1f15c99364abfea6e9b3a";
 
-		public static string GetShortenString(string[] args)
+		static HttpClient s_client = new HttpClient();
+
+		public static async Task<string> GetShortenString(string[] args)
 		{
 			StringBuilder builder = new StringBuilder();
 			foreach (string word in args)
@@ -25,7 +27,7 @@ namespace Sebagomez.BitLyHelper
 				{
 					Uri url = new Uri(word);
 					if (url.Host.ToLower() != "bit.ly")
-						newWord = ShortenUrl(HttpUtility.UrlEncode(url.ToString()));
+						newWord = await ShortenUrl(WebUtility.UrlEncode(url.ToString()));
 				}
 				catch {	}
 
@@ -35,21 +37,14 @@ namespace Sebagomez.BitLyHelper
 			return builder.ToString().Remove(builder.Length -1);
 		}
 
-		public static string GetShortenString(string status)
+		public static async Task<string> GetShortenString(string status)
 		{
-			return GetShortenString(status.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries));
+			return await GetShortenString(status.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries));
 		}
 
-		public static string ShortenUrl(string url)
+		public static async Task<string> ShortenUrl(string url)
 		{
-			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format(API_URL, API_VERSION, url, API_LOGIN, API_KEY));
-			request.Method = "GET";
-			request.ContentType = "application/x-www-form-urlencoded";
-			HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
-			string data = string.Empty;
-			using (StreamReader reader = new StreamReader(response.GetResponseStream()))
-				data = reader.ReadToEnd();
+			string data = await s_client.GetStringAsync(string.Format(API_URL, API_VERSION, url, API_LOGIN, API_KEY));
 
 			XDocument xDoc = XDocument.Parse(data);
 

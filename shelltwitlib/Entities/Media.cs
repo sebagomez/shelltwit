@@ -1,7 +1,4 @@
-﻿using System.IO;
-using System.Runtime.Serialization.Json;
-
-namespace Sebagomez.ShelltwitLib.Entities
+﻿namespace Sebagomez.ShelltwitLib.Entities
 {
 	public class Media
 	{

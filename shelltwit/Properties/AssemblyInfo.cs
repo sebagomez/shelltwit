@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 
-[assembly: AssemblyTitle("Command line Twitter status updater")]
+[assembly: AssemblyTitle("Command line Twitter client")]
 [assembly: AssemblyDescription("Minimalist command line Twitter client. Post a twit, view your timeline and mentions.")]
 [assembly: AssemblyConfiguration("No configuration needed")]
 [assembly: AssemblyProduct("shelltwit")]
-[assembly: AssemblyTrademarkAttribute("@sebagomez shelltwit ")]
+[assembly: AssemblyTrademark("@sebagomez shelltwit ")]

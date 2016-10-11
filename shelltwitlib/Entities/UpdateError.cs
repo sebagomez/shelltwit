@@ -17,5 +17,13 @@ namespace Sebagomez.ShelltwitLib.Entities
 	public class UpdateError
 	{
 		public List<Error> errors { get; set; }
+
+		public override string ToString()
+		{
+			if (errors == null)
+				return string.Empty;
+
+			return string.Join(";", errors);
+		}
 	}
 }

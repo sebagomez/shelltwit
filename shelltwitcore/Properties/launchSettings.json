@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "shelltwitcore": {
+      "commandName": "Project",
+      "commandLineArgs": "/?"
+    }
+  }
+}

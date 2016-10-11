@@ -48,7 +48,7 @@ namespace Sebagomez.Shelltwit
 
 				if (args.Length == 0)
 				{
-					PrintTwits(Timeline.GetTimeline());
+					PrintTwits(Timeline.GetTimeline().Result);
 					return;
 				}
 
@@ -66,23 +66,23 @@ namespace Sebagomez.Shelltwit
 							ShowUsage();
 							return;
 						case TIME_LINE:
-							PrintTwits(Timeline.GetTimeline());
+							PrintTwits(Timeline.GetTimeline().Result);
 							return;
 						case MENTIONS:
-							PrintTwits(Mentions.GetMentions());
+							PrintTwits(Mentions.GetMentions().Result);
 							return;
 						case SEARCH:
 							SearchOptions options = new SearchOptions { Query = string.Join(" ", args).Substring(2), User = AuthenticatedUser.LoadCredentials() };
-							PrintTwits(Search.SearchTweets(options));
+							PrintTwits(Search.SearchTweets(options).Result);
 							return;
 						case LIKES:
-							PrintTwits(Likes.GetUserLikes(new LikesOptions()));
+							PrintTwits(Likes.GetUserLikes(new LikesOptions()).Result);
 							return;
 						case USER:
 							if (args.Length != 2)
 								throw new ArgumentNullException("screenname","The user' screen name must be provided");
 							UserTimelineOptions usrOptions = new UserTimelineOptions { ScreenName = args[1] };
-							PrintTwits(UserTimeline.GetUserTimeline(usrOptions));
+							PrintTwits(UserTimeline.GetUserTimeline(usrOptions).Result);
 							return;
 						default:
 							Console.WriteLine($"Invalid flag: {flag}");
@@ -111,8 +111,7 @@ namespace Sebagomez.Shelltwit
 				}
 
 				OAuthAuthenticator.Initilize(CONSUMER_KEY, CONSUMER_SECRET);
-				string status = BitLyHelper.Util.GetShortenString(args);
-				string response = Update.UpdateStatus(status);
+				string response = Update.UpdateStatus(string.Join(" ", args)).Result;
 
 				if (response != "OK")
 					Console.WriteLine($"Response was not OK: {response}");
@@ -130,7 +129,7 @@ namespace Sebagomez.Shelltwit
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex.Message);
+				PrintException(ex);
 			}
 			finally
 			{
@@ -147,9 +146,23 @@ namespace Sebagomez.Shelltwit
 			Environment.Exit(0);
 		}
 
+		private static void PrintException(Exception ex)
+		{
+			Console.WriteLine(ex.Message);
+			Exception inner = ex.InnerException;
+			while (inner != null)
+			{
+				PrintException(inner);
+				inner = inner.InnerException;
+			}
+		}
+
 		static void PrintTwits(List<Status> twits)
 		{
-			twits.ForEach(twit => Console.WriteLine($"{twit.user.name} (@{twit.user.screen_name}): {twit.text}"));
+			if (twits == null)
+				Console.WriteLine("No twits :(");
+			else
+				twits.ForEach(twit => Console.WriteLine($"{twit.user.name} (@{twit.user.screen_name}): {twit.text}"));
 		}
 
 		static void PrintTwits(SearchResult results)
@@ -162,14 +175,14 @@ namespace Sebagomez.Shelltwit
 
 		static void ShowUsage()
 		{
-			Assembly assembly = Assembly.GetExecutingAssembly();
-			object[] assemblyAtt = assembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-			object[] assemblyCop = assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
-			string title = ((AssemblyTitleAttribute)assemblyAtt[0]).Title;
-			string copyRight = ((AssemblyCopyrightAttribute)assemblyCop[0]).Copyright;
+			Assembly assembly = Assembly.GetEntryAssembly();
+			IEnumerable<Attribute> assemblyAtt = assembly.GetCustomAttributes(typeof(AssemblyTitleAttribute));
+			IEnumerable<Attribute> assemblyCop = assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute));
+			string title = ((AssemblyTitleAttribute)assemblyAtt.First()).Title;
+			string copyRight = ((AssemblyCopyrightAttribute)assemblyCop.First()).Copyright;
 			string version = assembly.GetName().Version.ToString();
 
-			Console.WriteLine(title);
+			Console.WriteLine($"{title} running on {System.Runtime.InteropServices.RuntimeInformation.OSDescription}");
 			Console.WriteLine($"{copyRight} v{version}");
 			Console.WriteLine("");
 			Console.WriteLine("Usage: twit /q <query>|/c|/tl|/m|/l|/u <user>|/?|<status> [<mediaPath>]");

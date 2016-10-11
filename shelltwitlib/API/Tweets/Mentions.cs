@@ -1,35 +1,30 @@
 ﻿using System.Collections.Generic;
-using System.Net;
-using System.Runtime.Serialization.Json;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Sebagomez.ShelltwitLib.API.OAuth;
 using Sebagomez.ShelltwitLib.API.Options;
 using Sebagomez.ShelltwitLib.Entities;
 using Sebagomez.ShelltwitLib.Helpers;
-using Sebagomez.ShelltwitLib.Web;
 
 namespace Sebagomez.ShelltwitLib.API.Tweets
 {
-	public class Mentions
+	public class Mentions : BaseAPI
 	{
 		const string MENTIONS_STATUS = "https://api.twitter.com/1.1/statuses/mentions_timeline.json";
 
-		public static List<Status> GetMentions()
+		public static async Task<List<Status>> GetMentions()
 		{
-			return GetMentions(new MentionsOptions());
+			return await GetMentions(new MentionsOptions());
 		}
 
-		public static List<Status> GetMentions(MentionsOptions options)
+		public static async Task<List<Status>> GetMentions(MentionsOptions options)
 		{
 			if (options.User == null)
 				options.User = AuthenticatedUser.LoadCredentials();
 
-			HttpWebRequest req = OAuthHelper.GetRequest(HttpMethod.GET, MENTIONS_STATUS, options);
-			HttpWebResponse response = (HttpWebResponse)req.GetResponse();
+			HttpRequestMessage reqMsg = OAuthHelper.GetRequest(HttpMethod.Get, MENTIONS_STATUS, options);
 
-			if (response.StatusCode != HttpStatusCode.OK)
-				return null;
-
-			return Util.Deserialize<Statuses>(response.GetResponseStream());
+			return await GetData<Statuses>(reqMsg);
 		}
 	}
 }

@@ -9,7 +9,6 @@
 		public string location { get; set; }
 		public string description { get; set; }
 		public string url { get; set; }
-		//public Entities1 entities { get; set; }
 		public bool _protected { get; set; }
 		public int followers_count { get; set; }
 		public int friends_count { get; set; }
