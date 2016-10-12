@@ -8,8 +8,8 @@ shelltwit
 shelltwit allows you to update your twitter status via command line.   
 It's a good example of twitter API calls with xAuth. It also has bit.ly integration for url shortening.
 
-![ScreenShot](http://farm9.staticflickr.com/8363/8319299202_9282a7e6ed.jpg)
-
+<img src="res//Windows.PNG" alt="Works on my machine" width="700">
+<img src="res//Ubuntu.PNG" alt="Works on my machine" width="700">
 
 Little more (?) info about it at the original [blog post](http://sgomez.blogspot.com/2010/06/introducing-shelltwit.html)
 
@@ -28,7 +28,7 @@ After downloading the source files build the sln with Visual Studio 2015 (framew
 
 There's also a [.net core](https://www.microsoft.com/net/core#windows) solution called [shelltwitcore.sln](shelltwitcore.sln) (figures). You can also open that up with Visual Studio 2015 or go straight to the shelltwitcore folder and work with [Visual Studio Code](https://code.visualstudio.com/) from there. 
 In order to build the .net core project you need to run the [build.bat](./shelltwitcore/build.bat) file first which basically copies the source files from the other projects into this one. (for some reason assing linked files in .xproj projects does not work)
-This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), and it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/) <img src="https://blog.codinghorror.com/content/images/uploads/2007/03/6a0120a85dcdae970b0128776ff992970c-pi.png" alt="Works on my machine" height="50">.
+This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), and it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/) <img src="res//works on my machine.png" alt="Works on my machine" height="50">.
 
 ```
 Command line Twitter client running on Microsoft Windows 10.0.14393

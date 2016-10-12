@@ -27,6 +27,8 @@ namespace Sebagomez.Shelltwit
 			{
 				//Debug.Assert(false, "Attach VS here!");
 
+				PrintHeader();
+
 				BaseAPI.SetMessageAction(message => Console.WriteLine(message));
 
 				if (args.Length == 0)
@@ -155,7 +157,7 @@ namespace Sebagomez.Shelltwit
 				PrintTwits(results.statuses.ToList<Status>());
 		}
 
-		static void ShowUsage()
+		static void PrintHeader()
 		{
 			Assembly assembly = Assembly.GetEntryAssembly();
 			IEnumerable<Attribute> assemblyAtt = assembly.GetCustomAttributes(typeof(AssemblyTitleAttribute));
@@ -164,9 +166,13 @@ namespace Sebagomez.Shelltwit
 			string copyRight = ((AssemblyCopyrightAttribute)assemblyCop.First()).Copyright;
 			string version = assembly.GetName().Version.ToString();
 
-			Console.WriteLine($"{title} running on {System.Runtime.InteropServices.RuntimeInformation.OSDescription}");
-			Console.WriteLine($"{copyRight} v{version}");
+			Console.WriteLine($"{title} version {version} for {System.Runtime.InteropServices.RuntimeInformation.OSDescription}");
+			Console.WriteLine(copyRight);
 			Console.WriteLine("");
+		}
+
+		static void ShowUsage()
+		{
 			Console.WriteLine("Usage: twit /q <query>|/c|/tl|/m|/l|/u <user>|/?|<status> [<mediaPath>]");
 			Console.WriteLine("");
 			Console.WriteLine("/c 		: clears user stored credentials");
