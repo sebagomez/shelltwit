@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-[assembly: AssemblyTitle("@SebaGomez (R) twit")]
+[assembly: AssemblyTitle("@SebaGomez (R) shelltwit")]
 [assembly: AssemblyDescription("Minimalist command line Twitter client. Post a twit, view your timeline and mentions.")]
 [assembly: AssemblyConfiguration("No configuration needed")]
 [assembly: AssemblyProduct("shelltwit")]

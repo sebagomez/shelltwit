@@ -8,8 +8,8 @@ shelltwit
 shelltwit allows you to update your twitter status via command line.   
 It's a good example of twitter API calls with xAuth. It also has bit.ly integration for url shortening.
 
-<img src="res//Windows.PNG" alt="Works on my machine" width="700">
-<img src="res//Ubuntu.PNG" alt="Works on my machine" width="700">
+<img src="res//Windows.png" alt="shelltwit on windows" width="700">
+<img src="res//Ubuntu.png" alt="shelltwit on ubuntu" width="700">
 
 Little more (?) info about it at the original [blog post](http://sgomez.blogspot.com/2010/06/introducing-shelltwit.html)
 
@@ -31,8 +31,8 @@ In order to build the .net core project you need to run the [build.bat](./shellt
 This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), and it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/) <img src="res//works on my machine.png" alt="Works on my machine" height="50">.
 
 ```
-Command line Twitter client running on Microsoft Windows 10.0.14393
-Copyright c 2010-2016 v4.2.0.692
+@SebaGomez (R) shelltwit version 4.2.2.2046 for Microsoft Windows 10.0.14393
+Copyright (C) @sebagomez. All rights reserved.
 
 Usage: twit /q <query>|/c|/tl|/m|/l|/u <user>|/?|<status> [<mediaPath>]
 
