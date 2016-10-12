@@ -25,11 +25,14 @@ Implemented Twitter APIs
 Build
 -----
 After downloading the source files build the sln with Visual Studio 2015 (framework 4.6)
-There's also a .net core branch. It uses the same files from the framework 4.6 projects, use the build.bat to copy the files into the project.
+
+There's also a [.net core](https://www.microsoft.com/net/core#windows) solution called [shelltwitcore.sln](shelltwitcore.sln) (figures). You can also open that up with Visual Studio 2015 or go straight to the shelltwitcore folder and work with [Visual Studio Code](https://code.visualstudio.com/) from there. 
+In order to build the .net core project you need to run the [build.bat](./shelltwitcore/build.bat) file first which basically copies the source files from the other projects into this one. (for some reason assing linked files in .xproj projects does not work)
+This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), and it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/) <img src="https://blog.codinghorror.com/content/images/uploads/2007/03/6a0120a85dcdae970b0128776ff992970c-pi.png" alt="Works on my machine" height="50">.
 
 ```
 Command line Twitter client running on Microsoft Windows 10.0.14393
-Copyright c 2010-2016 v4.0.0.25009
+Copyright c 2010-2016 v4.2.0.692
 
 Usage: twit /q <query>|/c|/tl|/m|/l|/u <user>|/?|<status> [<mediaPath>]
 
