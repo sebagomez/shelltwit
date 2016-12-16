@@ -80,6 +80,7 @@
     <Compile Include="API\Options\LikesOptions.cs" />
     <Compile Include="API\Options\MentionsOptions.cs" />
     <Compile Include="API\Options\SearchOptions.cs" />
+    <Compile Include="API\Options\StreammingFilterOptions.cs" />
     <Compile Include="API\Options\TimelineOptions.cs" />
     <Compile Include="API\Options\TwitterOptions.cs" />
     <Compile Include="API\Options\UpdateOptions.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="API\Tweets\Likes.cs" />
     <Compile Include="API\Tweets\Mentions.cs" />
     <Compile Include="API\Tweets\Search.cs" />
+    <Compile Include="API\Tweets\StreamingFilter.cs" />
     <Compile Include="API\Tweets\Timeline.cs" />
     <Compile Include="API\Tweets\UserTimeline.cs" />
     <Compile Include="Entities\SearchMetadata.cs" />

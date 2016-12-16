@@ -21,6 +21,7 @@ Implemented Twitter APIs
 - [Status User Timeline](https://dev.twitter.com/rest/reference/get/statuses/user_timeline)
 - [Search](https://dev.twitter.com/rest/public/search)
 - [Favorites List](https://dev.twitter.com/rest/reference/get/favorites/list)
+- [Streaming statuses](https://dev.twitter.com/streaming/reference/post/statuses/filter)
 
 Build
 -----
@@ -30,17 +31,20 @@ There's also a [.net core](https://www.microsoft.com/net/core#windows) solution 
 In order to build the .net core project you need to run the [build.bat](./shelltwitcore/build.bat) file first which basically copies the source files from the other projects into this one. (for some reason assing linked files in .xproj projects does not work)
 This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), and it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/) <img src="res//works on my machine.png" alt="Works on my machine" height="50">.
 
+**net core solution is currently broken**
+
 ```
-@SebaGomez (R) shelltwit version 4.2.2.2046 for Microsoft Windows 10.0.14393
+@SebaGomez (R) shelltwit version 5.0.0.31862 for Microsoft Windows 10.0.14393
 Copyright (C) @sebagomez. All rights reserved.
 
-Usage: twit /q <query>|/c|/tl|/m|/l|/u <user>|/?|<status> [<mediaPath>]
+Usage: twit /q <query>|/c|/tl|/m|/l|/s <track>|/u <user>|/?|<status> [<mediaPath>]
 
 /c              : clears user stored credentials
 /tl             : show user's timeline (default)
 /q              : query twits containing words
 /m              : show user's mentions
 /u user         : show another user's timeline
+/s track        : live status with a specific track
 /l              : user's likes (fka favorites)
 /?              : show this help
 status          : status to update at twitter.com
