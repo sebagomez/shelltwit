@@ -20,7 +20,7 @@ namespace Sebagomez.ShelltwitLib.Helpers
 			s_client.DefaultRequestHeaders.ExpectContinue = false;
 			s_client.DefaultRequestHeaders.Add(Constants.HEADERS.USER_AGENT, Constants.HEADERS.USER_AGENT_VALUE);
 		}
-	
+
 		public static HttpClient Client
 		{
 			get { return s_client; }
@@ -126,6 +126,17 @@ namespace Sebagomez.ShelltwitLib.Helpers
 			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
 			return (T)serializer.ReadObject(stream);
 #endif
+		}
+
+		public static T Deserialize<T>(string json)
+		{
+			System.Diagnostics.Debug.Write(json);
+
+			using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(json)))
+			{
+				DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
+				return (T)serializer.ReadObject(ms);
+			}
 		}
 	}
 }

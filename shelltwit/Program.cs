@@ -20,6 +20,7 @@ namespace Sebagomez.Shelltwit
 		const string MENTIONS = "/m";
 		const string USER = "/u";
 		const string LIKES = "/l";
+		const string STREAMING = "/s";
 
 		static void Main(string[] args)
 		{
@@ -68,6 +69,14 @@ namespace Sebagomez.Shelltwit
 								throw new ArgumentNullException("screenname","The user' screen name must be provided");
 							UserTimelineOptions usrOptions = new UserTimelineOptions { ScreenName = args[1] };
 							PrintTwits(UserTimeline.GetUserTimeline(usrOptions).Result);
+							return;
+						case STREAMING:
+							if (args.Length != 2)
+								throw new ArgumentNullException("streaming", "The track must be provided");
+							StreammingFilterOptions streamingOptions = new StreammingFilterOptions { Track = args[1] };
+							Console.WriteLine("Starting live streaming, press ctrl+c to quit");
+							foreach (Status s in StreamingFilter.GetStreamingTimeline(streamingOptions))
+								PrintTwit(s);
 							return;
 						default:
 							Console.WriteLine($"Invalid flag: {flag}");
@@ -146,7 +155,12 @@ namespace Sebagomez.Shelltwit
 			if (twits == null)
 				Console.WriteLine("No twits :(");
 			else
-				twits.ForEach(twit => Console.WriteLine($"{twit.user.name} (@{twit.user.screen_name}): {twit.text}"));
+				twits.ForEach(twit => PrintTwit(twit));
+		}
+
+		static void PrintTwit(Status twit)
+		{
+			Console.WriteLine($"{twit.user.name} (@{twit.user.screen_name}): {twit.text}");
 		}
 
 		static void PrintTwits(SearchResult results)
@@ -173,13 +187,14 @@ namespace Sebagomez.Shelltwit
 
 		static void ShowUsage()
 		{
-			Console.WriteLine("Usage: twit /q <query>|/c|/tl|/m|/l|/u <user>|/?|<status> [<mediaPath>]");
+			Console.WriteLine("Usage: twit /q <query>|/c|/tl|/m|/l|/s <track>|/u <user>|/?|<status> [<mediaPath>]");
 			Console.WriteLine("");
 			Console.WriteLine("/c 		: clears user stored credentials");
 			Console.WriteLine("/tl 		: show user's timeline (default)");
 			Console.WriteLine("/q 		: query twits containing words");
 			Console.WriteLine("/m 		: show user's mentions");
 			Console.WriteLine("/u user		: show another user's timeline");
+			Console.WriteLine("/s track	: live status with a specific track");
 			Console.WriteLine("/l		: user's likes (fka favorites)");
 			Console.WriteLine("/? 		: show this help");
 			Console.WriteLine("status	 	: status to update at twitter.com");

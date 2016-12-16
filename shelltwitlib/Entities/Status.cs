@@ -26,7 +26,7 @@ namespace Sebagomez.ShelltwitLib.Entities
 		public int favorite_count { get; set; }
 		public bool favorited { get; set; }
 		public bool retweeted { get; set; }
-		public bool possibly_sensitive { get; set; }
+		public bool? possibly_sensitive { get; set; }
 		public string lang { get; set; }
 
 		public override string ToString()

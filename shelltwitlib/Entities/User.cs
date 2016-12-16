@@ -23,7 +23,7 @@
 		public string lang { get; set; }
 		public bool contributors_enabled { get; set; }
 		public bool is_translator { get; set; }
-		public bool is_translation_enabled { get; set; }
+		public bool? is_translation_enabled { get; set; }
 		public string profile_background_color { get; set; }
 		public string profile_background_image_url { get; set; }
 		public string profile_background_image_url_https { get; set; }
@@ -36,12 +36,12 @@
 		public string profile_sidebar_fill_color { get; set; }
 		public string profile_text_color { get; set; }
 		public bool profile_use_background_image { get; set; }
-		public bool has_extended_profile { get; set; }
+		public bool? has_extended_profile { get; set; }
 		public bool default_profile { get; set; }
 		public bool default_profile_image { get; set; }
-		public bool following { get; set; }
-		public bool follow_request_sent { get; set; }
-		public bool notifications { get; set; }
+		public bool? following { get; set; }
+		public bool? follow_request_sent { get; set; }
+		public bool? notifications { get; set; }
 
 		public override string ToString()
 		{

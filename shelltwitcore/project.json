@@ -6,18 +6,16 @@
   },
 
   "dependencies": {
-			"Microsoft.NETCore.App": {
-				"type": "platform",
-				"version": "1.0.1"
-			},
-    "System.Runtime.Serialization.Json": "4.0.2",
-    "System.Runtime.Serialization.Xml": "4.1.1",
-    "System.Xml.XmlSerializer": "4.0.11"
+			"Microsoft.NETCore.App": "1.1.0",
+			"System.Runtime.Serialization.Json": "4.3.0",
+			"System.Runtime.Serialization.Xml": "4.3.0",
+			"System.Xml.XmlSerializer": "4.3.0"
   },
 
-  "frameworks": {
-    "netcoreapp1.0": {
-      "imports": "dnxcore50"
-    }
-  }
+    "frameworks": {
+        "netcoreapp1.0": {
+            "imports": "dnxcore50"
+        }
+    },
+    "userSecretsId": "aspnet-shelltwitcore-20161116041930"
 }
