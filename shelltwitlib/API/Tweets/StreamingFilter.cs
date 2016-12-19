@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
@@ -32,17 +33,28 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 				var formUrlEncodedContent = new FormUrlEncodedContent(p);
 				formUrlEncodedContent.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
 
+				options.Track = string.IsNullOrEmpty(options.Track) ? options.Track : Util.EncodeString(WebUtility.HtmlDecode(options.Track));
+				options.Follow = string.IsNullOrEmpty(options.Follow) ? options.Follow : Util.EncodeString(WebUtility.HtmlDecode(options.Follow));
+				options.Locations = string.IsNullOrEmpty(options.Locations) ? options.Locations : Util.EncodeString(WebUtility.HtmlDecode(options.Locations));
+
 				HttpRequestMessage request = OAuthHelper.GetRequest(HttpMethod.Post, STATUS_FILTER, options);
 				request.Content = formUrlEncodedContent;
 
 				var response = httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).Result;
+				if (!response.IsSuccessStatusCode)
+					throw new Exception($"{response.StatusCode}:{response.ReasonPhrase}");
+
 				using (var reader = new StreamReader(response.Content.ReadAsStreamAsync().Result))
 				{
 					while (!reader.EndOfStream)
 					{
 						string json = reader.ReadLine();
 						if (!string.IsNullOrWhiteSpace(json))
-							yield return Util.Deserialize<Status>(json);
+						{
+							Status status = Util.Deserialize<Status>(json);
+							if (status != null && !string.IsNullOrEmpty(status.text))
+								yield return status;
+						}
 					}
 				}
 			}
