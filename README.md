@@ -31,8 +31,6 @@ There's also a [.net core](https://www.microsoft.com/net/core#windows) solution 
 In order to build the .net core project you need to run the [build.bat](./shelltwitcore/build.bat) file first which basically copies the source files from the other projects into this one. (for some reason assing linked files in .xproj projects does not work)
 This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), and it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/) <img src="res//works on my machine.png" alt="Works on my machine" height="50">.
 
-**net core solution is currently broken**
-
 ```
 @SebaGomez (R) shelltwit version 5.0.0.31862 for Microsoft Windows 10.0.14393
 Copyright (C) @sebagomez. All rights reserved.

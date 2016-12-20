@@ -17,5 +17,6 @@
             "imports": "dnxcore50"
         }
     },
-    "userSecretsId": "aspnet-shelltwitcore-20161116041930"
+	"userSecretsId": "aspnet-shelltwitcore-20161116041930",
+	"runtimes": { "win10-x64": true }
 }
