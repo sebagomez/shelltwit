@@ -1,7 +1,7 @@
 language: csharp
 solution: shelltwitcore.sln
 install:
-	- nuget restore shelltwitcore.sln
+	nuget restore shelltwitcore.sln
 matrix:
 	include:
 		- dotnet: 1.0.0-preview2-003121
