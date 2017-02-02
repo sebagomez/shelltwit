@@ -1,3 +1,8 @@
+# taken from https://rimdev.io/building-net-core-on-travis-ci/
 language: csharp
+dist: trusty
+sudo: required
+mono: none
+dotnet: 1.0.0-preview2-1-003177
 script:
-- dotnet build ./shelltwitcore/
+  - ./shelltwitcore/build.sh
