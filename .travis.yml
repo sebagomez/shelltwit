@@ -5,6 +5,6 @@ sudo: required
 mono: none
 dotnet: 1.0.0-preview2-1-003177
 before_script:
- - chmod a+x ./shelltwitcore/build.sh
+ - chmod a+x ./build.sh
 script:
- - ./shelltwitcore/build.sh
+ - ./build.sh
