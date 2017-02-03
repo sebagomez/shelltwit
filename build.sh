@@ -5,4 +5,5 @@ rsync -avh --include="*.cs" --exclude="*.*" ./shelltwitlib/ ./shelltwitcore
 cp ./BitLyHelper/Util.cs ./BitLyHelper/BitLyUtil.cs --verbose
 cp ./BitLyHelper/BitLyUtil.cs ./shelltwitcore/ --verbose
 rm ./BitLyHelper/BitLyUtil.cs --verbose
-dotnet restore -s ./shelltwitcore && dotnet build ./shelltwitcore
+cd shelltwitcore
+dotnet restore && dotnet build 
