@@ -14,6 +14,8 @@ It's a good example of twitter API calls with xAuth. It also has bit.ly integrat
 
 Little more (?) info about it at the original [blog post](http://sgomez.blogspot.com/2010/06/introducing-shelltwit.html)
 
+As of Jun-05-2017 it uses [PIN-based](https://dev.twitter.com/oauth/pin-based) authorization
+
 Implemented Twitter APIs
 ------------------------
 - [Status Update](https://dev.twitter.com/rest/reference/post/statuses/update)
