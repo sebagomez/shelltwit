@@ -6,15 +6,13 @@ shelltwit
 [![Appveyor Build status](https://ci.appveyor.com/api/projects/status/1m0mqeskgew1ry4o?svg=true)](https://ci.appveyor.com/project/sebagomez/shelltwit)
 [![Travis Build Status](https://travis-ci.org/sebagomez/shelltwit.svg?branch=master)](https://travis-ci.org/sebagomez/shelltwit)
 
-shelltwit allows you to update your twitter status via command line.   
-It's a good example of twitter API calls with xAuth. It also has bit.ly integration for url shortening.
+shelltwit allows you to update your twitter status via command line. It also has bit.ly integration for url shortening.
+~~It's a good example of twitter API calls with xAuth.~~ As of Jun-05-2017 it uses [PIN-based](https://dev.twitter.com/oauth/pin-based) authorization
 
 <img src="res//Windows.png" alt="shelltwit on windows" width="700">
 <img src="res//Ubuntu.png" alt="shelltwit on ubuntu" width="700">
 
 Little more (?) info about it at the original [blog post](http://sgomez.blogspot.com/2010/06/introducing-shelltwit.html)
-
-As of Jun-05-2017 it uses [PIN-based](https://dev.twitter.com/oauth/pin-based) authorization
 
 Implemented Twitter APIs
 ------------------------
