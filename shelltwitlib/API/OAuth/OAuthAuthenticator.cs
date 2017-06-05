@@ -31,6 +31,62 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 				throw new Exception("Missing Twitter app credentials (Key and/or Secret)");
 		}
 
+		public static async Task<string> GetOAuthToken()
+		{
+			OnAuthenticationNeeded();
+
+			string nonce = OAuthHelper.GetNonce();
+			string timestamp = Util.EncodeString(OAuthHelper.GetTimestamp());
+			string callback = "oob";
+
+			Dictionary<string, string> dic = GetWebAccessTokenParms(nonce, timestamp, callback, null);
+
+			string signatureBase = OAuthHelper.SignatureBsseString(HttpMethod.Post.Method, REQUEST_TOKEN, dic);
+			string signature = SignBaseString(signatureBase, string.Empty);
+			string authHeader = AuthorizationHeader(nonce, signature, timestamp, string.Empty, true, string.Empty);
+
+			HttpRequestMessage reqMsg = new HttpRequestMessage(HttpMethod.Post, REQUEST_TOKEN);
+
+			reqMsg.Headers.Add(Constants.HEADERS.AUTHORIZATION, authHeader);
+
+			HttpResponseMessage response = await Util.Client.SendAsync(reqMsg);
+			if (!response.IsSuccessStatusCode)
+				throw new Exception(await response.Content.ReadAsStringAsync());
+
+			string strResponse = await response.Content.ReadAsStringAsync();
+
+			const string oauth_token = "oauth_token=";
+			int start = strResponse.IndexOf(oauth_token);
+			int length = strResponse.IndexOf("&", start);
+
+			return strResponse.Substring(start + oauth_token.Length, length - oauth_token.Length);
+
+		}
+
+		public static async Task<string> GetPINToken(string oAuthToken, string pin)
+		{
+			OnAuthenticationNeeded();
+
+			string nonce = OAuthHelper.GetNonce();
+			string timestamp = Util.EncodeString(OAuthHelper.GetTimestamp());
+
+			Dictionary<string, string> dic = GetWebAccessTokenParms(nonce, timestamp, null, pin);
+
+			string signatureBase = OAuthHelper.SignatureBsseString(HttpMethod.Post.Method, ACCESS_TOKEN, dic);
+			string signature = SignBaseString(signatureBase, string.Empty);
+			string authHeader = AuthorizationHeader(nonce, signature, timestamp, oAuthToken, false, pin);
+
+			HttpRequestMessage reqMsg = new HttpRequestMessage(HttpMethod.Post, ACCESS_TOKEN);
+
+			reqMsg.Headers.Add(Constants.HEADERS.AUTHORIZATION, authHeader);
+
+			HttpResponseMessage response = await Util.Client.SendAsync(reqMsg);
+			if (!response.IsSuccessStatusCode)
+				throw new Exception(await response.Content.ReadAsStringAsync());
+
+			return await response.Content.ReadAsStringAsync();
+		}
+
 		public static async Task<string> GetAccessToken(string username, string password)
 		{
 			OnAuthenticationNeeded();
@@ -57,7 +113,7 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 			Dictionary<string, string> parms = GetAccessTokenParms(nonce, timestamp, decodedUsr, decodedPwd);
 			string signatureBase = OAuthHelper.SignatureBsseString(HttpMethod.Post.Method, ACCESS_TOKEN, parms);
 			string signature = SignBaseString(signatureBase, string.Empty);
-			string authHeader = AuthorizationHeader(nonce, signature, timestamp, string.Empty);
+			string authHeader = AuthorizationHeader(nonce, signature, timestamp, string.Empty, string.Empty);
 
 			reqMsg.Headers.Add(Constants.HEADERS.AUTHORIZATION, authHeader);
 
@@ -70,7 +126,7 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 
 		private static Dictionary<string, string> GetAccessTokenParms(string nonce, string timestamp, string username, string password)
 		{
-			Dictionary<string, string> dic = GetWebAccessTokenParms(nonce, timestamp, string.Empty);
+			Dictionary<string, string> dic = GetWebAccessTokenParms(nonce, timestamp, null, null);
 			dic.Add(OAuthHelper.X_AUTH_MODE, OAuthHelper.CLIENT_AUTH);
 			dic.Add(OAuthHelper.X_AUTH_PASSWORD, password);
 			dic.Add(OAuthHelper.X_AUTH_USERNAME, username);
@@ -78,7 +134,7 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 			return dic;
 		}
 
-		private static Dictionary<string, string> GetWebAccessTokenParms(string nonce, string timestamp, string callback)
+		private static Dictionary<string, string> GetWebAccessTokenParms(string nonce, string timestamp, string callback, string verifier)
 		{
 			Dictionary<string, string> dic = new Dictionary<string, string>();
 			if (!string.IsNullOrEmpty(callback))
@@ -88,34 +144,39 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 			dic.Add(OAuthHelper.OAUTH_SIGNATURE_METHOD, OAuthHelper.HMAC_SHA1);
 			dic.Add(OAuthHelper.OAUTH_TIMESTAMP, timestamp);
 			dic.Add(OAuthHelper.OAUTH_VERSION, OAuthHelper.OAUTH_VERSION_10);
+			if (!string.IsNullOrEmpty(verifier))
+				dic.Add(OAuthHelper.OAUTH_VERIFIER, verifier);
 
 			return dic;
 		}
 
-		internal static string AuthorizationHeader(string nonce, string signature, string timestamp, string oAuthToken)
+		internal static string AuthorizationHeader(string nonce, string signature, string timestamp, string oAuthToken, string pin)
 		{
-			return AuthorizationHeader(nonce, signature, timestamp, oAuthToken, false);
+			return AuthorizationHeader(nonce, signature, timestamp, oAuthToken, false, pin);
 		}
 
-		internal static string AuthorizationHeader(string nonce, string signature, string timestamp, string oAuthToken, bool withCallback)
+		internal static string AuthorizationHeader(string nonce, string signature, string timestamp, string oAuthToken, bool withCallback, string pin)
 		{
 			OnAuthenticationNeeded();
 
 			string token = string.Empty;
 			if (!string.IsNullOrEmpty(oAuthToken))
-				token = OAuthHelper.OAUTH_TOKEN + "=\"" + Util.EncodeString(oAuthToken) + "\", ";
+				token = $"{OAuthHelper.OAUTH_TOKEN}=\"{Util.EncodeString(oAuthToken)}\", ";
 
+			string callBack = "";
 			if (withCallback)
-				return $"OAuth oauth_callback=\"oob\", oauth_consumer_key=\"{Util.EncodeString(CONSUMER_KEY)}\", oauth_nonce=\"{nonce}\", oauth_signature=\"{Util.EncodeString(signature)}\", oauth_signature_method=\"HMAC-SHA1\", oauth_timestamp=\"{timestamp}\", {token}oauth_version=\"1.0\"";
+				callBack = $"{OAuthHelper.OAUTH_CALLBACK}=\"oob\", ";
+			if (!string.IsNullOrEmpty(pin))
+				pin = $"{OAuthHelper.OAUTH_VERIFIER}=\"{pin}\", ";
 
-			return $"OAuth oauth_nonce=\"{nonce}\", oauth_signature_method=\"{OAuthHelper.HMAC_SHA1}\", oauth_timestamp=\"{timestamp}\", oauth_consumer_key=\"{Util.EncodeString(CONSUMER_KEY)}\", {token} oauth_signature=\"{Util.EncodeString(signature)}\", oauth_version=\"1.0\"";
+			return $"OAuth {callBack}oauth_nonce=\"{nonce}\", oauth_signature_method=\"{OAuthHelper.HMAC_SHA1}\", oauth_timestamp=\"{timestamp}\", oauth_consumer_key=\"{Util.EncodeString(CONSUMER_KEY)}\", {token} oauth_signature=\"{Util.EncodeString(signature)}\", {pin}oauth_version=\"1.0\"";
 		}
 
-		internal static string WebAuthorizationHeader(string nonce, string signature, string timestamp, string callback)
+		internal static string WebAuthorizationHeader(string nonce, string signature, string timestamp, string pin)
 		{
 			OnAuthenticationNeeded();
 
-			return $"OAuth oauth_nonce=\"{nonce}\", oauth_callback=\"{Util.EncodeString(callback)}\", oauth_signature_method=\"{OAuthHelper.HMAC_SHA1}\", oauth_timestamp=\"{timestamp}\", oauth_consumer_key=\"{Util.EncodeString(CONSUMER_KEY)}\", oauth_signature=\"{Util.EncodeString(signature)}\", oauth_version=\"1.0\"";
+			return $"OAuth oauth_nonce=\"{nonce}\", oauth_signature_method=\"{OAuthHelper.HMAC_SHA1}\", oauth_timestamp=\"{timestamp}\", oauth_consumer_key=\"{Util.EncodeString(CONSUMER_KEY)}\", oauth_signature=\"{Util.EncodeString(signature)}\", oauth_verifier=\"{pin}\", oauth_version=\"1.0\"";
 		}
 
 		#region utils

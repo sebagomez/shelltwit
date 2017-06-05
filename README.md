@@ -33,7 +33,7 @@ In order to build the .net core project you need to run the [build.bat](./shellt
 This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), and it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/) <img src="res//works on my machine.png" alt="Works on my machine" height="50">.
 
 ```
-@SebaGomez (R) shelltwit version 5.0.0.31862 for Microsoft Windows 10.0.14393
+@SebaGomez (R) shelltwit version 6.0.0.0 for Microsoft Windows 10.0.15063
 Copyright (C) @sebagomez. All rights reserved.
 
 Usage: twit /q <query>|/c|/tl|/m|/l|/s <track>|/u <user>|/?|<status> [<mediaPath>]

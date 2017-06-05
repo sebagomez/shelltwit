@@ -77,7 +77,7 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 			Dictionary<string, string> parms = GetParms(nonce, timestamp, options, callBack, imageUpload);
 			string signatureBase = SignatureBsseString(method.Method, baseUrl, parms);
 			string signature = OAuthAuthenticator.SignBaseString(signatureBase, options.User.OAuthTokenSecret);
-			string authHeader = OAuthAuthenticator.AuthorizationHeader(nonce, signature, timestamp, options.User.OAuthToken, callBack);
+			string authHeader = OAuthAuthenticator.AuthorizationHeader(nonce, signature, timestamp, options.User.OAuthToken, callBack, string.Empty);
 
 			HttpRequestMessage reqMsg = new HttpRequestMessage(method, url);
 			reqMsg.Headers.Add(Constants.HEADERS.AUTHORIZATION, authHeader);

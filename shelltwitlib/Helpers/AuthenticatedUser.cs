@@ -17,10 +17,6 @@ namespace Sebagomez.ShelltwitLib.Helpers
 
 		static string s_configFile = Path.Combine(Util.FilesLocation, USER_FILE);
 
-		public string Username { get; set; }
-
-		public string Password { get; set; }
-
 		[XmlAttribute]
 		[DataMember]
 		public string OAuthToken { get; set; }
@@ -33,10 +29,8 @@ namespace Sebagomez.ShelltwitLib.Helpers
 		{
 		}
 
-		public AuthenticatedUser(string user, string password, string token, string tokensecret)
+		public AuthenticatedUser(string token, string tokensecret)
 		{
-			Username = user;
-			Password = password;
 			OAuthToken = token;
 			OAuthTokenSecret = tokensecret;
 		}
@@ -67,34 +61,36 @@ namespace Sebagomez.ShelltwitLib.Helpers
 			AuthenticatedUser twiUser = new AuthenticatedUser();
 			if (!File.Exists(s_configFile))
 			{
-				Console.WriteLine("Enter Twitter username...");
-				twiUser.Username = Console.ReadLine();
+				string token = OAuthAuthenticator.GetOAuthToken().Result;
+				Console.WriteLine("Please open your favorite browser and go to this URL to authenticate with Twitter:");
+				Console.WriteLine($"https://api.twitter.com/oauth/authorize?oauth_token={token}");
+				Console.Write("Insert the pin here:");
 
-				Console.WriteLine("Enter Twitter password...");
-				twiUser.Password = Console.ReadLine();
+				string pin = Console.ReadLine();
+
+				string accessToken = OAuthAuthenticator.GetPINToken(token, pin).Result;
+				twiUser.SerializeTokens(accessToken);
+				Console.WriteLine("Sucess!");
+				Console.WriteLine("");
 			}
 			else
 			{
 				twiUser = Deserialize();
 			}
 
-			if (string.IsNullOrEmpty(twiUser.OAuthToken) || string.IsNullOrEmpty(twiUser.OAuthTokenSecret))
-				twiUser.SetOAuthCredentials().Wait();
-
 			return twiUser;
 		}
 
-		public async Task SetOAuthCredentials()
+		public void SerializeTokens(string accessTokens)
 		{
-			string accessToken = await OAuthAuthenticator.GetAccessToken(Username, Password);
-			string[] tokens = accessToken.Split(new char[] {'&'},StringSplitOptions.RemoveEmptyEntries);
+			string[] tokens = accessTokens.Split(new char[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
 
 			foreach (string tok in tokens)
 			{
 				string[] props = tok.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
 				if (props[0] != OAUTH_TOKEN && props[0] != OAUTH_TOKEN_SECRET)
 					continue;
-				
+
 				if (props[0] == OAUTH_TOKEN)
 					OAuthToken = props[1];
 				else if (props[0] == OAUTH_TOKEN_SECRET)

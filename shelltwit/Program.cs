@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using Sebagomez.ShelltwitLib.API.Options;
 using Sebagomez.ShelltwitLib.API.Tweets;
 using Sebagomez.ShelltwitLib.Entities;
@@ -160,6 +161,7 @@ namespace Sebagomez.Shelltwit
 
 		static void PrintTwit(Status twit)
 		{
+			Console.OutputEncoding = new UTF8Encoding();
 			Console.WriteLine($"{twit.user.name} (@{twit.user.screen_name}): {twit.text}");
 		}
 

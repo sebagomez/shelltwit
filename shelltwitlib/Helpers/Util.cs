@@ -103,6 +103,9 @@ namespace Sebagomez.ShelltwitLib.Helpers
 						message = reader.ReadToEnd();
 				}
 			}
+			else if (ex.InnerException != null)
+				return ExceptionMessage(ex.InnerException);
+
 
 			return message;
 		}
