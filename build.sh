@@ -6,4 +6,5 @@ cp ./BitLyHelper/Util.cs ./BitLyHelper/BitLyUtil.cs --verbose
 cp ./BitLyHelper/BitLyUtil.cs ./shelltwitcore/ --verbose
 rm ./BitLyHelper/BitLyUtil.cs --verbose
 cd shelltwitcore
-dotnet restore && dotnet build 
+dotnet restore 
+dotnet build 
