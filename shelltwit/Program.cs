@@ -29,6 +29,8 @@ namespace Sebagomez.Shelltwit
 			{
 				//Debug.Assert(false, "Attach VS here!");
 
+				Console.OutputEncoding = new UTF8Encoding();
+
 				PrintHeader();
 
 				BaseAPI.SetMessageAction(message => Console.WriteLine(message));
@@ -161,7 +163,6 @@ namespace Sebagomez.Shelltwit
 
 		static void PrintTwit(Status twit)
 		{
-			Console.OutputEncoding = new UTF8Encoding();
 			Console.WriteLine($"{twit.user.name} (@{twit.user.screen_name}): {twit.text}");
 		}
 
