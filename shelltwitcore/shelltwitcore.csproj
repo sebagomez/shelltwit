@@ -17,12 +17,75 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <SignAssembly>False</SignAssembly>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;NETCOREAPP1_1</DefineConstants>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;RELEASE;NETCOREAPP1_1</DefineConstants>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\BitLyHelper\Util.cs" Link="BitLy\Util.cs" />
+    <Compile Include="..\CommonAssemblyInfo.cs" Link="Properties\CommonAssemblyInfo.cs" />
+    <Compile Include="..\shelltwitlib\API\OAuth\OAuthAuthenticator.cs" Link="lib\API\OAuth\OAuthAuthenticator.cs" />
+    <Compile Include="..\shelltwitlib\API\OAuth\OAuthHelper.cs" Link="lib\API\OAuth\OAuthHelper.cs" />
+    <Compile Include="..\shelltwitlib\API\Options\LikesOptions.cs" Link="lib\API\Options\LikesOptions.cs" />
+    <Compile Include="..\shelltwitlib\API\Options\MentionsOptions.cs" Link="lib\API\Options\MentionsOptions.cs" />
+    <Compile Include="..\shelltwitlib\API\Options\SearchOptions.cs" Link="lib\API\Options\SearchOptions.cs" />
+    <Compile Include="..\shelltwitlib\API\Options\StreammingFilterOptions.cs" Link="lib\API\Options\StreammingFilterOptions.cs" />
+    <Compile Include="..\shelltwitlib\API\Options\TimelineOptions.cs" Link="lib\API\Options\TimelineOptions.cs" />
+    <Compile Include="..\shelltwitlib\API\Options\TwitterOptions.cs" Link="lib\API\Options\TwitterOptions.cs" />
+    <Compile Include="..\shelltwitlib\API\Options\UpdateOptions.cs" Link="lib\API\Options\UpdateOptions.cs" />
+    <Compile Include="..\shelltwitlib\API\Options\UserTimelineOptions.cs" Link="lib\API\Options\UserTimelineOptions.cs" />
+    <Compile Include="..\shelltwitlib\API\Tweets\BaseAPI.cs" Link="lib\API\Tweets\BaseAPI.cs" />
+    <Compile Include="..\shelltwitlib\API\Tweets\Likes.cs" Link="lib\API\Tweets\Likes.cs" />
+    <Compile Include="..\shelltwitlib\API\Tweets\Mentions.cs" Link="lib\API\Tweets\Mentions.cs" />
+    <Compile Include="..\shelltwitlib\API\Tweets\Search.cs" Link="lib\API\Tweets\Search.cs" />
+    <Compile Include="..\shelltwitlib\API\Tweets\StreamingFilter.cs" Link="lib\API\Tweets\StreamingFilter.cs" />
+    <Compile Include="..\shelltwitlib\API\Tweets\Timeline.cs" Link="lib\API\Tweets\Timeline.cs" />
+    <Compile Include="..\shelltwitlib\API\Tweets\Update.cs" Link="lib\API\Tweets\Update.cs" />
+    <Compile Include="..\shelltwitlib\API\Tweets\UserTimeline.cs" Link="lib\API\Tweets\UserTimeline.cs" />
+    <Compile Include="..\shelltwitlib\Entities\Media.cs" Link="lib\Entities\Media.cs" />
+    <Compile Include="..\shelltwitlib\Entities\SearchMetadata.cs" Link="lib\Entities\SearchMetadata.cs" />
+    <Compile Include="..\shelltwitlib\Entities\SearchResult.cs" Link="lib\Entities\SearchResult.cs" />
+    <Compile Include="..\shelltwitlib\Entities\Status.cs" Link="lib\Entities\Status.cs" />
+    <Compile Include="..\shelltwitlib\Entities\UpdateError.cs" Link="lib\Entities\UpdateError.cs" />
+    <Compile Include="..\shelltwitlib\Entities\User.cs" Link="lib\Entities\User.cs" />
+    <Compile Include="..\shelltwitlib\Helpers\AuthenticatedUser.cs" Link="lib\Helpers\AuthenticatedUser.cs" />
+    <Compile Include="..\shelltwitlib\Helpers\Settings.cs" Link="lib\Helpers\Settings.cs" />
+    <Compile Include="..\shelltwitlib\Helpers\Util.cs" Link="lib\Helpers\Util.cs" />
+    <Compile Include="..\shelltwitlib\Helpers\WebAccessToken.cs" Link="lib\Helpers\WebAccessToken.cs" />
+    <Compile Include="..\shelltwitlib\Web\Constants.cs" Link="lib\Web\Constants.cs" />
+    <Compile Include="..\shelltwit\Program.cs" Link="Program.cs" />
+    <Compile Include="..\shelltwit\Properties\AssemblyInfo.cs" Link="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\shelltwit\Util.cs" Link="Util.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\shelltwit\private.twit.data" Link="private.twit.data" />
+    <None Include="..\shelltwit\twit.data" Link="twit.data" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Runtime.Serialization.Json" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Xml" Version="4.3.0" />
     <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="lib\API\Tweets\" />
+    <Folder Include="lib\API\Options\" />
+    <Folder Include="lib\API\OAuth\" />
+    <Folder Include="lib\Entities\" />
+    <Folder Include="lib\Helpers\" />
+    <Folder Include="lib\Web\" />
+    <Folder Include="BitLy\" />
   </ItemGroup>
 
 </Project>
