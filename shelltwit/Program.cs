@@ -88,9 +88,9 @@ namespace Sebagomez.Shelltwit
 					}
 				}
 
-				if (args[0].StartsWith("\\") || args[0].Length == 1)
+				if (args[0].StartsWith("\\") || (args.Length == 1 && args[0].Length == 1))
 				{
-					Console.WriteLine("Really? do you really wanna twit that?. [T]wit, or [N]o sorry, I messed up...");
+					Console.WriteLine($"Really? do you really wanna twit \"{string.Join(" ",args)}\"?{Environment.NewLine}[T]wit, or [N]o sorry, I messed up...");
 					ConsoleKeyInfo input = Console.ReadKey();
 					while (input.Key != ConsoleKey.T && input.Key != ConsoleKey.N)
 					{
