@@ -5,6 +5,11 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>Sebagomez.Shelltwit</RootNamespace>
     <AssemblyName>Sebagomez.Shelltwit</AssemblyName>
+    <Description>Minimalist command line Twitter client. Post a twit, view your timeline and mentions.</Description>
+    <Version>6.2.0.0</Version>
+    <StartupObject>Sebagomez.Shelltwit.Program</StartupObject>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>C:\Users\user\OneDrive\Documents\Personales\secure\sebagomez.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,7 +19,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="packages.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs" Link="Properties\CommonAssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\Users\user\OneDrive\Documents\Personales\secure\sebagomez.snk" Link="sebagomez.snk" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\shelltwitlib\shelltwitlibCore.csproj" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy *.data $(TargetDir)" />
+  </Target>
 
 </Project>

@@ -21,13 +21,12 @@ namespace Sebagomez.ShelltwitLib.Helpers
 
 		static Settings()
 		{
-			try
-			{
-				s_instance = GetData(GetFullPath(s_settingsFile));
-				while (s_instance != null && string.IsNullOrEmpty(s_instance.ConsumerKey) && string.IsNullOrEmpty(s_instance.ConsumerSecret) && !string.IsNullOrEmpty(s_instance.RefFile) && File.Exists(GetFullPath(s_instance.RefFile)))
-					s_instance = GetData(GetFullPath(s_instance.RefFile));
-			}
-			catch { }
+			s_instance = GetData(GetFullPath(s_settingsFile));
+			while (s_instance != null && string.IsNullOrEmpty(s_instance.ConsumerKey) && string.IsNullOrEmpty(s_instance.ConsumerSecret) && !string.IsNullOrEmpty(s_instance.RefFile) && File.Exists(GetFullPath(s_instance.RefFile)))
+				s_instance = GetData(GetFullPath(s_instance.RefFile));
+
+			if (s_instance == null)
+				throw new Exception("Missing configuration file");
 		}
 
 		static string GetFullPath(string fileName)
@@ -47,7 +46,7 @@ namespace Sebagomez.ShelltwitLib.Helpers
 			}
 			catch
 			{
-				return new Settings();
+				return null;
 			}
 		}
 	}
