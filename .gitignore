@@ -7,12 +7,11 @@ packages/
 *.testsettings
 *.suo
 *.user
-launchSettings.json
-
 
 SecureData.txt
 shelltwit/private.twit.data
 shelltwit/BuildMergeDeploy.bat
+shelltwit/Properties/launchSettings.json
 WebTester/
 shelltwit_tester/
 shelltwit/output
