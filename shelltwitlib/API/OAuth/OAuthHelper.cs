@@ -34,18 +34,18 @@ namespace Sebagomez.ShelltwitLib.API.OAuth
 
 		internal static string GetNonce()
 		{
-			return Util.EncodeString(Guid.NewGuid().ToString().Replace("-",""));
+			return Util.EncodeString(Guid.NewGuid().ToString().Replace("-", ""));
 		}
 
 		internal static string GetTimestamp()
 		{
 			TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
-			return Convert.ToInt64(ts.TotalSeconds).ToString();            
+			return Convert.ToInt64(ts.TotalSeconds).ToString();
 		}
 
-		internal static string SignatureBsseString(string method, string url, Dictionary<string,string> parms)
+		internal static string SignatureBsseString(string method, string url, Dictionary<string, string> parms)
 		{
-			IEnumerable<KeyValuePair<string,string>> sortedParms = parms.OrderBy(parm => parm.Key);
+			IEnumerable<KeyValuePair<string, string>> sortedParms = parms.OrderBy(parm => parm.Key);
 
 			StringBuilder builder = new StringBuilder($"{method}&{Util.EncodeString(url)}&");
 			foreach (KeyValuePair<string, string> p in sortedParms)

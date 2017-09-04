@@ -61,7 +61,7 @@ namespace Sebagomez.Shelltwit
 							PrintTwits(Mentions.GetMentions().Result);
 							return;
 						case SEARCH:
-							SearchOptions options = new SearchOptions { Query = string.Join(" ", args).Substring(2), User = AuthenticatedUser.LoadCredentials() };
+							SearchOptions options = new SearchOptions { Query = string.Join(" ", args.Skip(1)), User = AuthenticatedUser.LoadCredentials() };
 							PrintTwits(Search.SearchTweets(options).Result);
 							return;
 						case LIKES:
@@ -74,10 +74,11 @@ namespace Sebagomez.Shelltwit
 							PrintTwits(UserTimeline.GetUserTimeline(usrOptions).Result);
 							return;
 						case STREAMING:
-							if (args.Length != 2)
+							if (args.Length == 1)
 								throw new ArgumentNullException("streaming", "The track must be provided");
-							StreammingFilterOptions streamingOptions = new StreammingFilterOptions { Track = args[1] };
-							Console.WriteLine("Starting live streaming, press ctrl+c to quit");
+							string track = string.Join(" ", args.Skip(1));
+							StreammingFilterOptions streamingOptions = new StreammingFilterOptions { Track = track };
+							Console.WriteLine($"Starting live streaming for '{track}', press ctrl+c to quit");
 							foreach (Status s in StreamingFilter.GetStreamingTimeline(streamingOptions))
 								PrintTwit(s);
 							return;
