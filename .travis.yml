@@ -11,7 +11,10 @@ script:
 deploy:
  provider: releases
  api_key: MHeY4VQafp3D8ZphW0eW/UGObksD0iot6NHV8x4EHyYDECv5JwKs/w7XYRTyaLUSM62cXBkPIxoe1UT/kxJoOfY6FnxiecMfDIJ9wDFU+wDU6Q2/uAPBj7xIAX7G1he4JnaupgpCOTVCSbsnWnbZB6OHK6IWGEdiFQfAgVwlzvAs98RdNiQr5mwCODdIM9Cs/hqhgt/ZfUIguSBGYPpSllNxn3yh3HHfhlyz55ajlf6mCkBUZ05gP0Zd3Z4jcfrLGzWzvpIrFE/GE46hKnEE1i0m3bVetRth5WyIgte6X6s4zZ4La50ZVxON4/lEKvsalk640HBdRr93Ck3S2lyr1jrLTE24hdvKpFn2f09KmOx/4AVZ0EMHpfe1LKbNvLsScxcD7YNOmsc2928mAQBNkBSmrGBHcMNjOzA+VkQvH6taI/GsbFSIZC+kl54aOAlVBjuddW3KQj+U7QVH6hLzi/d4ayJ8pz2ALvNnC1vWL6lJEPkIj+106NivsjEIkJnM3pWfMAQnCmGjjS1lFA2gEFF+92xaqmRwVDLc5EUm3KApJXwriBI5j3pPVLrqXmaNDv4DaPLL8neW3QjjktZ5wLacmD9PQbGfUg6yS/JiMh1I99ZjFIE42z/IS7lbhT1/ea+pYfQKF7OC2sVP2+aLBK8RNDpiwvAINl8P1uCNLpY=
- file: *.dll
+ file: 
+ - "Sebagomez.BitLyHelper.dll"
+ - "Sebagomez.ShelltwitLib.dll"
+ - "Sebagomez.Shelltwit.dll"
  skip_cleanup: true
  on:
   tags: true
