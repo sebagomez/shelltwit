@@ -2,6 +2,7 @@
 language: csharp
 dist: trusty
 sudo: required
+mono: none
 dotnet: 2.0.0
 before_script:
  - chmod a+x ./build.sh
@@ -17,4 +18,3 @@ deploy:
   - "Sebagomez.Shelltwit.dll"
   on:
     tags: true
-
