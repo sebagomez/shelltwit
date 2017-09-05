@@ -28,14 +28,14 @@ Build
 -----
 After downloading the source files build the sln with Visual Studio 2017 (framework 4.6)
 
-There's also a [.net core](https://www.microsoft.com/net/core#windows) 1.1 solution called [shelltwitcore.sln](shelltwitcore.sln) (figures). You can also open that up with Visual Studio 2017 or go straight to the shelltwitcore folder and work with [Visual Studio Code](https://code.visualstudio.com/) from there. 
+There's also a [.net core](https://www.microsoft.com/net/core#windows) 2.0 solution called [shelltwitcore.sln](shelltwitcore.sln) (figures). You can also open that up with Visual Studio 2017. 
 Since .net core 1.1 there's a csproj file so you just build that project and that's it.
 This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), and it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/) <img src="res//works on my machine.png" alt="Works on my machine" height="50">.
 
 For my next trick I'll create a docker image so it will definetely works on yours too.
 
 ```
-@SebaGomez (R) shelltwit version 6.0.0.0 for Microsoft Windows 10.0.15063
+@SebaGomez (R) shelltwit version 6.2.1.0 for Microsoft Windows 10.0.15063
 Copyright (C) @sebagomez. All rights reserved.
 
 Usage: twit /q <query>|/c|/tl|/m|/l|/s <track>|/u <user>|/?|<status> [<mediaPath>]
