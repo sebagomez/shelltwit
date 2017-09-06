@@ -35,19 +35,19 @@ This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows
 For my next trick I'll create a docker image so it will definetely works on yours too.
 
 ```
-@SebaGomez (R) shelltwit version 6.2.1.0 for Microsoft Windows 10.0.15063
+@SebaGomez (R) shelltwit version 6.3.0.0 for Microsoft Windows 10.0.15063
 Copyright (C) @sebagomez. All rights reserved.
 
-Usage: twit /q <query>|/c|/tl|/m|/l|/s <track>|/u <user>|/?|<status> [<mediaPath>]
+Usage: twit -q <query>|-c|-tl|-m|-l|-s <track>|-u <user>|-?|<status> [<mediaPath>]
 
-/c              : clears user stored credentials
-/tl             : show user's timeline (default)
-/q              : query twits containing words
-/m              : show user's mentions
-/u user         : show another user's timeline
-/s track        : live status with a specific track
-/l              : user's likes (fka favorites)
-/?              : show this help
+-c              : clears user stored credentials
+-tl             : show user's timeline (default)
+-q              : query twits containing words
+-m              : show user's mentions
+-u user         : show another user's timeline
+-s track        : live status with a specific track
+-l              : user's likes (fka favorites)
+-?              : show this help
 status          : status to update at twitter.com
 mediaPath       : full path, between brackets, to the media files (up to four) to upload.
 ```
