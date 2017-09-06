@@ -14,14 +14,14 @@ namespace Sebagomez.Shelltwit
 {
 	class Program
 	{
-		const string CLEAR = "/c";
-		const string SEARCH = "/q";
-		const string TIME_LINE = "/tl";
-		const string HELP = "/?";
-		const string MENTIONS = "/m";
-		const string USER = "/u";
-		const string LIKES = "/l";
-		const string STREAMING = "/s";
+		const string CLEAR = "-c";
+		const string SEARCH = "-q";
+		const string TIME_LINE = "-tl";
+		const string HELP = "-?";
+		const string MENTIONS = "-m";
+		const string USER = "-u";
+		const string LIKES = "-l";
+		const string STREAMING = "-s";
 
 		static void Main(string[] args)
 		{
@@ -42,7 +42,7 @@ namespace Sebagomez.Shelltwit
 				}
 
 
-				if (args[0].StartsWith("/"))
+				if (args[0].StartsWith("-"))
 				{
 					string flag = args[0].ToLower().Trim();
 					switch (flag)
@@ -191,16 +191,16 @@ namespace Sebagomez.Shelltwit
 
 		static void ShowUsage()
 		{
-			Console.WriteLine("Usage: twit /q <query>|/c|/tl|/m|/l|/s <track>|/u <user>|/?|<status> [<mediaPath>]");
+			Console.WriteLine("Usage: twit -q <query>|-c|-tl|-m|-l|-s <track>|-u <user>|-?|<status> [<mediaPath>]");
 			Console.WriteLine("");
-			Console.WriteLine("/c 		: clears user stored credentials");
-			Console.WriteLine("/tl 		: show user's timeline (default)");
-			Console.WriteLine("/q 		: query twits containing words");
-			Console.WriteLine("/m 		: show user's mentions");
-			Console.WriteLine("/u user		: show another user's timeline");
-			Console.WriteLine("/s track	: live status with a specific track");
-			Console.WriteLine("/l		: user's likes (fka favorites)");
-			Console.WriteLine("/? 		: show this help");
+			Console.WriteLine("-c 		: clears user stored credentials");
+			Console.WriteLine("-tl 		: show user's timeline (default)");
+			Console.WriteLine("-q 		: query twits containing words");
+			Console.WriteLine("-m 		: show user's mentions");
+			Console.WriteLine("-u user		: show another user's timeline");
+			Console.WriteLine("-s track	: live status with a specific track");
+			Console.WriteLine("-l		: user's likes (fka favorites)");
+			Console.WriteLine("-? 		: show this help");
 			Console.WriteLine("status	 	: status to update at twitter.com");
 			Console.WriteLine("mediaPath	: full path, between brackets, to the media files (up to four) to upload.");
 			Console.WriteLine("");
