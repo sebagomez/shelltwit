@@ -16,5 +16,6 @@ deploy:
   - "$TRAVIS_BUILD_DIR/BitLyHelper/bin/Release/Sebagomez.BitLyHelper.dll"
   - "$TRAVIS_BUILD_DIR/shelltwitlib/bin/Release/Sebagomez.ShelltwitLib.dll"
   - "$TRAVIS_BUILD_DIR/shelltwit/bin/Release/Sebagomez.Shelltwit.dll"
+  skip_cleanup: true
   on:
     tags: true
