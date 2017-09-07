@@ -18,4 +18,4 @@ deploy:
   - "$TRAVIS_BUILD_DIR/shelltwit/bin/Release/Sebagomez.Shelltwit.dll"
   skip_cleanup: true
   on:
-    tags: true
+    branch: master
