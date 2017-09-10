@@ -3,7 +3,6 @@ shelltwit
 =========
 
 [![Join the chat at https://gitter.im/sebagomez/shelltwit](https://badges.gitter.im/sebagomez/shelltwit.svg)](https://gitter.im/sebagomez/shelltwit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Appveyor Build status](https://ci.appveyor.com/api/projects/status/1m0mqeskgew1ry4o?svg=true)](https://ci.appveyor.com/project/sebagomez/shelltwit)
 [![Travis Build Status](https://travis-ci.org/sebagomez/shelltwit.svg?branch=master)](https://travis-ci.org/sebagomez/shelltwit)
 
 shelltwit allows you to update your twitter status via command line. It also has bit.ly integration for url shortening.
@@ -23,22 +22,22 @@ Implemented Twitter APIs
 - [Search](https://dev.twitter.com/rest/public/search)
 - [Favorites List](https://dev.twitter.com/rest/reference/get/favorites/list)
 - [Streaming statuses](https://dev.twitter.com/streaming/reference/post/statuses/filter)
+- [Streaming user](https://dev.twitter.com/streaming/userstreams)
 
 Build
 -----
-After downloading the source files build the sln with Visual Studio 2017 (framework 4.6)
+As of Sep 10th 2017 there's a single solution in .net Core 2.0. The old .net framework 4.6 was removed since there was no reason to keep both of them.
+After downloading the repo just build the sln with Visual Studio 2017 (15.3)
 
-There's also a [.net core](https://www.microsoft.com/net/core#windows) 2.0 solution called [shelltwitcore.sln](shelltwitcore.sln) (figures). You can also open that up with Visual Studio 2017. 
-Since .net core 1.1 there's a csproj file so you just build that project and that's it.
 This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), and it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/) <img src="res//works on my machine.png" alt="Works on my machine" height="50">.
 
 For my next trick I'll create a docker image so it will definetely works on yours too.
 
 ```
-@SebaGomez (R) shelltwit version 6.3.0.0 for Microsoft Windows 10.0.15063
+Sebagomez.Shelltwit version 7.0.0.0 for Microsoft Windows 10.0.15063
 Copyright (C) @sebagomez. All rights reserved.
 
-Usage: twit -q <query>|-c|-tl|-m|-l|-s <track>|-u <user>|-?|<status> [<mediaPath>]
+Usage: twit -q <query>|-c|-tl|-m|-l|-s <track>|-stl|-u <user>|-?|<status> [<mediaPath>]
 
 -c              : clears user stored credentials
 -tl             : show user's timeline (default)
@@ -46,6 +45,7 @@ Usage: twit -q <query>|-c|-tl|-m|-l|-s <track>|-u <user>|-?|<status> [<mediaPath
 -m              : show user's mentions
 -u user         : show another user's timeline
 -s track        : live status with a specific track
+-stl            : streamed user tl
 -l              : user's likes (fka favorites)
 -?              : show this help
 status          : status to update at twitter.com
