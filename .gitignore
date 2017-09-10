@@ -7,18 +7,9 @@ packages/
 *.testsettings
 *.suo
 *.user
+*.usr
 
 SecureData.txt
-shelltwit/private.twit.data
-shelltwit/BuildMergeDeploy.bat
-shelltwit/Properties/launchSettings.json
-WebTester/
-shelltwit_tester/
-shelltwit/output
-shelltwit/shelltwit.nrproj
+twit.data
 
-PortabilityAnalysis*.html
-shelltwit.sln
-BitlyHelper/BitlyHelper.csproj
-shelltwitlib/shelltwitlib.csproj
-shelltwit/shelltwit.csproj
+Docker/app/
