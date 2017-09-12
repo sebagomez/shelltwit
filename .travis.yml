@@ -8,6 +8,7 @@ before_script:
 script:
 - "./build.sh"
 before_deploy:
+- chmod a+x ./publish.sh
 - "./publish.sh"
 deploy:
   provider: releases
