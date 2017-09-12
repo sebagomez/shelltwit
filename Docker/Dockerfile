@@ -11,7 +11,7 @@ RUN mkdir twit
 
 WORKDIR twit
 
-COPY app/ .
+COPY https://github.com/sebagomez/shelltwit/archive/s7.zip .
 
 ENTRYPOINT ["dotnet", "Sebagomez.Shelltwit.dll"] 
 
