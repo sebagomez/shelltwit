@@ -11,7 +11,10 @@ RUN mkdir twit
 
 WORKDIR twit
 
-COPY https://github.com/sebagomez/shelltwit/archive/s7.zip .
+ADD https://github.com/sebagomez/shelltwit/releases/download/7.0.0.2/shelltwit.tar.gz ./
+
+RUN tar xvf shelltwit.tar.gz
 
 ENTRYPOINT ["dotnet", "Sebagomez.Shelltwit.dll"] 
 
+#ENTRYPOINT ["bash"] 
