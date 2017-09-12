@@ -16,4 +16,4 @@ deploy:
   file: src/shelltwit/bin/Release/netcoreapp2.0/publish/*
   skip_cleanup: true
   on:
-    repo: sebagomez/shelltwit
+    tags: true
