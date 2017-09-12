@@ -1,22 +1,18 @@
-# taken from https://rimdev.io/building-net-core-on-travis-ci/
 language: csharp
 dist: trusty
 sudo: required
 mono: none
 dotnet: 2.0.0
 before_script:
- - chmod a+x ./build.sh
+- chmod a+x ./build.sh
 script:
- - ./build.sh
+- "./build.sh"
 before_deploy:
-  - ./publish.sh
+- "./publish.sh"
 deploy:
   provider: releases
   api_key:
-    secure: 25c4cbb59090ac20ce75b275dba3beb84e368f6b
-  file:
-    - "FILE 1"
-    - "FILE 2"
-  skip_cleanup: true
+    secure: oI3sjxaqtND07L8DySCqVPVoXR9M+tTSbgPrrn11a2WvAIxzp23gPrXAc9lW1l4GYRD7P/8d3l1np5hbSODwsDzXws9ald195z5m2cwjmCzr63Fn2IezzPzF7/E7r+UAv4fc4nsvKgEyLUWzGy1IVf2b/7wxziIPsM3vQSqExz0geM+z9Eu0SUNNiSHdFOB+aGHS5cAwWtYrQmuMeJhf4ir9LJwHDaZENu4V4sMEsyq+jJm3h1bE4JVfuz+wVF+DSpbTRZ/LyCXUNzpFtTJpafIaSXnx0JWQTwxkQxxdwycG89NCEnujBdY6wLgT/s3F8OMbN9OhWoLMxd9lZTGHvSCfAS/kscz7QNXJfab0rbs6u2C6SLa6rVut16GYXdeU6Q67CBD5uTYJ31wSQmn3GHKPvdXPXJZXuK72P9ofrT1wJ1qDlarTIKVQ7mbhLQtb5fb0b2GQdJL235RBgz24sM4euYJqDAe050UmcNv7sy8a71i2lxBXmjNvrZsPIQjA4vKppQK2AN3xcPCox4IMvEaL7aXXSrA//tLgSNkreHWyS6nb1TM4hqQxXmXQvtyWIv3YKUAcqxYbpPK5+Ggi+v4S3MHAi2XEHuDvGT+uXhCOMyEWIKV9ajUCTU/pRQbRHq72ARNi+3kRx4PVrUs4Ck+Gb7oNp2ztA19E0SLP4bg=
+  file: src/shelltwit/bin/Release/netcoreapp2.0/publish/*
   on:
-    tags: true
+    repo: sebagomez/shelltwit
