@@ -1,1 +1,1 @@
-dotnet build -c Release shelltwitcore_NOTESTS.sln
+dotnet build -c Release ./shelltwitcore_NOTESTS.sln
