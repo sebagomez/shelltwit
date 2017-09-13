@@ -1,4 +1,6 @@
 ![](https://pbs.twimg.com/client_application_images/54927/shelltwit.png)
+![](https://images.microbadger.com/badges/image/sebagomez/shelltwit.svg)](https://microbadger.com/images/sebagomez/shelltwit "Get your own image badge on microbadger.com")
+![](https://images.microbadger.com/badges/version/sebagomez/shelltwit.svg)](https://microbadger.com/images/sebagomez/shelltwit "Get your own version badge on microbadger.com")
 shelltwit
 =========
 
