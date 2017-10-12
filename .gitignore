@@ -12,6 +12,7 @@ packages/
 
 SecureData.txt
 test/SecretBaseTests.cs
+Docker/Docker.txt
 twit.data
 
 Docker/app/

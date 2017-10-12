@@ -1,8 +1,1 @@
-copy ..\bin app\
-docker build -t sebagomez/twit .
-
-REM docker run -it --name twit sebagomez/twit
-
-REM docker commit twit mytwit
-
-REM docker run --rm mytwit -q Irma
+docker build --build-arg TAG=v7.1 -t sebagomez/shelltwit:7.1 .

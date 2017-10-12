@@ -7,11 +7,14 @@ LABEL com.sebagomez.name="SebaGomez Shelltwit client" \
       com.genexus.schema-version="1.0" \
       com.genexus.maintainer="Seba Gómez <twitter.com/sebagomez>"
 
+#For automated build purposes
+ARG TAG=v7.1 
+
 RUN mkdir twit
 
 WORKDIR twit
 
-ADD https://github.com/sebagomez/shelltwit/releases/download/7.0.0.2/shelltwit.tar.gz ./
+ADD https://github.com/sebagomez/shelltwit/releases/download/$TAG/shelltwit.tar.gz ./
 
 RUN tar xvf shelltwit.tar.gz
 
