@@ -8,6 +8,9 @@ namespace Sebagomez.ShelltwitLib.Helpers
 	{
 		static string s_settingsFile = "twit.data";
 
+		public static string TWIT_KEY = "TWIT_KEY";
+		public static string TWIT_SECRET = "TWIT_SECRET";
+
 		static Settings s_instance;
 
 		public string ConsumerKey { get; set; }
@@ -26,11 +29,16 @@ namespace Sebagomez.ShelltwitLib.Helpers
 
 					if (s_instance == null)
 						s_instance = new Settings();
-						//throw new Exception("Missing configuration file");
 				}
 
 				return s_instance;
 			}
+		}
+
+		public Settings()
+		{
+			ConsumerKey = Environment.GetEnvironmentVariable(TWIT_KEY);
+			ConsumerSecret = Environment.GetEnvironmentVariable(TWIT_SECRET);
 		}
 
 		public static void NewSettings(string key, string secret)

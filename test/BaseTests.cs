@@ -7,7 +7,7 @@ using Sebagomez.ShelltwitLib.Helpers;
 namespace shelltwit_tester
 {
 	[TestClass]
-	public class BaseTests
+	public partial class BaseTests
 	{
 		internal const string MEDIA1_NAME = @"Noooooooo.jpg";
 		internal const string MEDIA2_NAME = @"Snapshot.jpg";
@@ -21,9 +21,14 @@ namespace shelltwit_tester
 				return Util.Deserialize<AuthenticatedUser>(file);
 		}
 
+		//Implement this method setting environment variables with your Twitter API Key (TWIT_KEY) and Secret (TWIT_SECRET)
+		partial void SetTwitterKeys();
+
 		public BaseTests()
 		{
 			m_user = LoadTestUser("sebatestapi");
+
+			SetTwitterKeys();
 		}
 
 		private TestContext testContextInstance;
