@@ -14,22 +14,20 @@ namespace Sebagomez.Shelltwit
 {
 	class Program
 	{
-		const string CLEAR =		"-c";
-		const string SEARCH =		"-q";
-		const string TIME_LINE =	"-tl";
-		const string HELP =			"-?";
-		const string MENTIONS =		"-m";
-		const string USER =			"-u";
-		const string LIKES =		"-l";
-		const string STREAMING =	"-s";
-		const string STREAMING_TL =	"-stl";
+		const string CLEAR =		"c";
+		const string SEARCH =		"q";
+		const string TIME_LINE =	"tl";
+		const string HELP =			"?";
+		const string MENTIONS =		"m";
+		const string USER =			"u";
+		const string LIKES =		"l";
+		const string STREAMING =	"s";
+		const string STREAMING_TL =	"stl";
 
 		static void Main(string[] args)
 		{
 			try
 			{
-				//Debug.Assert(false, "Attach VS here!");
-
 				Console.OutputEncoding = new UTF8Encoding();
 
 				PrintHeader();
@@ -40,53 +38,41 @@ namespace Sebagomez.Shelltwit
 
 				if (args.Length == 0)
 				{
-					GetUserStreamingTimeline(user);
+					Util.UserTimeLine(user);
 					return;
 				}
 
-				if (args[0].StartsWith("-"))
+				if (args[0].StartsWith("-") || args[0].StartsWith("/"))
 				{
-					string flag = args[0].ToLower().Trim();
+					string flag = args[0].Substring(1).ToLower().Trim();
 					switch (flag)
 					{
 						case CLEAR:
-							AuthenticatedUser.ClearCredentials();
-							Console.WriteLine("User credentials cleared!");
+							Util.ClearCredentials();
 							return;
 						case HELP:
 							ShowUsage();
 							return;
 						case TIME_LINE:
-							PrintTwits(Timeline.GetTimeline(new TimelineOptions { User = user }).GetAwaiter().GetResult());
+							Util.UserTimeLine(user);
 							return;
 						case MENTIONS:
-							PrintTwits(Mentions.GetMentions(new MentionsOptions { User = user }).GetAwaiter().GetResult());
+							Util.UserMentions(user);
 							return;
 						case SEARCH:
-							SearchOptions options = new SearchOptions { Query = string.Join(" ", args.Skip(1)), User = user };
-							PrintTwits(Search.SearchTweets(options).GetAwaiter().GetResult());
+							Util.UserSearch(user, args);
 							return;
 						case LIKES:
-							PrintTwits(Likes.GetUserLikes(new LikesOptions { User = user}).GetAwaiter().GetResult());
+							Util.UserLikes(user);
 							return;
 						case USER:
-							if (args.Length != 2)
-								throw new ArgumentNullException("screenname","The user' screen name must be provided");
-							UserTimelineOptions usrOptions = new UserTimelineOptions { ScreenName = args[1], User = user };
-							PrintTwits(UserTimeline.GetUserTimeline(usrOptions).GetAwaiter().GetResult());
+							Util.UserTwits(user, args);
 							return;
 						case STREAMING:
-							if (args.Length == 1)
-								throw new ArgumentNullException("streaming", "The track must be provided");
-							string track = string.Join(" ", args.Skip(1));
-							StreamingFilterOptions streamingOptions = new StreamingFilterOptions { Track = track, User = user };
-							Console.WriteLine($"Starting live streaming for '{track}', press ctrl+c to quit");
-							StreamingFilter filter = new StreamingFilter();
-							foreach (Status s in filter.GetStreamingStatus(streamingOptions))
-								PrintTwit(s);
+							Util.StreamingTrack(user, args);
 							return;
 						case STREAMING_TL:
-							GetUserStreamingTimeline(user);
+							Util.StreamingTimeLine(user);
 							return;
 						default:
 							Console.WriteLine($"Invalid flag: {flag}");
@@ -150,12 +136,6 @@ namespace Sebagomez.Shelltwit
 			Environment.Exit(0);
 		}
 
-		static void GetUserStreamingTimeline(AuthenticatedUser user)
-		{
-			StreamingUser streaing = new StreamingUser();
-			foreach (Status status in streaing.GetStreamingStatus(new StreamingUserOptions { User = user }))
-				PrintTwit(status);
-		}
 
 		private static void PrintException(Exception ex)
 		{
@@ -166,27 +146,6 @@ namespace Sebagomez.Shelltwit
 				PrintException(inner);
 				inner = inner.InnerException;
 			}
-		}
-
-		static void PrintTwits(List<Status> twits)
-		{
-			if (twits == null)
-				Console.WriteLine("No twits :(");
-			else
-				twits.ForEach(twit => PrintTwit(twit));
-		}
-
-		static void PrintTwit(Status twit)
-		{
-			Console.WriteLine($"{twit.user.name} (@{twit.user.screen_name}): {twit.text}");
-		}
-
-		static void PrintTwits(SearchResult results)
-		{
-			if (results.statuses.Length == 0)
-				Console.WriteLine("Sorry, no tweets found :(");
-			else
-				PrintTwits(results.statuses.ToList<Status>());
 		}
 
 		static void PrintHeader()
