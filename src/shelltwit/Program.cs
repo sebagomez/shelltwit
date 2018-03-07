@@ -84,16 +84,5 @@ namespace Sebagomez.Shelltwit
 			Console.WriteLine(copyRight);
 			Console.WriteLine("");
 		}
-
-		//static void ShowUsage()
-		//{
-		//	Console.WriteLine("Usage: twit [options] | <status> [<mediaPath>]");
-		//	Console.WriteLine("Options:");
-		//	foreach (Option option in Option.GetAll(new string[] { }))
-		//		Console.WriteLine("-{0}|--{1}\t{2}", option.Short, option.Long, option.Description);
-		//	Console.WriteLine("status\t\tstatus to update at twitter.com");
-		//	Console.WriteLine("mediaPath\tfull path, between brackets, to the media files (up to four) to upload.");
-		//	Console.WriteLine("");
-		//}
 	}
 }

@@ -37,20 +37,26 @@ This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows
 For my next trick I'll create a docker image so it will definetely works on yours too.
 
 ```
-Sebagomez.Shelltwit version 7.0.0.0 for Microsoft Windows 10.0.15063
+Sebagomez.Shelltwit version 7.3.1.0 for Microsoft Windows 10.0.17115
 Copyright (C) @sebagomez. All rights reserved.
 
-Usage: twit -q <query>|-c|-tl|-m|-l|-s <track>|-stl|-u <user>|-?|<status> [<mediaPath>]
+Usage: twit [options] | <status> [<mediaPath>]
 
--c              : clears user stored credentials
--tl             : show user's timeline (default)
--q              : query twits containing words
--m              : show user's mentions
--u user         : show another user's timeline
--s track        : live status with a specific track
--stl            : streamed user tl
--l              : user's likes (fka favorites)
--?              : show this help
-status          : status to update at twitter.com
-mediaPath       : full path, between brackets, to the media files (up to four) to upload.
+Options:
+        -c|--clear      clears user stored credentials
+        -tl|--timeline  show user's timeline
+        -q|--query      query twits containing words
+        -m|--mentions   show user's mentions
+        -u|--user       show another user's timeline
+        -t|--track      live status with a specific track
+        -s|--streamed   streamed user timeline
+        -l|--likes      user's likes (fka favorites)
+        -h|--help       show this help
+
+status:
+        status to update at twitter.com
+
+mediaPath:
+        full path, between brackets, to the media files (up to four) to upload.
+
 ```
