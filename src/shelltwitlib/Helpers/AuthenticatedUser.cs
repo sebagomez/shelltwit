@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Sebagomez.ShelltwitLib.API.OAuth;
 
@@ -70,7 +68,7 @@ namespace Sebagomez.ShelltwitLib.Helpers
 
 				string accessToken = OAuthAuthenticator.GetPINToken(token, pin).Result;
 				twiUser.SerializeTokens(accessToken);
-				Console.WriteLine("Sucess!");
+				Console.WriteLine("Success!");
 				Console.WriteLine("");
 			}
 			else
