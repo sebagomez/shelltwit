@@ -15,7 +15,7 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 		public static async Task<List<Status>> GetTimeline(TimelineOptions options)
 		{
 			if (options.User == null)
-				options.User = AuthenticatedUser.LoadCredentials();
+				options.User = AuthenticatedUser.CurrentUser;
 
 			HttpRequestMessage reqMsg = OAuthHelper.GetRequest(HttpMethod.Get, HOME_TIMELINE, options);
 			

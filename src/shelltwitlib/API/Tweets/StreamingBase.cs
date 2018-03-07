@@ -25,7 +25,7 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 		public IEnumerable<Status> GetStreamingStatus(StreamingOptions options)
 		{
 			if (options.User == null)
-				options.User = AuthenticatedUser.LoadCredentials();
+				options.User = AuthenticatedUser.CurrentUser;
 
 			using (HttpClient httpClient = new HttpClient())
 			{

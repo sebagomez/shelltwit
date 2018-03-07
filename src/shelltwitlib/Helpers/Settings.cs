@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 
 namespace Sebagomez.ShelltwitLib.Helpers
 {
+	[DataContract]
 	public class Settings
 	{
 		static string s_settingsFile = "twit.data";
@@ -13,8 +15,11 @@ namespace Sebagomez.ShelltwitLib.Helpers
 
 		static Settings s_instance;
 
+		[DataMember]
 		public string ConsumerKey { get; set; }
+		[DataMember]
 		public string ConsumerSecret { get; set; }
+		[DataMember]
 		public string RefFile { get; set; }
 
 		public static Settings Instance
@@ -59,7 +64,8 @@ namespace Sebagomez.ShelltwitLib.Helpers
 				using (FileStream file = File.Open(fileName, FileMode.Open))
 				{
 					DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(Settings));
-					return (Settings)jsonSerializer.ReadObject(file);
+					Settings s = (Settings)jsonSerializer.ReadObject(file);
+					return s;
 				}
 			}
 			catch

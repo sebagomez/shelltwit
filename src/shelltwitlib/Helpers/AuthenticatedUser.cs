@@ -56,7 +56,7 @@ namespace Sebagomez.ShelltwitLib.Helpers
 			Serialize(userPath);
 		}
 
-		public static AuthenticatedUser LoadCredentials()
+		static AuthenticatedUser LoadCredentials()
 		{
 			AuthenticatedUser twiUser = new AuthenticatedUser();
 			if (!File.Exists(s_configFile))
@@ -79,6 +79,18 @@ namespace Sebagomez.ShelltwitLib.Helpers
 			}
 
 			return twiUser;
+		}
+
+
+		static AuthenticatedUser s_currentUser;
+		public static AuthenticatedUser CurrentUser
+		{
+			get
+			{
+				if (s_currentUser == null)
+					s_currentUser = LoadCredentials();
+				return s_currentUser;
+			}
 		}
 
 		public void SerializeTokens(string accessTokens)

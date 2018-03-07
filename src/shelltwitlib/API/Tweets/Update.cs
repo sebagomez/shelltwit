@@ -44,7 +44,7 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 					throw new ArgumentOutOfRangeException("media", "Up to 4 media files are allowed per tweet");
 
 				if (options.User == null)
-					options.User = AuthenticatedUser.LoadCredentials();
+					options.User = AuthenticatedUser.CurrentUser;
 				if (string.IsNullOrEmpty(options.OriginalSatatus))
 					options.OriginalSatatus = options.Status;
 

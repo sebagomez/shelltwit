@@ -15,7 +15,7 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 		public static async Task<List<Status>> GetUserLikes(LikesOptions options)
 		{
 			if (options.User == null)
-				options.User = AuthenticatedUser.LoadCredentials();
+				options.User = AuthenticatedUser.CurrentUser;
 
 			HttpRequestMessage reqMsg = OAuthHelper.GetRequest(HttpMethod.Get, USER_LIKES, options);
 

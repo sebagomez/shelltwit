@@ -88,5 +88,44 @@ namespace Sebagomez.Shelltwit
 			foreach (Status status in streaing.GetStreamingStatus(new StreamingUserOptions { User = user }))
 				PrintTwit(status);
 		}
+
+		public static void UpdateStatus(AuthenticatedUser user, string[] args)
+		{
+			if (args.Length == 1 && args[0].Length == 1)
+			{
+				Console.WriteLine($"Really? do you really wanna twit \"{string.Join(" ", args)}\"?{Environment.NewLine}[T]wit, or [N]o sorry, I messed up...");
+				ConsoleKeyInfo input = Console.ReadKey();
+				while (input.Key != ConsoleKey.T && input.Key != ConsoleKey.N)
+				{
+					Console.WriteLine();
+					Console.WriteLine("[T]wit, or [N]o sorry, I messed up...");
+					input = Console.ReadKey();
+				}
+				Console.WriteLine();
+
+				if (input.Key == ConsoleKey.N)
+				{
+					Console.WriteLine("That's what I thought! ;)");
+					return;
+				}
+			}
+
+			UpdateOptions updOptions = new UpdateOptions { Status = string.Join(" ", args), User = user };
+			string response = Update.UpdateStatus(updOptions).GetAwaiter().GetResult();
+
+			if (response != "OK")
+				Console.WriteLine($"Response was not OK: {response}");
+		}
+
+		public static void ShowUsage()
+		{
+			Console.WriteLine("Usage: twit [options] | <status> [<mediaPath>]");
+			Console.WriteLine("Options:");
+			foreach (Option option in Option.GetAll(new string[] { }))
+				Console.WriteLine("-{0}|--{1}\t{2}", option.Short, option.Long, option.Description);
+			Console.WriteLine("status\t\tstatus to update at twitter.com");
+			Console.WriteLine("mediaPath\tfull path, between brackets, to the media files (up to four) to upload.");
+			Console.WriteLine("");
+		}
 	}
 }

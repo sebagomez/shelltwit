@@ -23,7 +23,7 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 				throw new IndexOutOfRangeException($"Query too long. The query string cannot exceed {MAX_QUERY_LENGTH} chars.");
 
 			if (options.User == null)
-				options.User = AuthenticatedUser.LoadCredentials();
+				options.User = AuthenticatedUser.CurrentUser;
 
 			options.Query = Util.EncodeString(WebUtility.HtmlDecode(options.Query));
 
