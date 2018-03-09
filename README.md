@@ -38,7 +38,8 @@ After downloading the repo just build the sln with Visual Studio 2017 (15.3+)
 
 This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), and it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/) 
 
-but it can now work on your machine thanks to [Docker](https://docker.com)
+but it can now work on your machine thanks to [Docker](https://docker.com)  
+
 Docker
 ------
 
