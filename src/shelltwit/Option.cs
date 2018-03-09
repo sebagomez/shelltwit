@@ -17,6 +17,9 @@ namespace Sebagomez.Shelltwit
 			if (arguments.Length == 0)
 				return Timeline();
 
+			if (!arguments[0].StartsWith("-"))
+				return Update();
+
 			Option option = GetAll(arguments).FirstOrDefault((o) =>
 		   {
 			   if (arguments[0].StartsWith("--"))
@@ -143,6 +146,16 @@ namespace Sebagomez.Shelltwit
 				Long = "help",
 				Description = "show this help",
 				Action = (u, s) => Util.ShowUsage()
+			};
+
+			return o;
+		}
+
+		public static Option Update()
+		{
+			Option o = new Option()
+			{
+				Action = (u, s) => Util.UpdateStatus(u, s)
 			};
 
 			return o;
