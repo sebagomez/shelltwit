@@ -11,7 +11,9 @@ shelltwit
 shelltwit allows you to update your twitter status via command line. It also has bit.ly integration for url shortening.
 ~~It's a good example of twitter API calls with xAuth.~~ As of Jun-05-2017 it uses [PIN-based](https://dev.twitter.com/oauth/pin-based) authorization
 
+![](https://github.com/sebagomez/shelltwit/blob/master/res/Windows.png?raw=true)
 <img src="res//Windows.png" alt="shelltwit on windows" width="700">
+![](https://github.com/sebagomez/shelltwit/blob/master/res/Ubuntu.png?raw=true)
 <img src="res//Ubuntu.png" alt="shelltwit on ubuntu" width="700">
 
 Little more (?) info about it at the original [blog post](http://sgomez.blogspot.com/2010/06/introducing-shelltwit.html)
