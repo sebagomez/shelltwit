@@ -30,14 +30,36 @@ Implemented Twitter APIs
 Build
 -----
 As of Sep 10th 2017 there's a single solution in .net Core 2.0. The old .net framework 4.6 was removed since there was no reason to keep both of them.
-After downloading the repo just build the sln with Visual Studio 2017 (15.3)
+After downloading the repo just build the sln with Visual Studio 2017 (15.3+)
 
-This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), and it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/) <img src="res//works on my machine.png" alt="Works on my machine" height="50">.
+This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), and it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/) 
 
-For my next trick I'll create a docker image so it will definetely works on yours too.
+but it can now work on your machine thanks to [Docker](https://docker.com)
+Docker
+------
+
+In order to build your own container you must run the following command
+
+```docker run -e "TWIT_KEY=<Your Twitter Key>" -e "TWIT_SECRET=<Your Twitter Secret>" -it --name twit sebagomez/shelltwit ```
+
+![](https://github.com/sebagomez/shelltwit/blob/master/res/PINAuthorization.png?raw=true)
+
+Copy and paste the provided URL in your favorite browser, authorize the app to access twitter on your behalf and copy and paste the provided PIN in the command line waiting for it.
+
+![](https://github.com/sebagomez/shelltwit/blob/master/res/TwitterPIN.png?raw=true)
+
+Now you have a container with the needed credentials to access the Twitter API.
+
+We'll now commit those changes into a new image:
+
+```docker commit twit mytwit```
+
+And that's it, you can now call commands inside the newly created image as follows:
+
+```docker run --rm mytwit --help```
 
 ```
-Sebagomez.Shelltwit version 7.3.1.0 for Microsoft Windows 10.0.17115
+Sebagomez.Shelltwit version 7.3.2.0 for Microsoft Windows 10.0.17115
 Copyright (C) @sebagomez. All rights reserved.
 
 Usage: twit [options] | <status> [<mediaPath>]
