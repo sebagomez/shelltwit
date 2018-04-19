@@ -51,7 +51,7 @@ namespace Sebagomez.Shelltwit
 		{
 			Option o = new Option()
 			{
-				Short = "tl",
+				Short = "t",
 				Long = "timeline",
 				Description = "show user's timeline",
 				Action = (u, s) => Util.UserTimeLine(u)
@@ -103,7 +103,7 @@ namespace Sebagomez.Shelltwit
 		{
 			Option o = new Option()
 			{
-				Short = "t",
+				Short = "k",
 				Long = "track",
 				Description = "live status with a specific track",
 				Action = (u, s) => Util.StreamingTrack(u, s)

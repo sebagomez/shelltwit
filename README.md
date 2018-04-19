@@ -71,11 +71,11 @@ Usage: twit [options] | <status> [<mediaPath>]
 
 Options:
         -c|--clear      clears user stored credentials
-        -tl|--timeline  show user's timeline
+        -t|--timeline   show user's timeline
         -q|--query      query twits containing words
         -m|--mentions   show user's mentions
         -u|--user       show another user's timeline
-        -t|--track      live status with a specific track
+        -k|--track      live status with a specific track
         -s|--streamed   streamed user timeline
         -l|--likes      user's likes (fka favorites)
         -h|--help       show this help
