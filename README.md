@@ -64,14 +64,14 @@ And that's it, you can now call commands inside the newly created image as follo
 ```docker run --rm mytwit --help```
 
 ```
-Sebagomez.Shelltwit version 7.3.2.0 for Microsoft Windows 10.0.17115
+Sebagomez.Shelltwit version 7.5.0.0 for Microsoft Windows 10.0.17134
 Copyright (C) @sebagomez. All rights reserved.
 
 Usage: twit [options] | <status> [<mediaPath>]
 
 Options:
         -c|--clear      clears user stored credentials
-        -t|--timeline   show user's timeline
+        -t|--timeline   show user's timeline (Default)
         -q|--query      query twits containing words
         -m|--mentions   show user's mentions
         -u|--user       show another user's timeline

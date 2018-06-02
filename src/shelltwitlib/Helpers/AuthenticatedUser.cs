@@ -23,9 +23,7 @@ namespace Sebagomez.ShelltwitLib.Helpers
 		[DataMember]
 		public string OAuthTokenSecret { get; set; }
 
-		public AuthenticatedUser()
-		{
-		}
+		public AuthenticatedUser() { }
 
 		public AuthenticatedUser(string token, string tokensecret)
 		{
@@ -126,17 +124,10 @@ namespace Sebagomez.ShelltwitLib.Helpers
 		static AuthenticatedUser Deserialize()
 		{
 			AuthenticatedUser twiUser = null;
-
 			try
 			{
-
 				using (FileStream file = File.Open(s_configFile, FileMode.Open))
-				{
 					twiUser = Util.Deserialize<AuthenticatedUser>(file);
-
-					//DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(AuthenticatedUser));
-					//twiUser = (AuthenticatedUser)jsonSerializer.ReadObject(file);
-				}
 			}
 			catch (SerializationException)
 			{

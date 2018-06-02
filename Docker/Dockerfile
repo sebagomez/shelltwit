@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2-runtime
+FROM microsoft/dotnet:2.1-runtime
 
 LABEL com.sebagomez.name="SebaGomez Shelltwit client" \
       com.genexus.description="Run your own shelltwit from this image" \
@@ -8,7 +8,7 @@ LABEL com.sebagomez.name="SebaGomez Shelltwit client" \
       com.genexus.maintainer="Seba Gómez <twitter.com/sebagomez>"
 
 #For automated build purposes
-ARG TAG=7.4 
+ARG TAG=7.5 
 
 RUN mkdir twit
 

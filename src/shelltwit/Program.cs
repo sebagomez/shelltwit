@@ -51,7 +51,6 @@ namespace Sebagomez.Shelltwit
 				{
 					Console.WriteLine("Press <enter> to exit...");
 					Console.ReadLine();
-
 				}
 #endif
 			}

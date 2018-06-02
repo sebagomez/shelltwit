@@ -123,7 +123,7 @@ namespace Sebagomez.Shelltwit
 			Console.WriteLine("");
 			Console.WriteLine("Options:");
 			foreach (Option option in Option.GetAll(new string[] { }))
-				Console.WriteLine("\t-{0}|--{1}\t{2}", option.Short, option.Long, option.Description);
+				Console.WriteLine("\t-{0}|--{1}\t{2}{3}", option.Short, option.Long, option.Description, option.IsDefault ? " (Default)" : "");
 			Console.WriteLine("");
 			Console.WriteLine("status:\r\n\tstatus to update at twitter.com");
 			Console.WriteLine("");

@@ -10,12 +10,14 @@ namespace Sebagomez.Shelltwit
 		public string Short { get; set; }
 		public string Long { get; set; }
 		public string Description { get; set; }
+		public bool IsDefault { get; set; }
+
 		public Action<AuthenticatedUser, string[]> Action { get; private set; }
 
 		public static Option GetOption(string[] arguments)
 		{
 			if (arguments.Length == 0)
-				return Timeline();
+				return GetAll(arguments).FirstOrDefault((o) => o.IsDefault);
 
 			if (!arguments[0].StartsWith("-"))
 				return Update();
@@ -54,6 +56,7 @@ namespace Sebagomez.Shelltwit
 				Short = "t",
 				Long = "timeline",
 				Description = "show user's timeline",
+				IsDefault = true,
 				Action = (u, s) => Util.UserTimeLine(u)
 			};
 

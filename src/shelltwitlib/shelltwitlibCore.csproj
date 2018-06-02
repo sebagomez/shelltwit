@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <AssemblyName>Sebagomez.ShelltwitLib</AssemblyName>
     <RootNamespace>Sebagomez.ShelltwitLib</RootNamespace>
     <Company>Sebastián Gómez (@sebagomez)</Company>
-    <Version>7.1.0.0</Version>
+    <Version>7.5.0.0</Version>
     <Description />
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>C:\Users\user\OneDrive\Documents\Personales\secure\sebagomez.snk</AssemblyOriginatorKeyFile>
