@@ -39,8 +39,8 @@ namespace shelltwit_tester
 				string path = Path.Combine(AppContext.BaseDirectory, "serialized.json");
 
 				Sebagomez.ShelltwitLib.Entities.Statuses ss = new Sebagomez.ShelltwitLib.Entities.Statuses();
-				ss.Add(new Sebagomez.ShelltwitLib.Entities.Status() { id = 1, text = "One", user = new Sebagomez.ShelltwitLib.Entities.User { id = 1, name = "User1", screen_name = "screenName1" } });
-				ss.Add(new Sebagomez.ShelltwitLib.Entities.Status() { id = 2, text = "Two", user = new Sebagomez.ShelltwitLib.Entities.User { id = 2, name = "User2", screen_name = "ScreenName2" } });
+				ss.Add(new Sebagomez.ShelltwitLib.Entities.Status() { id = 1, full_text = "One", user = new Sebagomez.ShelltwitLib.Entities.User { id = 1, name = "User1", screen_name = "screenName1" } });
+				ss.Add(new Sebagomez.ShelltwitLib.Entities.Status() { id = 2, full_text = "Two", user = new Sebagomez.ShelltwitLib.Entities.User { id = 2, name = "User2", screen_name = "ScreenName2" } });
 
 
 				Util.Serialize(ss, path);

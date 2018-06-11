@@ -30,6 +30,8 @@ namespace Sebagomez.ShelltwitLib.API.Options
 			if (!IncludeRTs)
 				parameters.Add("include_rts", IncludeRTs.ToString());
 
+			parameters.Add("tweet_mode", "extended");
+
 			return parameters;
 		}
 	}

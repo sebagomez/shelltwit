@@ -23,7 +23,7 @@ namespace shelltwit_tester
 			}
 		}
 
-		[TestMethod]
+		//[TestMethod] Not automatic... it needs the PIN and oAuthToken
 		public void GetPINAuthToken()
 		{
 			try

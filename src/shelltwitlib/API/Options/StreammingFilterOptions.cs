@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Sebagomez.ShelltwitLib.Helpers;
 
 namespace Sebagomez.ShelltwitLib.API.Options
 {

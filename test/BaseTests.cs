@@ -11,7 +11,7 @@ namespace shelltwit_tester
 	{
 		internal const string MEDIA1_NAME = @"Noooooooo.jpg";
 		internal const string MEDIA2_NAME = @"Snapshot.jpg";
-		internal const string HUGE_MEDIA = @"nemonew.png";
+		internal const string HUGE_MEDIA = @"BiggerThan5MB.jpg";
 
 		protected AuthenticatedUser m_user;
 

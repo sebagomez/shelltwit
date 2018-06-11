@@ -45,7 +45,7 @@ namespace shelltwit_tester
 		{
 			try
 			{
-				SearchOptions options = new SearchOptions { Query = "#WindowsInsiders", User = m_user };
+				SearchOptions options = new SearchOptions { Query = "#Trump", User = m_user };
 				SearchResult result = await Sebagomez.ShelltwitLib.API.Tweets.Search.SearchTweets(options);
 				Assert.IsTrue(result.search_metadata.count >= result.statuses.Length, "OK");
 			}

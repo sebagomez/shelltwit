@@ -45,6 +45,8 @@ namespace Sebagomez.ShelltwitLib.API.Options
 			if (MaxId != 0)
 				parameters.Add("max_id", MaxId.ToString());
 
+			parameters.Add("tweet_mode", "extended");
+
 			return parameters;
 		}
 	}

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Sebagomez.ShelltwitLib.API.Options
 {
@@ -16,6 +14,8 @@ namespace Sebagomez.ShelltwitLib.API.Options
 				parameters.Add("track", Track);
 			if (!string.IsNullOrWhiteSpace(Follow))
 				parameters.Add("follow", Follow);
+
+			parameters.Add("tweet_mode", "extended");
 
 			return parameters;
 		}

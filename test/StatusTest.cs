@@ -42,6 +42,7 @@ namespace shelltwit_tester
 			Thread.Sleep(1500);
 			try
 			{
+				options.Status = status; //it gets encoded after an update
 				response = await Sebagomez.ShelltwitLib.API.Tweets.Update.UpdateStatus(options);
 				Assert.AreEqual("{\"errors\":[{\"code\":187,\"message\":\"Status is a duplicate.\"}]}",response, "OK");
 			}
@@ -92,7 +93,7 @@ namespace shelltwit_tester
 
 				string status = string.Format(@"Este viene con imagen GRANDE [{0}]: {1}", mediaPath, DateTime.Now);
 				string response = await Sebagomez.ShelltwitLib.API.Tweets.Update.UpdateStatus(new UpdateOptions { Status = status, User = m_user });
-				Assert.AreEqual("{\"errors\":[{\"code\":324,\"message\":\"Image file size must be <= 3145728 bytes\"}]}", response, "OK");
+				Assert.AreEqual("{\"errors\":[{\"code\":324,\"message\":\"Image file size must be <= 5242880 bytes\"}]}", response, "OK");
 			}
 			catch (Exception ex)
 			{

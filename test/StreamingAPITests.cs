@@ -35,7 +35,7 @@ namespace shelltwit_tester
 		[TestMethod]
 		public void GetStreamingTimeline()
 		{
-			StreamingFilterOptions options = new StreamingFilterOptions { Track = "irma", User = m_user };
+			StreamingFilterOptions options = new StreamingFilterOptions { Track = "trump", User = m_user };
 			Execute(options);
 		}
 
@@ -56,7 +56,7 @@ namespace shelltwit_tester
 		[TestMethod]
 		public void GetStreamingTimelineWithHashtag()
 		{
-			StreamingFilterOptions options = new StreamingFilterOptions { Track = "#Camila", User = m_user };
+			StreamingFilterOptions options = new StreamingFilterOptions { Track = "#Trump", User = m_user };
 			Execute(options);
 		}
 
@@ -74,15 +74,12 @@ namespace shelltwit_tester
 				int count = 0;
 				foreach (Status status in streamingService.GetStreamingStatus(options))
 				{
-					
-
 					System.Diagnostics.Debug.Write(status);
 					count++;
 
 					if (count == 1)
 						break;
 				}
-
 			}
 			catch (Exception ex)
 			{

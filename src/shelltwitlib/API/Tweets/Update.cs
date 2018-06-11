@@ -93,15 +93,18 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 				HttpRequestMessage reqMsg = OAuthHelper.GetRequest(HttpMethod.Post, MEDIA_UPLOAD, options, true, true);
 
 				MultipartFormDataContent content = new MultipartFormDataContent(GetMultipartBoundary());
-				StreamContent streamContent = new StreamContent(File.Open(file.FullName, FileMode.Open));
-				streamContent.Headers.Add(Constants.HEADERS.CONTENT_TYPE, Constants.CONTENT_TYPE.OCTET_STREAM);
-				streamContent.Headers.Add(Constants.HEADERS.CONTENT_DISPOSITION, string.Format(Constants.FORM_DATA, file.Name));
-				content.Add(streamContent);
+				using (FileStream fs = File.Open(file.FullName, FileMode.Open))
+				{
+					StreamContent streamContent = new StreamContent(fs);
+					streamContent.Headers.Add(Constants.HEADERS.CONTENT_TYPE, Constants.CONTENT_TYPE.OCTET_STREAM);
+					streamContent.Headers.Add(Constants.HEADERS.CONTENT_DISPOSITION, string.Format(Constants.FORM_DATA, file.Name));
+					content.Add(streamContent);
 
-				reqMsg.Content = content;
-				Media media = await GetData<Media>(reqMsg);
+					reqMsg.Content = content;
 
-				options.MediaIds.Add(media.media_id_string);
+					Media media = await GetData<Media>(reqMsg);
+					options.MediaIds.Add(media.media_id_string);
+				}
 			}
 		}
 

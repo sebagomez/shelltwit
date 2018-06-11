@@ -33,8 +33,8 @@ Implemented Twitter APIs
 
 Build
 -----
-As of Sep 10th 2017 there's a single solution in .net Core 2.0. The old .net framework 4.6 was removed since there was no reason to keep both of them.
-After downloading the repo just build the sln with Visual Studio 2017 (15.3+)
+As of June 11th 2018 there's a single solution in .NEET Core 2.1. 
+After downloading the repo just build the sln with Visual Studio 2017 (15.7+).
 
 This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), and it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/) 
 
@@ -64,7 +64,7 @@ And that's it, you can now call commands inside the newly created image as follo
 ```docker run --rm mytwit --help```
 
 ```
-Sebagomez.Shelltwit version 7.5.0.0 for Microsoft Windows 10.0.17134
+Sebagomez.Shelltwit version 7.6.0.0 for Microsoft Windows 10.0.17134
 Copyright (C) @sebagomez. All rights reserved.
 
 Usage: twit [options] | <status> [<mediaPath>]

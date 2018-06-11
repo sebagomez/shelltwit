@@ -30,7 +30,6 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 			using (HttpClient httpClient = new HttpClient())
 			{
 				httpClient.Timeout = TimeSpan.FromMilliseconds(Timeout.Infinite);
-
 				List<KeyValuePair<string, string>> p = new List<KeyValuePair<string, string>>();
 
 				foreach (var item in options.GetParameters())
@@ -39,6 +38,7 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 				var formUrlEncodedContent = new FormUrlEncodedContent(p);
 				formUrlEncodedContent.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
 
+				EncodeOptions(options);
 				HttpRequestMessage request = OAuthHelper.GetRequest(HttpMethod.Post, GetStreamingUrl(), options);
 				request.Content = formUrlEncodedContent;
 
@@ -54,7 +54,7 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 						if (!string.IsNullOrWhiteSpace(json))
 						{
 							Status status = Util.Deserialize<Status>(json);
-							if (status != null && !string.IsNullOrEmpty(status.text))
+							if (status != null && !string.IsNullOrEmpty(status.ResolvedText))
 								yield return status;
 						}
 					}

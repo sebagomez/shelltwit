@@ -22,7 +22,7 @@ namespace Sebagomez.Shelltwit
 
 		static void PrintTwit(Status twit)
 		{
-			Console.WriteLine($"{twit.user.name} (@{twit.user.screen_name}): {twit.text}");
+			Console.WriteLine(twit);
 		}
 
 		static void PrintTwits(SearchResult results)

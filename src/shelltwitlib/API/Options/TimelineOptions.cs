@@ -12,6 +12,8 @@ namespace Sebagomez.ShelltwitLib.API.Options
 			if (SinceId != 0)
 				parameters.Add("since_id", SinceId.ToString());
 
+			parameters.Add("tweet_mode", "extended");
+
 			return parameters;
 		}
 	}
