@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="BiggerThan5MB.jpg">
+    <None Update="Resources\BiggerThan5MB.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="findmyplane.usr">
@@ -26,7 +26,7 @@
     <None Update="nemonew.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Noooooooo.jpg">
+    <None Update="Resources\Noooooooo.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="sebagomez.usr">
@@ -38,7 +38,7 @@
     <None Update="serialized.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Snapshot.jpg">
+    <None Update="Resources\Snapshot.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="twit.data">

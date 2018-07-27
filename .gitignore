@@ -11,7 +11,7 @@ packages/
 *.tar.gz
 
 SecureData.txt
-test/SecretBaseTests.cs
+test/Tests/SecretBaseTests.cs
 Docker/Docker.txt
 twit.data
 

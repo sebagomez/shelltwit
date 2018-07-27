@@ -8,7 +8,7 @@ LABEL com.sebagomez.name="SebaGomez Shelltwit client" \
       com.genexus.maintainer="Seba Gómez <twitter.com/sebagomez>"
 
 #For automated build purposes
-ARG TAG=7.6 
+ARG TAG=7.7 
 
 RUN mkdir twit
 

@@ -53,6 +53,21 @@ namespace shelltwit_tester
 		}
 
 		[TestMethod]
+		public async Task StatusConEmojis()
+		{
+			string status = string.Format("Hello Emoji World 😉 :{0}", DateTime.Now);
+			try
+			{
+				string response = await Sebagomez.ShelltwitLib.API.Tweets.Update.UpdateStatus(new UpdateOptions { Status = status, User = m_user });
+				Assert.AreEqual(response, "OK");
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(Util.ExceptionMessage(ex));
+			}
+		}
+
+		[TestMethod]
 		public async Task StatusConUrl()
 		{
 			string status = string.Format("Hello World @ http://twitter.com :{0}", DateTime.Now);
