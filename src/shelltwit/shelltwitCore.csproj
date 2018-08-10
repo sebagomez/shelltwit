@@ -6,12 +6,12 @@
     <RootNamespace>Sebagomez.Shelltwit</RootNamespace>
     <AssemblyName>Sebagomez.Shelltwit</AssemblyName>
     <Description>Minimalist command line Twitter client. Post a twit, view your timeline and mentions.</Description>
-    <Version>7.7.0.0</Version>
+    <Version>7.8.0.0</Version>
     <StartupObject>Sebagomez.Shelltwit.Program</StartupObject>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>C:\Users\user\OneDrive\Documents\Personales\secure\sebagomez.snk</AssemblyOriginatorKeyFile>
-    <AssemblyVersion>7.7.0.0</AssemblyVersion>
-    <FileVersion>7.7.0.0</FileVersion>
+    <AssemblyVersion>7.8.0.0</AssemblyVersion>
+    <FileVersion>7.8.0.0</FileVersion>
     <RepositoryUrl>https://github.com/sebagomez/shelltwit</RepositoryUrl>
   </PropertyGroup>
 
@@ -31,6 +31,10 @@
 
   <ItemGroup>
     <None Include="..\..\..\..\Users\user\OneDrive\Documents\Personales\secure\sebagomez.snk" Link="sebagomez.snk" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="dein.Colorify" Version="1.0.7" />
   </ItemGroup>
 
   <ItemGroup>

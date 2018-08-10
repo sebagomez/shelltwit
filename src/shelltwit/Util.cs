@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Colorify;
+using Colorify.UI;
 using Sebagomez.ShelltwitLib.API.Options;
 using Sebagomez.ShelltwitLib.API.Tweets;
 using Sebagomez.ShelltwitLib.Entities;
 using Sebagomez.ShelltwitLib.Helpers;
+using ToolBox.Platform;
 
 namespace Sebagomez.Shelltwit
 {
@@ -12,25 +15,64 @@ namespace Sebagomez.Shelltwit
 	{
 		#region Print
 
+		static Format s_colorify = null;
+
+		public static Format ColorifyInstance
+		{
+			get
+			{
+				if (s_colorify == null)
+				{
+					if (OS.IsMac())
+						s_colorify = new Format(Theme.Light);
+					else
+						s_colorify = new Format(Theme.Dark);
+				}
+				return s_colorify;
+			}
+		}
+
 		static void PrintTwits(List<Status> twits)
 		{
 			if (twits == null)
-				Console.WriteLine("No twits :(");
+				PrintInfo("No twits :(");
 			else
 				twits.ForEach(twit => PrintTwit(twit));
 		}
 
 		static void PrintTwit(Status twit)
 		{
-			Console.WriteLine(twit);
+			ColorifyInstance.Write($"{twit.user.name}", Colors.txtInfo);
+			ColorifyInstance.Write($" ({twit.user.screen_name})", Colors.txtMuted);
+			ColorifyInstance.WriteLine($": {twit.ResolvedText}", Colors.txtDefault);
 		}
 
 		static void PrintTwits(SearchResult results)
 		{
 			if (results.statuses.Length == 0)
-				Console.WriteLine("Sorry, no tweets found :(");
+				PrintInfo("Sorry, no tweets found :(");
 			else
 				PrintTwits(results.statuses.ToList<Status>());
+		}
+
+		public static void PrintWarning(string message)
+		{
+			ColorifyInstance.WriteLine(message, Colors.txtWarning);
+		}
+
+		public static void PrintError(string message)
+		{
+			ColorifyInstance.WriteLine(message, Colors.txtDanger);
+		}
+
+		public static void PrintInfo(string message)
+		{
+			ColorifyInstance.WriteLine(message, Colors.txtInfo);
+		}
+
+		public static void Print(string message)
+		{
+			ColorifyInstance.WriteLine(message, Colors.txtDefault);
 		}
 
 		#endregion
@@ -38,7 +80,7 @@ namespace Sebagomez.Shelltwit
 		public static void ClearCredentials()
 		{
 			AuthenticatedUser.ClearCredentials();
-			Console.WriteLine("User credentials cleared!");
+			PrintInfo("User credentials cleared!");
 		}
 
 		public static void UserTimeLine(AuthenticatedUser user)
@@ -76,7 +118,7 @@ namespace Sebagomez.Shelltwit
 				throw new ArgumentNullException("streaming", "The track must be provided");
 			string track = string.Join(" ", args.Skip(1));
 			StreamingFilterOptions streamingOptions = new StreamingFilterOptions { Track = track, User = user };
-			Console.WriteLine($"Starting live streaming for '{track}', press ctrl+c to quit");
+			PrintInfo($"Starting live streaming for '{track}', press ctrl+c to quit");
 			StreamingFilter filter = new StreamingFilter();
 			foreach (Status s in filter.GetStreamingStatus(streamingOptions))
 				PrintTwit(s);
@@ -93,7 +135,7 @@ namespace Sebagomez.Shelltwit
 		{
 			if (args.Length == 1 && args[0].Length == 1)
 			{
-				Console.WriteLine($"Really? do you really wanna twit \"{string.Join(" ", args)}\"?{Environment.NewLine}[T]wit, or [N]o sorry, I messed up...");
+				PrintWarning($"Really? do you really wanna twit \"{string.Join(" ", args)}\"?{Environment.NewLine}[T]wit, or [N]o sorry, I messed up...");
 				ConsoleKeyInfo input = Console.ReadKey();
 				while (input.Key != ConsoleKey.T && input.Key != ConsoleKey.N)
 				{
@@ -114,7 +156,7 @@ namespace Sebagomez.Shelltwit
 			string response = Update.UpdateStatus(updOptions).GetAwaiter().GetResult();
 
 			if (response != "OK")
-				Console.WriteLine($"Response was not OK: {response}");
+				PrintError($"Response was not OK: {response}");
 		}
 
 		public static void ShowUsage()

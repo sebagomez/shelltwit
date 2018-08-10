@@ -15,13 +15,19 @@ namespace Sebagomez.Shelltwit
 	{
 		static void Main(string[] args)
 		{
+
+			AppDomain.CurrentDomain.ProcessExit += (sender, atgs) =>
+			{
+				Util.ColorifyInstance.ResetColor();
+			};
+
 			try
 			{
 				Console.OutputEncoding = new UTF8Encoding();
 
 				PrintHeader();
 
-				BaseAPI.SetMessageAction(message => Console.WriteLine(message));
+				BaseAPI.SetMessageAction(message => Util.Print(message));
 
 				Option o = Option.GetOption(args);
 				if (o == null)
@@ -31,13 +37,13 @@ namespace Sebagomez.Shelltwit
 			}
 			catch (WebException wex)
 			{
-				Console.WriteLine(wex.Message);
+				Util.PrintError(wex.Message);
 
 				HttpWebResponse res = (HttpWebResponse)wex.Response;
 				if (res != null)
 				{
 					UpdateError errors = ShelltwitLib.Helpers.Util.Deserialize<UpdateError>(res.GetResponseStream());
-					errors.errors.ForEach(e => Console.WriteLine(e.ToString()));
+					errors.errors.ForEach(e => Util.PrintError(e.ToString()));
 				}
 			}
 			catch (Exception ex)
@@ -61,7 +67,7 @@ namespace Sebagomez.Shelltwit
 
 		private static void PrintException(Exception ex)
 		{
-			Console.WriteLine(ex.Message);
+			Util.PrintError(ex.Message);
 			Exception inner = ex.InnerException;
 			while (inner != null)
 			{
@@ -79,9 +85,9 @@ namespace Sebagomez.Shelltwit
 			string copyRight = ((AssemblyCopyrightAttribute)assemblyCop.First()).Copyright;
 			string version = assembly.GetName().Version.ToString();
 
-			Console.WriteLine($"{title} version {version} for {System.Runtime.InteropServices.RuntimeInformation.OSDescription}");
-			Console.WriteLine(copyRight);
-			Console.WriteLine("");
+			Util.Print($"{title} version {version} for {System.Runtime.InteropServices.RuntimeInformation.OSDescription} 🐤");
+			Util.Print(copyRight);
+			Util.Print("");
 		}
 	}
 }
