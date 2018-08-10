@@ -15,19 +15,16 @@ namespace Sebagomez.Shelltwit
 	{
 		static void Main(string[] args)
 		{
-
-			AppDomain.CurrentDomain.ProcessExit += (sender, atgs) =>
-			{
-				Util.ColorifyInstance.ResetColor();
-			};
-
 			try
 			{
 				Console.OutputEncoding = new UTF8Encoding();
 
 				PrintHeader();
 
-				BaseAPI.SetMessageAction(message => Util.Print(message));
+				BaseAPI.SetMessageAction(message =>
+				{
+					Util.Print(message);
+				});
 
 				Option o = Option.GetOption(args);
 				if (o == null)
@@ -55,7 +52,7 @@ namespace Sebagomez.Shelltwit
 #if DEBUG
 				if (Debugger.IsAttached)
 				{
-					Console.WriteLine("Press <enter> to exit...");
+					Util.PrintWarning("Press <enter> to exit...");
 					Console.ReadLine();
 				}
 #endif
@@ -85,7 +82,7 @@ namespace Sebagomez.Shelltwit
 			string copyRight = ((AssemblyCopyrightAttribute)assemblyCop.First()).Copyright;
 			string version = assembly.GetName().Version.ToString();
 
-			Util.Print($"{title} version {version} for {System.Runtime.InteropServices.RuntimeInformation.OSDescription} 🐤");
+			Util.Print($"🐤{title} version {version} for {System.Runtime.InteropServices.RuntimeInformation.OSDescription}");
 			Util.Print(copyRight);
 			Util.Print("");
 		}

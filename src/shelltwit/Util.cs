@@ -35,7 +35,7 @@ namespace Sebagomez.Shelltwit
 		static void PrintTwits(List<Status> twits)
 		{
 			if (twits == null)
-				PrintInfo("No twits :(");
+				PrintError("No twits 😞");
 			else
 				twits.ForEach(twit => PrintTwit(twit));
 		}
@@ -50,7 +50,7 @@ namespace Sebagomez.Shelltwit
 		static void PrintTwits(SearchResult results)
 		{
 			if (results.statuses.Length == 0)
-				PrintInfo("Sorry, no tweets found :(");
+				PrintError("Sorry, no twits found 😞");
 			else
 				PrintTwits(results.statuses.ToList<Status>());
 		}
@@ -161,6 +161,7 @@ namespace Sebagomez.Shelltwit
 
 		public static void ShowUsage()
 		{
+			Console.ResetColor();
 			Console.WriteLine("Usage: twit [options] | <status> [<mediaPath>]");
 			Console.WriteLine("");
 			Console.WriteLine("Options:");

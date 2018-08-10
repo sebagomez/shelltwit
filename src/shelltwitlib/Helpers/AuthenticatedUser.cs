@@ -57,6 +57,7 @@ namespace Sebagomez.ShelltwitLib.Helpers
 			AuthenticatedUser twiUser = new AuthenticatedUser();
 			if (!File.Exists(s_configFile))
 			{
+				Console.ResetColor(); // <-- the Console should not be called from here!
 				string token = OAuthAuthenticator.GetOAuthToken().Result;
 				Console.WriteLine("Please open your favorite browser and go to this URL to authenticate with Twitter:");
 				Console.WriteLine($"https://api.twitter.com/oauth/authorize?oauth_token={token}");
