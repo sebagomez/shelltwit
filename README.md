@@ -64,7 +64,7 @@ And that's it, you can now call commands inside the newly created image as follo
 ```docker run --rm mytwit --help```
 
 ```
-Sebagomez.Shelltwit version 7.6.0.0 for Microsoft Windows 10.0.17134
+Sebagomez.Shelltwit version 7.8.3.0 for Microsoft Windows 10.0.17134
 Copyright (C) @sebagomez. All rights reserved.
 
 Usage: twit [options] | <status> [<mediaPath>]

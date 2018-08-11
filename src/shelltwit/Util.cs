@@ -45,7 +45,7 @@ namespace Sebagomez.Shelltwit
 		static void PrintTwit(Status twit)
 		{
 			ColorifyInstance.Write($"{twit.user.name}", Colors.txtInfo);
-			ColorifyInstance.Write($" ({twit.user.screen_name})", Colors.txtMuted);
+			ColorifyInstance.Write($" ({twit.user.screen_name})", Colors.txtPrimary);
 			ColorifyInstance.WriteLine($": {twit.ResolvedText}", Colors.txtDefault);
 		}
 
