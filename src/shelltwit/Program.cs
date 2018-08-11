@@ -19,6 +19,8 @@ namespace Sebagomez.Shelltwit
 			{
 				Console.OutputEncoding = new UTF8Encoding();
 
+				AppDomain.CurrentDomain.ProcessExit += (s, a) => Console.ResetColor();
+
 				PrintHeader();
 
 				BaseAPI.SetMessageAction(message =>

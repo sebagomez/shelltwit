@@ -15,6 +15,7 @@ namespace Sebagomez.Shelltwit
 	{
 		#region Print
 
+		//Taken from: https://github.com/deinsoftware/colorify
 		static Format s_colorify = null;
 
 		public static Format ColorifyInstance
@@ -38,6 +39,7 @@ namespace Sebagomez.Shelltwit
 				PrintError("No twits 😞");
 			else
 				twits.ForEach(twit => PrintTwit(twit));
+			Console.ResetColor();
 		}
 
 		static void PrintTwit(Status twit)
@@ -58,21 +60,25 @@ namespace Sebagomez.Shelltwit
 		public static void PrintWarning(string message)
 		{
 			ColorifyInstance.WriteLine(message, Colors.txtWarning);
+			Console.ResetColor();
 		}
 
 		public static void PrintError(string message)
 		{
 			ColorifyInstance.WriteLine(message, Colors.txtDanger);
+			Console.ResetColor();
 		}
 
 		public static void PrintInfo(string message)
 		{
 			ColorifyInstance.WriteLine(message, Colors.txtInfo);
+			Console.ResetColor();
 		}
 
 		public static void Print(string message)
 		{
 			ColorifyInstance.WriteLine(message, Colors.txtDefault);
+			Console.ResetColor();
 		}
 
 		#endregion
@@ -85,23 +91,23 @@ namespace Sebagomez.Shelltwit
 
 		public static void UserTimeLine(AuthenticatedUser user)
 		{
-			PrintTwits(Timeline.GetTimeline(new TimelineOptions { User = user }).GetAwaiter().GetResult());
+			PrintTwits(Timeline.GetTimeline(new TimelineOptions { User = user }).Result);
 		}
 
 		public static void UserMentions(AuthenticatedUser user)
 		{
-			PrintTwits(Mentions.GetMentions(new MentionsOptions { User = user }).GetAwaiter().GetResult());
+			PrintTwits(Mentions.GetMentions(new MentionsOptions { User = user }).Result);
 		}
 
 		public static void UserSearch(AuthenticatedUser user, string[] args)
 		{
 			SearchOptions options = new SearchOptions { Query = string.Join(" ", args.Skip(1)), User = user };
-			PrintTwits(Search.SearchTweets(options).GetAwaiter().GetResult());
+			PrintTwits(Search.SearchTweets(options).Result);
 		}
 
 		public static void UserLikes(AuthenticatedUser user)
 		{
-			PrintTwits(Likes.GetUserLikes(new LikesOptions { User = user }).GetAwaiter().GetResult());
+			PrintTwits(Likes.GetUserLikes(new LikesOptions { User = user }).Result);
 		}
 
 		public static void UserTwits(AuthenticatedUser user, string[] args)
@@ -109,7 +115,7 @@ namespace Sebagomez.Shelltwit
 			if (args.Length != 2)
 				throw new ArgumentNullException("screenname", "The user' screen name must be provided");
 			UserTimelineOptions usrOptions = new UserTimelineOptions { ScreenName = args[1], User = user };
-			PrintTwits(UserTimeline.GetUserTimeline(usrOptions).GetAwaiter().GetResult());
+			PrintTwits(UserTimeline.GetUserTimeline(usrOptions).Result);
 		}
 
 		public static void StreamingTrack(AuthenticatedUser user, string[] args)
@@ -122,6 +128,8 @@ namespace Sebagomez.Shelltwit
 			StreamingFilter filter = new StreamingFilter();
 			foreach (Status s in filter.GetStreamingStatus(streamingOptions))
 				PrintTwit(s);
+			
+			Console.ResetColor();
 		}
 
 		public static void StreamingTimeLine(AuthenticatedUser user)
@@ -129,6 +137,8 @@ namespace Sebagomez.Shelltwit
 			StreamingUser streaing = new StreamingUser();
 			foreach (Status status in streaing.GetStreamingStatus(new StreamingUserOptions { User = user }))
 				PrintTwit(status);
+
+			Console.ResetColor();
 		}
 
 		public static void UpdateStatus(AuthenticatedUser user, string[] args)
@@ -161,7 +171,6 @@ namespace Sebagomez.Shelltwit
 
 		public static void ShowUsage()
 		{
-			Console.ResetColor();
 			Console.WriteLine("Usage: twit [options] | <status> [<mediaPath>]");
 			Console.WriteLine("");
 			Console.WriteLine("Options:");

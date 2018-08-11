@@ -12,10 +12,10 @@ shelltwit allows you to update your twitter status via command line. It also has
 ~~It's a good example of twitter API calls with xAuth.~~ As of Jun-05-2017 it uses [PIN-based](https://dev.twitter.com/oauth/pin-based) authorization
 
 shelltwit running on Windows
-![](https://github.com/sebagomez/shelltwit/blob/master/res/Windows.png?raw=true)
+![](https://github.com/sebagomez/shelltwit/blob/master/res/Windows.gif?raw=true)
 
 shelltwit running on Linux (WSL)
-![](https://github.com/sebagomez/shelltwit/blob/master/res/Ubuntu.png?raw=true)
+![](https://github.com/sebagomez/shelltwit/blob/master/res/Ubuntu.gif?raw=true)
 
 
 Little more (?) info about it at the original [blog post](http://sgomez.blogspot.com/2010/06/introducing-shelltwit.html)
@@ -33,7 +33,7 @@ Implemented Twitter APIs
 
 Build
 -----
-As of June 11th 2018 there's a single solution in .NEET Core 2.1. 
+As of June 11th 2018 there's a single solution in .NET Core 2.1. 
 After downloading the repo just build the sln with Visual Studio 2017 (15.7+).
 
 This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), and it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/) 
