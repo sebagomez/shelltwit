@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Colorify;
 using Colorify.UI;
 using Sebagomez.ShelltwitLib.API.Options;
 using Sebagomez.ShelltwitLib.API.Tweets;
 using Sebagomez.ShelltwitLib.Entities;
 using Sebagomez.ShelltwitLib.Helpers;
-using ToolBox.Platform;
+//using ToolBox.Platform;
 
 namespace Sebagomez.Shelltwit
 {
@@ -24,7 +25,7 @@ namespace Sebagomez.Shelltwit
 			{
 				if (s_colorify == null)
 				{
-					if (OS.IsMac())
+					if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
 						s_colorify = new Format(Theme.Light);
 					else
 						s_colorify = new Format(Theme.Dark);

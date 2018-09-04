@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{86342853-7
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APITests", "test\APITests.csproj", "{BA05765F-6F66-42B8-98E4-ED6D73994922}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Colorify", "..\colorify\Colorify\Colorify.csproj", "{17E39BBE-4F41-467C-869B-AB6C49FE9B31}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{BA05765F-6F66-42B8-98E4-ED6D73994922}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA05765F-6F66-42B8-98E4-ED6D73994922}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA05765F-6F66-42B8-98E4-ED6D73994922}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17E39BBE-4F41-467C-869B-AB6C49FE9B31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17E39BBE-4F41-467C-869B-AB6C49FE9B31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17E39BBE-4F41-467C-869B-AB6C49FE9B31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17E39BBE-4F41-467C-869B-AB6C49FE9B31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
