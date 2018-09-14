@@ -8,7 +8,6 @@ using Sebagomez.ShelltwitLib.API.Options;
 using Sebagomez.ShelltwitLib.API.Tweets;
 using Sebagomez.ShelltwitLib.Entities;
 using Sebagomez.ShelltwitLib.Helpers;
-//using ToolBox.Platform;
 
 namespace Sebagomez.Shelltwit
 {
@@ -40,7 +39,6 @@ namespace Sebagomez.Shelltwit
 				PrintError("No twits 😞");
 			else
 				twits.ForEach(twit => PrintTwit(twit));
-			Console.ResetColor();
 		}
 
 		static void PrintTwit(Status twit)
@@ -58,29 +56,13 @@ namespace Sebagomez.Shelltwit
 				PrintTwits(results.statuses.ToList<Status>());
 		}
 
-		public static void PrintWarning(string message)
-		{
-			ColorifyInstance.WriteLine(message, Colors.txtWarning);
-			Console.ResetColor();
-		}
+		public static void PrintWarning(string message) => ColorifyInstance.WriteLine(message, Colors.txtWarning);
 
-		public static void PrintError(string message)
-		{
-			ColorifyInstance.WriteLine(message, Colors.txtDanger);
-			Console.ResetColor();
-		}
+		public static void PrintError(string message) => ColorifyInstance.WriteLine(message, Colors.txtDanger);
 
-		public static void PrintInfo(string message)
-		{
-			ColorifyInstance.WriteLine(message, Colors.txtInfo);
-			Console.ResetColor();
-		}
+		public static void PrintInfo(string message) => ColorifyInstance.WriteLine(message, Colors.txtInfo);
 
-		public static void Print(string message)
-		{
-			ColorifyInstance.WriteLine(message, Colors.txtDefault);
-			Console.ResetColor();
-		}
+		public static void Print(string message) => ColorifyInstance.WriteLine(message);
 
 		#endregion
 
@@ -129,8 +111,6 @@ namespace Sebagomez.Shelltwit
 			StreamingFilter filter = new StreamingFilter();
 			foreach (Status s in filter.GetStreamingStatus(streamingOptions))
 				PrintTwit(s);
-			
-			Console.ResetColor();
 		}
 
 		public static void StreamingTimeLine(AuthenticatedUser user)
@@ -138,8 +118,6 @@ namespace Sebagomez.Shelltwit
 			StreamingUser streaing = new StreamingUser();
 			foreach (Status status in streaing.GetStreamingStatus(new StreamingUserOptions { User = user }))
 				PrintTwit(status);
-
-			Console.ResetColor();
 		}
 
 		public static void UpdateStatus(AuthenticatedUser user, string[] args)

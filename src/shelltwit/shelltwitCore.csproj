@@ -6,12 +6,12 @@
     <RootNamespace>Sebagomez.Shelltwit</RootNamespace>
     <AssemblyName>Sebagomez.Shelltwit</AssemblyName>
     <Description>Minimalist command line Twitter client. Post a twit, view your timeline and mentions.</Description>
-    <Version>7.8.4.0</Version>
+    <Version>7.8.5.1</Version>
     <StartupObject>Sebagomez.Shelltwit.Program</StartupObject>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>C:\Users\user\OneDrive\Documents\Personales\secure\sebagomez.snk</AssemblyOriginatorKeyFile>
-    <AssemblyVersion>7.8.4.0</AssemblyVersion>
-    <FileVersion>7.8.4.0</FileVersion>
+    <AssemblyVersion>7.8.5.0</AssemblyVersion>
+    <FileVersion>7.8.5.1</FileVersion>
     <RepositoryUrl>https://github.com/sebagomez/shelltwit</RepositoryUrl>
   </PropertyGroup>
 
@@ -34,10 +34,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\colorify\Colorify\Colorify.csproj" />
     <ProjectReference Include="..\shelltwitlib\shelltwitlibCore.csproj">
       <Private>true</Private>
     </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Colorify">
+      <HintPath>..\Colorify.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
