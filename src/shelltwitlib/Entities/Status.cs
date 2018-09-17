@@ -33,7 +33,8 @@ namespace Sebagomez.ShelltwitLib.Entities
 		public string lang { get; set; }
 
 		string m_resolvedText;
-		public string ResolvedText {
+		public string ResolvedText
+		{
 			get
 			{
 				if (string.IsNullOrEmpty(m_resolvedText))

@@ -11,6 +11,7 @@ namespace Sebagomez.Shelltwit
 		public string Long { get; set; }
 		public string Description { get; set; }
 		public bool IsDefault { get; set; }
+		public string Argument { get; set; }
 
 		public Action<AuthenticatedUser, string[]> Action { get; private set; }
 
@@ -55,9 +56,10 @@ namespace Sebagomez.Shelltwit
 			{
 				Short = "t",
 				Long = "timeline",
-				Description = "show user's timeline",
+				Description = "show user's timeline, optionally set how many twits to display (up to 200)",
+				Argument = "[count]",
 				IsDefault = true,
-				Action = (u, s) => Util.UserTimeLine(u)
+				Action = (u, s) => Util.UserTimeLine(u,s)
 			};
 
 			return o;
@@ -70,6 +72,7 @@ namespace Sebagomez.Shelltwit
 				Short = "q",
 				Long = "query",
 				Description = "query twits containing words",
+				Argument = "<query>",
 				Action = (u, s) => Util.UserSearch(u, s)
 			};
 
@@ -96,6 +99,7 @@ namespace Sebagomez.Shelltwit
 				Short = "u",
 				Long = "user",
 				Description = "show another user's timeline",
+				Argument = "<handle>",
 				Action = (u, s) => Util.UserTwits(u, s)
 			};
 
@@ -109,6 +113,7 @@ namespace Sebagomez.Shelltwit
 				Short = "k",
 				Long = "track",
 				Description = "live status with a specific track",
+				Argument = "<track>",
 				Action = (u, s) => Util.StreamingTrack(u, s)
 			};
 

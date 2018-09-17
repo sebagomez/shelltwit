@@ -44,7 +44,8 @@ namespace Sebagomez.Shelltwit
 		static void PrintTwit(Status twit)
 		{
 			ColorifyInstance.Write($"{twit.user.name}", Colors.txtInfo);
-			ColorifyInstance.Write($" ({twit.user.screen_name})", Colors.txtPrimary);
+			if (twit.retweeted_status != null && twit.retweeted_status.user != null && !string.IsNullOrEmpty(twit.retweeted_status.user.screen_name))
+				ColorifyInstance.Write($" (RT {twit.retweeted_status.user.screen_name})", Colors.txtDefault);
 			ColorifyInstance.WriteLine($": {twit.ResolvedText}", Colors.txtDefault);
 		}
 
@@ -72,9 +73,19 @@ namespace Sebagomez.Shelltwit
 			PrintInfo("User credentials cleared!");
 		}
 
-		public static void UserTimeLine(AuthenticatedUser user)
+		public static void UserTimeLine(AuthenticatedUser user, string[] args)
 		{
-			PrintTwits(Timeline.GetTimeline(new TimelineOptions { User = user }).Result);
+			TimelineOptions options = new TimelineOptions { User = user };
+			if (args.Length == 2)
+			{
+				try
+				{
+					options.Count = int.Parse(args[1]);
+				}
+				catch { }
+			}
+
+			PrintTwits(Timeline.GetTimeline(options).Result);
 		}
 
 		public static void UserMentions(AuthenticatedUser user)
@@ -154,7 +165,7 @@ namespace Sebagomez.Shelltwit
 			Console.WriteLine("");
 			Console.WriteLine("Options:");
 			foreach (Option option in Option.GetAll(new string[] { }))
-				Console.WriteLine("\t-{0}|--{1}\t{2}{3}", option.Short, option.Long, option.Description, option.IsDefault ? " (Default)" : "");
+				Console.WriteLine("\t-{0}|--{1} {2}\t{3}", option.Short, option.Long, string.IsNullOrEmpty(option.Argument) ? "" : option.Argument, option.Description);
 			Console.WriteLine("");
 			Console.WriteLine("status:\r\n\tstatus to update at twitter.com");
 			Console.WriteLine("");
