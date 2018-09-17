@@ -10,7 +10,7 @@
     <StartupObject>Sebagomez.Shelltwit.Program</StartupObject>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>C:\Users\user\OneDrive\Documents\Personales\secure\sebagomez.snk</AssemblyOriginatorKeyFile>
-    <AssemblyVersion>7.8.5.0</AssemblyVersion>
+    <AssemblyVersion>7.8.5.1</AssemblyVersion>
     <FileVersion>7.8.5.1</FileVersion>
     <RepositoryUrl>https://github.com/sebagomez/shelltwit</RepositoryUrl>
   </PropertyGroup>
