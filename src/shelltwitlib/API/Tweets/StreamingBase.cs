@@ -12,11 +12,11 @@ using Sebagomez.ShelltwitLib.Helpers;
 
 namespace Sebagomez.ShelltwitLib.API.Tweets
 {
-	public abstract class StreamingBase : BaseAPI
+	public class StreamingEndpoint : BaseAPI
 	{
-		protected abstract string GetStreamingUrl();
+		const string STATUS_FILTER = "https://stream.twitter.com/1.1/statuses/filter.json";
 
-		protected virtual void EncodeOptions(StreamingOptions options)
+		protected void EncodeOptions(StreamingOptions options)
 		{
 			options.Track = string.IsNullOrEmpty(options.Track) ? options.Track : Util.EncodeString(WebUtility.HtmlDecode(options.Track));
 			options.Follow = string.IsNullOrEmpty(options.Follow) ? options.Follow : Util.EncodeString(WebUtility.HtmlDecode(options.Follow));
@@ -39,12 +39,21 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 				formUrlEncodedContent.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
 
 				EncodeOptions(options);
-				HttpRequestMessage request = OAuthHelper.GetRequest(HttpMethod.Post, GetStreamingUrl(), options);
+				HttpRequestMessage request = OAuthHelper.GetRequest(HttpMethod.Post, STATUS_FILTER, options);
 				request.Content = formUrlEncodedContent;
 
 				var response = httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).Result;
 				if (!response.IsSuccessStatusCode)
-					throw new Exception($"{response.StatusCode}:{response.ReasonPhrase}");
+				{
+					using (var reader = new StreamReader(response.Content.ReadAsStreamAsync().Result))
+					{
+						string message = reader.ReadToEnd();
+						if (!string.IsNullOrEmpty(message))
+							throw new Exception($"{response.StatusCode}:{message}");
+						else
+							throw new Exception($"{response.StatusCode}:{response.ReasonPhrase}");
+					}
+				}
 
 				using (var reader = new StreamReader(response.Content.ReadAsStreamAsync().Result))
 				{

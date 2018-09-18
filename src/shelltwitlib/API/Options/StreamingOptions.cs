@@ -15,7 +15,7 @@ namespace Sebagomez.ShelltwitLib.API.Options
 			if (!string.IsNullOrWhiteSpace(Follow))
 				parameters.Add("follow", Follow);
 
-			parameters.Add("tweet_mode", "extended");
+			parameters.Add("stall_warnings", "true");
 
 			return parameters;
 		}

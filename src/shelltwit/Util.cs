@@ -116,18 +116,19 @@ namespace Sebagomez.Shelltwit
 		{
 			if (args.Length == 1)
 				throw new ArgumentNullException("streaming", "The track must be provided");
+
 			string track = string.Join(" ", args.Skip(1));
-			StreamingFilterOptions streamingOptions = new StreamingFilterOptions { Track = track, User = user };
-			PrintInfo($"Starting live streaming for '{track}', press ctrl+c to quit");
-			StreamingFilter filter = new StreamingFilter();
-			foreach (Status s in filter.GetStreamingStatus(streamingOptions))
+			StreamingOptions streamingOptions = new StreamingOptions { Track = track, User = user };
+			PrintInfo($"Starting live streaming for '{track}', press Ctrl+C to quit");
+			foreach (Status s in new StreamingEndpoint().GetStreamingStatus(streamingOptions))
 				PrintTwit(s);
 		}
 
-		public static void StreamingTimeLine(AuthenticatedUser user)
+		public static void StreamingTimeLine(AuthenticatedUser user, string[] args)
 		{
-			StreamingUser streaing = new StreamingUser();
-			foreach (Status status in streaing.GetStreamingStatus(new StreamingUserOptions { User = user }))
+			if (args.Length != 2)
+				throw new ArgumentNullException("screenname", "The user id must be provided");
+			foreach (Status status in new StreamingEndpoint().GetStreamingStatus(new StreamingOptions { User = user, Follow = args[1] }))
 				PrintTwit(status);
 		}
 

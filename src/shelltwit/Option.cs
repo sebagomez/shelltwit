@@ -127,7 +127,8 @@ namespace Sebagomez.Shelltwit
 				Short = "s",
 				Long = "streamed",
 				Description = "streamed user timeline",
-				Action = (u, s) => Util.StreamingTimeLine(u)
+				Argument = "<handle id>",
+				Action = (u, s) => Util.StreamingTimeLine(u,s)
 			};
 
 			return o;

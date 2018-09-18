@@ -10,11 +10,11 @@ namespace shelltwit_tester
 	[TestClass]
 	public class StreamingAPITests : BaseTests
 	{
-		void Execute(StreamingFilterOptions options)
+		void Execute(StreamingOptions options)
 		{
 			try
 			{
-				StreamingFilter streamingFilter = new StreamingFilter();
+				StreamingEndpoint streamingFilter = new StreamingEndpoint();
 				int count = 0;
 				foreach (Status status in streamingFilter.GetStreamingStatus(options))
 				{
@@ -35,41 +35,39 @@ namespace shelltwit_tester
 		[TestMethod]
 		public void GetStreamingTimeline()
 		{
-			StreamingFilterOptions options = new StreamingFilterOptions { Track = "trump", User = m_user };
+			StreamingOptions options = new StreamingOptions { Track = "trump", User = m_user };
 			Execute(options);
 		}
 
 		[TestMethod]
 		public void GetStreamingTimelineWithSpace()
 		{
-			StreamingFilterOptions options = new StreamingFilterOptions { Track = "twitter com", User = m_user };
+			StreamingOptions options = new StreamingOptions { Track = "twitter com", User = m_user };
 			Execute(options);
 		}
 
 		[TestMethod]
 		public void GetStreamingTimelineWithComa()
 		{
-			StreamingFilterOptions options = new StreamingFilterOptions { Track = "twitter,facebook", User = m_user };
+			StreamingOptions options = new StreamingOptions { Track = "twitter,facebook", User = m_user };
 			Execute(options);
 		}
 
 		[TestMethod]
 		public void GetStreamingTimelineWithHashtag()
 		{
-			StreamingFilterOptions options = new StreamingFilterOptions { Track = "#Trump", User = m_user };
+			StreamingOptions options = new StreamingOptions { Track = "#Trump", User = m_user };
 			Execute(options);
 		}
 
 		[TestMethod]
 		public void GetStreamingUserTimeline()
 		{
-			AuthenticatedUser sebagomez = LoadTestUser("sebagomez");
-
-			StreamingUserOptions options = new StreamingUserOptions { User = sebagomez };
+			StreamingOptions options = new StreamingOptions { User = m_user, Follow = "108356361" }; //sebatestapi
 
 			try
 			{
-				StreamingUser streamingService = new StreamingUser();
+				StreamingEndpoint streamingService = new StreamingEndpoint();
 
 				int count = 0;
 				foreach (Status status in streamingService.GetStreamingStatus(options))

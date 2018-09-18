@@ -38,7 +38,7 @@ namespace Sebagomez.ShelltwitLib.Entities
 			get
 			{
 				if (string.IsNullOrEmpty(m_resolvedText))
-					m_resolvedText = extended_tweet != null ? extended_tweet.full_text : (retweeted_status != null ? retweeted_status.full_text : (!string.IsNullOrEmpty(full_text) ? full_text : text)); // sometimes text is truncated while the retweeted text isn't
+					m_resolvedText = extended_tweet != null ? extended_tweet.full_text : (retweeted_status != null ? retweeted_status.ResolvedText : (!string.IsNullOrEmpty(full_text) ? full_text : text)); // sometimes text is truncated while the retweeted text isn't
 
 				return m_resolvedText;
 			}
