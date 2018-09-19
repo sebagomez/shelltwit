@@ -65,19 +65,19 @@ And that's it, you can now call commands inside the newly created image as follo
 ```docker run --rm mytwit --help```
 
 ```
-Sebagomez.Shelltwit version 7.8.3.0 for Microsoft Windows 10.0.17134
+🐤Sebagomez.Shelltwit version 8.1.0.0 for Microsoft Windows 10.0.17134
 Copyright (C) @sebagomez. All rights reserved.
 
 Usage: twit [options] | <status> [<mediaPath>]
 
 Options:
         -c|--clear      clears user stored credentials
-        -t|--timeline   show user's timeline (Default)
-        -q|--query      query twits containing words
+        -t|--timeline [count]   show user's timeline, optionally set how many twits to display (up to 200)
+        -q|--query <query>      query twits containing words
         -m|--mentions   show user's mentions
-        -u|--user       show another user's timeline
-        -k|--track      live status with a specific track
-        -s|--streamed   streamed user timeline
+        -u|--user <handle>      show another user's timeline
+        -k|--track <track>      live status with a specific track
+        -s|--streamed <handle id>       streamed user timeline
         -l|--likes      user's likes (fka favorites)
         -h|--help       show this help
 
@@ -86,5 +86,4 @@ status:
 
 mediaPath:
         full path, between brackets, to the media files (up to four) to upload.
-
 ```
