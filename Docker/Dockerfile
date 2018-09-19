@@ -8,7 +8,7 @@ LABEL name="SebaGomez Shelltwit client" \
       maintainer="Seba Gómez <twitter.com/sebagomez>"
 
 #For automated build purposes
-ARG TAG=8.0
+ARG TAG=8.1
 
 RUN mkdir twit
 

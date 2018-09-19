@@ -13,6 +13,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Entities\Class1.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="packages.config" />
   </ItemGroup>
 
