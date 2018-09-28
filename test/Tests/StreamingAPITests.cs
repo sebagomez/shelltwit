@@ -63,7 +63,8 @@ namespace shelltwit_tester
 		[TestMethod]
 		public void GetStreamingUserTimeline()
 		{
-			StreamingOptions options = new StreamingOptions { User = m_user, Follow = "108356361" }; //sebatestapi
+			//sebatestapi 108356361
+			StreamingOptions options = new StreamingOptions { User = m_user, Follow = "sebatestapi" };
 
 			try
 			{

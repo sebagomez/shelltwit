@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
+using System.Threading.Tasks;
 using Sebagomez.ShelltwitLib.API.OAuth;
 using Sebagomez.ShelltwitLib.API.Options;
 using Sebagomez.ShelltwitLib.Entities;
@@ -26,6 +27,12 @@ namespace Sebagomez.ShelltwitLib.API.Tweets
 		{
 			if (options.User == null)
 				options.User = AuthenticatedUser.CurrentUser;
+
+			if (!string.IsNullOrWhiteSpace(options.Follow) && !long.TryParse(options.Follow, out long id))
+			{
+				User data = Task.Run( () => UserData.GetUser(new UserShowOptions { User = options.User, ScreenName = options.Follow })).Result;
+				options.Follow = data.id_str;
+			}
 
 			using (HttpClient httpClient = new HttpClient())
 			{

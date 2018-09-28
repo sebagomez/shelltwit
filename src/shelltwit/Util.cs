@@ -45,7 +45,7 @@ namespace Sebagomez.Shelltwit
 		{
 			ColorifyInstance.Write($"{twit.user.name}", Colors.txtInfo);
 			if (twit.retweeted_status != null && twit.retweeted_status.user != null && !string.IsNullOrEmpty(twit.retweeted_status.user.screen_name))
-				ColorifyInstance.Write($" (RT {twit.retweeted_status.user.screen_name})", Colors.txtDefault);
+				ColorifyInstance.Write($" (RT {twit.retweeted_status.user.screen_name})", Colors.txtMuted);
 			ColorifyInstance.WriteLine($": {twit.ResolvedText}", Colors.txtDefault);
 		}
 
@@ -61,7 +61,7 @@ namespace Sebagomez.Shelltwit
 
 		public static void PrintError(string message) => ColorifyInstance.WriteLine(message, Colors.txtDanger);
 
-		public static void PrintInfo(string message) => ColorifyInstance.WriteLine(message, Colors.txtInfo);
+		public static void PrintInfo(string message) => ColorifyInstance.WriteLine(message, Colors.txtMuted);
 
 		public static void Print(string message) => ColorifyInstance.WriteLine(message);
 
@@ -118,9 +118,8 @@ namespace Sebagomez.Shelltwit
 				throw new ArgumentNullException("streaming", "The track must be provided");
 
 			string track = string.Join(" ", args.Skip(1));
-			StreamingOptions streamingOptions = new StreamingOptions { Track = track, User = user };
 			PrintInfo($"Starting live streaming for '{track}', press Ctrl+C to quit");
-			foreach (Status s in new StreamingEndpoint().GetStreamingStatus(streamingOptions))
+			foreach (Status s in new StreamingEndpoint().GetStreamingStatus(new StreamingOptions { Track = track, User = user }))
 				PrintTwit(s);
 		}
 
@@ -128,7 +127,10 @@ namespace Sebagomez.Shelltwit
 		{
 			if (args.Length != 2)
 				throw new ArgumentNullException("screenname", "The user id must be provided");
-			foreach (Status status in new StreamingEndpoint().GetStreamingStatus(new StreamingOptions { User = user, Follow = args[1] }))
+
+			string follow = args[1];
+			PrintInfo($"Starting live streaming for user '{follow}', press Ctrl+C to quit");
+			foreach (Status status in new StreamingEndpoint().GetStreamingStatus(new StreamingOptions { User = user, Follow = follow }))
 				PrintTwit(status);
 		}
 
@@ -166,7 +168,7 @@ namespace Sebagomez.Shelltwit
 			Console.WriteLine("");
 			Console.WriteLine("Options:");
 			foreach (Option option in Option.GetAll(new string[] { }))
-				Console.WriteLine("\t-{0}|--{1} {2}\t{3}", option.Short, option.Long, string.IsNullOrEmpty(option.Argument) ? "" : option.Argument, option.Description);
+				Console.WriteLine("\t-{0}|--{1} {2}\t{3}", option.Short, option.Long, string.IsNullOrEmpty(option.Argument) ? "\t" : option.Argument, option.Description);
 			Console.WriteLine("");
 			Console.WriteLine("status:\r\n\tstatus to update at twitter.com");
 			Console.WriteLine("");
