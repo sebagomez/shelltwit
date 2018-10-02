@@ -6,12 +6,12 @@
     <RootNamespace>Sebagomez.Shelltwit</RootNamespace>
     <AssemblyName>Sebagomez.Shelltwit</AssemblyName>
     <Description>Minimalist command line Twitter client. Post a twit, view your timeline and mentions.</Description>
-    <Version>8.2</Version>
+    <Version>8.2.1</Version>
     <StartupObject>Sebagomez.Shelltwit.Program</StartupObject>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>C:\Users\user\OneDrive\Documents\Personales\secure\sebagomez.snk</AssemblyOriginatorKeyFile>
-    <AssemblyVersion>8.2.0.0</AssemblyVersion>
-    <FileVersion>8.2.0.0</FileVersion>
+    <AssemblyVersion>8.2.1.0</AssemblyVersion>
+    <FileVersion>8.2.1.0</FileVersion>
     <RepositoryUrl>https://github.com/sebagomez/shelltwit</RepositoryUrl>
   </PropertyGroup>
 
