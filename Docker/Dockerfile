@@ -4,6 +4,7 @@ LABEL maintainer="seba gomez <sebagomezcorrea@outlook.com>"
 
 #For automated build purposes
 ARG BUILD
+
 ENV APPBUILD=$BUILD
 
 RUN mkdir twit
