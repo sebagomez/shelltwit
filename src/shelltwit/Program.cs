@@ -84,7 +84,11 @@ namespace Sebagomez.Shelltwit
 			string copyRight = ((AssemblyCopyrightAttribute)assemblyCop.First()).Copyright;
 			string version = assembly.GetName().Version.ToString();
 
-			Util.Print($"🐤{title} version {version} for {System.Runtime.InteropServices.RuntimeInformation.OSDescription}");
+			string build = System.Environment.GetEnvironmentVariable("APPBUILD");
+			if (string.IsNullOrEmpty(build))
+				version += $".{build}";
+
+			Util.Print($"🐤{title} version {version} running on {System.Runtime.InteropServices.RuntimeInformation.OSDescription}");
 			Util.Print(copyRight);
 			Util.Print("");
 		}
