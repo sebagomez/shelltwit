@@ -86,7 +86,7 @@ namespace Sebagomez.Shelltwit
 
 			string build = System.Environment.GetEnvironmentVariable("APPBUILD");
 			if (!string.IsNullOrEmpty(build))
-				build += $" {build}";
+				build = $"-{build}";
 
 			Util.Print($"🐤{title} version {version}{build} running on {System.Runtime.InteropServices.RuntimeInformation.OSDescription}");
 			Util.Print(copyRight);
