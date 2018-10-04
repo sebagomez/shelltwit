@@ -1,7 +1,6 @@
-![](https://pbs.twimg.com/client_application_images/54927/shelltwit.png)
+![](res/shelltwit.png?raw=true)
 
-shelltwit
-=========
+# shelltwit
 
 [![Join the chat at https://gitter.im/sebagomez/shelltwit](https://badges.gitter.im/sebagomez/shelltwit.svg)](https://gitter.im/sebagomez/shelltwit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Travis Build Status](https://travis-ci.org/sebagomez/shelltwit.svg?branch=master)](https://travis-ci.org/sebagomez/shelltwit)
@@ -9,20 +8,20 @@ shelltwit
 [![](https://images.microbadger.com/badges/version/sebagomez/shelltwit.svg)](https://microbadger.com/images/sebagomez/shelltwit)
 [![Build Status](https://sebagomez.visualstudio.com/shelltwit/_apis/build/status/sebagomez.shelltwit)](https://sebagomez.visualstudio.com/shelltwit/_build/latest?definitionId=4)
 
-shelltwit allows you to update your twitter status via command line. It also has bit.ly integration for url shortening.
+shelltwit updates your twitter status while at the command line. It also has [bit.ly](http://bit.ly) integration for url shortening.
 ~~It's a good example of twitter API calls with xAuth.~~ As of Jun-05-2017 it uses [PIN-based](https://dev.twitter.com/oauth/pin-based) authorization
 
 shelltwit running on Windows
-![](https://github.com/sebagomez/shelltwit/blob/master/res/Windows.gif?raw=true)
+![](res/Windows.gif?raw=true)
 
 shelltwit running on Linux (WSL)
-![](https://github.com/sebagomez/shelltwit/blob/master/res/Ubuntu.gif?raw=true)
+![](res/Ubuntu.gif?raw=true)
 
 
 Little more (?) info about it at the original [blog post](http://sgomez.blogspot.com/2010/06/introducing-shelltwit.html)
 
-Implemented Twitter APIs
-------------------------
+## Implemented Twitter APIs
+
 - [Status Update](https://dev.twitter.com/rest/reference/post/statuses/update)
 - [Status Mentions](https://dev.twitter.com/rest/reference/get/statuses/mentions_timeline)
 - [Status Home Timeline](https://dev.twitter.com/rest/reference/get/statuses/home_timeline)
@@ -32,8 +31,8 @@ Implemented Twitter APIs
 - [Streaming statuses](https://dev.twitter.com/streaming/reference/post/statuses/filter)
 - [Streaming user](https://dev.twitter.com/streaming/userstreams)
 
-Build
------
+## Build
+
 As of June 11th 2018 there's a single solution in .NET Core 2.1. 
 After downloading the repo just build the sln with Visual Studio 2017 (15.7+).
 
@@ -41,45 +40,50 @@ This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows
 
 but it can now work on your machine thanks to [Docker](https://docker.com)  
 
-Docker
-------
+## Docker
 
 In order to build your own container you must run the following command
 
-```docker run -e "TWIT_KEY=<Your Twitter Key>" -e "TWIT_SECRET=<Your Twitter Secret>" -it --name twit sebagomez/shelltwit ```
+``` docker
+docker run -e "TWIT_KEY=<Your Twitter Key>" -e "TWIT_SECRET=<Your Twitter Secret>" -it --name twit sebagomez/shelltwit 
+```
 
-![](https://github.com/sebagomez/shelltwit/blob/master/res/PINAuthorization.png?raw=true)
+![](res/PINAuthorization.png?raw=true)
 
 Copy and paste the provided URL in your favorite browser, authorize the app to access twitter on your behalf and copy and paste the provided PIN in the command line waiting for it.
 
-![](https://github.com/sebagomez/shelltwit/blob/master/res/TwitterPIN.png?raw=true)
+![](res/TwitterPIN.png?raw=true)
 
 Now you have a container with the needed credentials to access the Twitter API.
 
 We'll now commit those changes into a new image:
 
-```docker commit twit mytwit```
+``` docker
+docker commit twit mytwit
+```
 
 And that's it, you can now call commands inside the newly created image as follows:
 
-```docker run --rm mytwit --help```
+``` docker
+docker run --rm mytwit --help
+```
 
 ```
-🐤Sebagomez.Shelltwit version 8.1.0.0 for Microsoft Windows 10.0.17134
+🐤Sebagomez.Shelltwit version 8.2.2.0-20181004.1 running on Linux 4.9.93-linuxkit-aufs #1 SMP Wed Jun 6 16:55:56 UTC 2018
 Copyright (C) @sebagomez. All rights reserved.
 
 Usage: twit [options] | <status> [<mediaPath>]
 
 Options:
-        -c|--clear      clears user stored credentials
+        -c|--clear              clears user stored credentials
         -t|--timeline [count]   show user's timeline, optionally set how many twits to display (up to 200)
         -q|--query <query>      query twits containing words
-        -m|--mentions   show user's mentions
+        -m|--mentions           show user's mentions
         -u|--user <handle>      show another user's timeline
         -k|--track <track>      live status with a specific track
-        -s|--streamed <handle id>       streamed user timeline
-        -l|--likes      user's likes (fka favorites)
-        -h|--help       show this help
+        -s|--streamed <handle>  streamed user timeline
+        -l|--likes              user's likes (fka favorites)
+        -h|--help               show this help
 
 status:
         status to update at twitter.com
