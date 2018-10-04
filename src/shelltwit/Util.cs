@@ -25,9 +25,9 @@ namespace Sebagomez.Shelltwit
 				if (s_colorify == null)
 				{
 					if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-						s_colorify = new Format(Theme.Light);
+						s_colorify = new Format(new ThemeLight());
 					else
-						s_colorify = new Format(Theme.Dark);
+						s_colorify = new Format(new ThemeDark());
 				}
 				return s_colorify;
 			}
@@ -45,7 +45,7 @@ namespace Sebagomez.Shelltwit
 		{
 			ColorifyInstance.Write($"{twit.user.name}", Colors.txtInfo);
 			if (twit.retweeted_status != null && twit.retweeted_status.user != null && !string.IsNullOrEmpty(twit.retweeted_status.user.screen_name))
-				ColorifyInstance.Write($" (RT {twit.retweeted_status.user.screen_name})", Colors.txtMuted);
+				ColorifyInstance.Write($" (RT {twit.retweeted_status.user.screen_name})", Colors.txtSuccess);
 			ColorifyInstance.WriteLine($": {twit.ResolvedText}", Colors.txtDefault);
 		}
 
