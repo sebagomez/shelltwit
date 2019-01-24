@@ -28,6 +28,15 @@ namespace Sebagomez.Shelltwit
 					Util.Print(message);
 				});
 
+				//Look at this for coloring purposes
+				//https://docs.microsoft.com/en-us/windows/console/console-virtual-terminal-sequences
+
+				/*
+				string msg = "😂";
+				Util.Print(msg);
+				Console.WriteLine(msg);
+				*/
+
 				Option o = Option.GetOption(args);
 				if (o == null)
 					throw new Exception("Invalid flag");
@@ -88,7 +97,7 @@ namespace Sebagomez.Shelltwit
 			if (!string.IsNullOrEmpty(build))
 				build = $"-{build}";
 
-			Util.Print($"🐤{title} version {version}{build} running on {System.Runtime.InteropServices.RuntimeInformation.OSDescription}");
+			Util.Print($"{title} version {version}{build} running on {System.Runtime.InteropServices.RuntimeInformation.OSDescription}");
 			Util.Print(copyRight);
 			Util.Print("");
 		}

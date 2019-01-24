@@ -9,9 +9,11 @@ namespace shelltwit_tester
 	[TestClass]
 	public partial class BaseTests
 	{
-		internal const string MEDIA1_NAME = @"Noooooooo.jpg";
-		internal const string MEDIA2_NAME = @"Snapshot.jpg";
-		internal const string HUGE_MEDIA = @"BiggerThan5MB.jpg";
+
+		internal const string RESOURCES_FOLDER = "Resources";
+		internal const string MEDIA1_NAME = "Noooooooo.jpg";
+		internal const string MEDIA2_NAME = "Snapshot.jpg";
+		internal const string HUGE_MEDIA = "BiggerThan5MB.jpg";
 
 		protected AuthenticatedUser m_user;
 

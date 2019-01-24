@@ -1,2 +1,2 @@
 #!/bin/bash
-dotnet publish -c Release -o ../../bin ./shelltwitcore_NOTESTS.sln
+dotnet publish shelltwitcore_NOTESTS.sln -c Release -o ../../bin

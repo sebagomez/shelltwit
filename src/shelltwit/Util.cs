@@ -36,7 +36,7 @@ namespace Sebagomez.Shelltwit
 		static void PrintTwits(List<Status> twits)
 		{
 			if (twits == null)
-				PrintError("No twits 😞");
+				PrintError("No twits :(");
 			else
 				twits.ForEach(twit => PrintTwit(twit));
 		}
@@ -52,7 +52,7 @@ namespace Sebagomez.Shelltwit
 		static void PrintTwits(SearchResult results)
 		{
 			if (results.statuses.Length == 0)
-				PrintError("Sorry, no twits found 😞");
+				PrintError("Sorry, no twits found :(");
 			else
 				PrintTwits(results.statuses.ToList<Status>());
 		}

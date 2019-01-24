@@ -87,7 +87,7 @@ namespace shelltwit_tester
 		{
 			try
 			{
-				string mediaPath = Path.Combine(AppContext.BaseDirectory, MEDIA1_NAME);
+				string mediaPath = Path.Combine(AppContext.BaseDirectory, RESOURCES_FOLDER, MEDIA1_NAME);
 
 				string status = $"Este viene con imagen [{mediaPath}]: {DateTime.Now}";
 				string response = await Sebagomez.ShelltwitLib.API.Tweets.Update.UpdateStatus(new UpdateOptions { Status = status, User = m_user });
@@ -104,7 +104,7 @@ namespace shelltwit_tester
 		{
 			try
 			{
-				string mediaPath = Path.Combine(AppContext.BaseDirectory, HUGE_MEDIA);
+				string mediaPath = Path.Combine(AppContext.BaseDirectory, RESOURCES_FOLDER, HUGE_MEDIA);
 
 				string status = string.Format(@"Este viene con imagen GRANDE [{0}]: {1}", mediaPath, DateTime.Now);
 				string response = await Sebagomez.ShelltwitLib.API.Tweets.Update.UpdateStatus(new UpdateOptions { Status = status, User = m_user });
@@ -121,8 +121,8 @@ namespace shelltwit_tester
 		{
 			try
 			{
-				string mediaPath1 = Path.Combine(AppContext.BaseDirectory, MEDIA1_NAME);
-				string mediaPath2 = Path.Combine(AppContext.BaseDirectory, MEDIA2_NAME);
+				string mediaPath1 = Path.Combine(AppContext.BaseDirectory, RESOURCES_FOLDER, MEDIA1_NAME);
+				string mediaPath2 = Path.Combine(AppContext.BaseDirectory, RESOURCES_FOLDER, MEDIA2_NAME);
 
 				string status = string.Format(@"Este viene con 2 imagenes [{0}] [{1}]: {2}", mediaPath1, mediaPath2, DateTime.Now);
 				string response = await Sebagomez.ShelltwitLib.API.Tweets.Update.UpdateStatus(new UpdateOptions { Status = status, User = m_user });
@@ -157,7 +157,7 @@ namespace shelltwit_tester
 		{
 			try
 			{
-				string mediaPath = Path.Combine(AppContext.BaseDirectory, MEDIA1_NAME);
+				string mediaPath = Path.Combine(AppContext.BaseDirectory, RESOURCES_FOLDER, MEDIA1_NAME);
 
 				string status = $"á é í ó ú ñ ! # @ [{mediaPath}]: {DateTime.Now}";
 				string response = await Sebagomez.ShelltwitLib.API.Tweets.Update.UpdateStatus(new UpdateOptions { Status = status, User = m_user });
