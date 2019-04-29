@@ -1,2 +1,2 @@
 #!/bin/bash
-dotnet build ./shelltwitcore.sln -c Release
+dotnet build ./shelltwit.sln -c Release

@@ -33,8 +33,8 @@ Little more (?) info about it at the original [blog post](http://sgomez.blogspot
 
 ## Build
 
-As of June 11th 2018 there's a single solution in .NET Core 2.1. 
-After downloading the repo just build the sln with Visual Studio 2017 (15.7+).
+As of April 29th 2019 there's a single .NET Core 2.2 solution, which reference newly created NuGet packages.
+After downloading the repo just build the sln with Visual Studio 2017 (15.9+).
 
 This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), and it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/) 
 

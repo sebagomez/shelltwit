@@ -1,2 +1,2 @@
-dotnet build --force -c Release shelltwitcore_NOTESTS.sln
-dotnet publish -c Release -o ..\..\bin shelltwitcore_NOTESTS.sln 
+dotnet build --force -c Release shelltwit.sln
+dotnet publish -c Release -o ..\bin shelltwit.sln 

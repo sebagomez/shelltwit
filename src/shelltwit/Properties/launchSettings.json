@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "shelltwitCore": {
-      "commandName": "Project",
-      "commandLineArgs": "-s 😂"
-    }
-  }
-}
