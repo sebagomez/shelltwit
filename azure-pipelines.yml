@@ -7,8 +7,9 @@ variables:
 steps:
 - script: dotnet build --configuration $(buildConfiguration) ./shelltwit.sln
   displayName: 'dotnet build'
-- script: dotnet publish --configuration $(buildConfiguration) -o ../Docker/bin --no-build ./shelltwit.sln
+- script: dotnet publish --configuration $(buildConfiguration) -o $(build.SourcesDirectory)/Docker/bin --no-build ./shelltwit.sln
   displayName: 'dotnet publish'
+
 
 - task: PublishBuildArtifacts@1
   inputs:
