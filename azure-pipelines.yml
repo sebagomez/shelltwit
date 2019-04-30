@@ -12,8 +12,7 @@ steps:
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
-    script: ' |
-$file = Docker/binSebagomez.Shelltwit.dll
+    script: '$file = Docker/binSebagomez.Shelltwit.dll
 
 $version = $(Get-Item $file).VersionInfo.ProductVersion
 
