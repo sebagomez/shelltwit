@@ -18,12 +18,12 @@ namespace Sebagomez.Shelltwit.Misc
 		public static Option GetOption(string[] arguments)
 		{
 			if (arguments.Length == 0)
-				return GetAll(arguments).FirstOrDefault((o) => o.IsDefault);
+				return GetAll().FirstOrDefault((o) => o.IsDefault);
 
 			if (!arguments[0].StartsWith("-"))
 				return Update();
 
-			Option option = GetAll(arguments).FirstOrDefault((o) =>
+			Option option = GetAll().FirstOrDefault((o) =>
 		   {
 			   if (arguments[0].StartsWith("--"))
 				   return o.Long == arguments[0].Substring(2);
@@ -170,7 +170,7 @@ namespace Sebagomez.Shelltwit.Misc
 			return o;
 		}
 
-		public static IEnumerable<Option> GetAll(string[] args)
+		public static IEnumerable<Option> GetAll()
 		{
 			yield return Clear();
 			yield return Timeline();

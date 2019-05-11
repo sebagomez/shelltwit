@@ -30,7 +30,7 @@ namespace Sebagomez.Shelltwit
 
 				Option o = Option.GetOption(args);
 				if (o == null)
-					throw new Exception("Invalid flag");
+					throw new Exception($"Invalid flags:{string.Join(" ",args)}");
 
 				if (o.Short == "c")
 					o.Action(null, args); //No authentication needed
@@ -82,7 +82,7 @@ namespace Sebagomez.Shelltwit
 			if (!string.IsNullOrEmpty(build))
 				build = $"-{build}";
 
-			PrintActions.Print($"{title} version {version}{build} running on {System.Runtime.InteropServices.RuntimeInformation.OSDescription}");
+			PrintActions.Print($"🐤 {title} version {version}{build} running on {System.Runtime.InteropServices.RuntimeInformation.OSDescription}");
 			PrintActions.Print(copyRight);
 			PrintActions.Print("");
 		}

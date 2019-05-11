@@ -65,8 +65,8 @@ docker run --rm mytwit --help
 ```
 
 ```
-🐤Sebagomez.Shelltwit version 8.2.2.0-20181004.1 running on Linux 4.9.93-linuxkit-aufs #1 SMP Wed Jun 6 16:55:56 UTC 2018
-Copyright (C) @sebagomez. All rights reserved.
+🐤 Sebagomez.Shelltwit version 8.4.1.0 running on Microsoft Windows 10.0.18362
+Copyright 2019 @SebaGomez
 
 Usage: twit [options] | <status> [<mediaPath>]
 

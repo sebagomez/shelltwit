@@ -168,7 +168,7 @@ namespace Sebagomez.Shelltwit.Misc
 			Console.WriteLine("Usage: twit [options] | <status> [<mediaPath>]");
 			Console.WriteLine("");
 			Console.WriteLine("Options:");
-			foreach (Option option in Option.GetAll(new string[] { }))
+			foreach (Option option in Option.GetAll())
 				Console.WriteLine("\t-{0}|--{1} {2}\t{3}", option.Short, option.Long, string.IsNullOrEmpty(option.Argument) ? "\t" : option.Argument, option.Description);
 			Console.WriteLine("");
 			Console.WriteLine("status:\r\n\tstatus to update at twitter.com");
