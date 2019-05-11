@@ -4,6 +4,8 @@
 bin/
 obj/
 packages/
+Docker/app/
+
 *.testsettings
 *.suo
 *.user
@@ -11,8 +13,5 @@ packages/
 *.tar.gz
 
 SecureData.txt
-test/Tests/SecretBaseTests.cs
+launchSettings.json
 Docker/Docker.txt
-twit.data
-
-Docker/app/

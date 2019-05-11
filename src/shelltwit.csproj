@@ -6,20 +6,21 @@
     <RootNamespace>Sebagomez.Shelltwit</RootNamespace>
     <AssemblyName>Sebagomez.Shelltwit</AssemblyName>
     <Description>Minimalist command line Twitter client. Post a twit, view your timeline and mentions.</Description>
-    <Version>8.3.0</Version>
+    <Version>8.4.0</Version>
     <StartupObject>Sebagomez.Shelltwit.Program</StartupObject>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>C:\Users\user\OneDrive\Documents\Personales\secure\sebagomez.snk</AssemblyOriginatorKeyFile>
-    <AssemblyVersion>8.3.0</AssemblyVersion>
+    <AssemblyVersion>8.4.0</AssemblyVersion>
     <FileVersion>8.3.0</FileVersion>
     <RepositoryUrl>https://github.com/sebagomez/shelltwit</RepositoryUrl>
     <Authors>@sebagomez</Authors>
     <Copyright>Copyright 2019 @SebaGomez</Copyright>
-    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/sebagomez/shelltwit</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/sebagomez/twitterlib/master/src/twit.ico</PackageIconUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>twitter</PackageTags>
+    <!-- https://github.com/NuGet/Home/wiki/Packaging-License-within-the-nupkg-(Technical-Spec) -->
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -38,13 +39,14 @@
 
   <ItemGroup>
     <PackageReference Include="dein.Colorify" Version="2.4.0" />
-    <PackageReference Include="Sebagomez.TwitterLib" Version="1.0.0.1" />
+    <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.3" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="5.0.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Sebagomez.TwitterLib" Version="1.2.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="twit.data">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>

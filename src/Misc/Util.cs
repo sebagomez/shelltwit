@@ -4,14 +4,15 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using Colorify;
 using Colorify.UI;
+using Sebagomez.Shelltwit.Security;
 using Sebagomez.TwitterLib.API.Options;
 using Sebagomez.TwitterLib.API.Tweets;
 using Sebagomez.TwitterLib.Entities;
 using Sebagomez.TwitterLib.Helpers;
 
-namespace Sebagomez.Shelltwit
+namespace Sebagomez.Shelltwit.Misc
 {
-	internal static class Util
+	internal static class PrintActions
 	{
 		#region Print
 
@@ -69,8 +70,7 @@ namespace Sebagomez.Shelltwit
 
 		public static void ClearCredentials()
 		{
-			
-			AuthenticatedUser.ClearCredentials();
+			CredentialsManager.ClearCredentials();
 			PrintInfo("User credentials cleared!");
 		}
 

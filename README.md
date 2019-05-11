@@ -20,25 +20,21 @@ shelltwit running on Linux (WSL)
 
 Little more (?) info about it at the original [blog post](http://sgomez.blogspot.com/2010/06/introducing-shelltwit.html)
 
-## Implemented Twitter APIs
-
-- [Status Update](https://dev.twitter.com/rest/reference/post/statuses/update)
-- [Status Mentions](https://dev.twitter.com/rest/reference/get/statuses/mentions_timeline)
-- [Status Home Timeline](https://dev.twitter.com/rest/reference/get/statuses/home_timeline)
-- [Status User Timeline](https://dev.twitter.com/rest/reference/get/statuses/user_timeline)
-- [Search](https://dev.twitter.com/rest/public/search)
-- [Favorites List](https://dev.twitter.com/rest/reference/get/favorites/list)
-- [Streaming statuses](https://dev.twitter.com/streaming/reference/post/statuses/filter)
-- [Streaming user](https://dev.twitter.com/streaming/userstreams)
-
 ## Build
 
 As of April 29th 2019 there's a single .NET Core 2.2 solution, which reference newly created NuGet packages.
 After downloading the repo just build the sln with Visual Studio 2017 (15.9+).
 
-This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), and it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/) 
+This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), and it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/). It can now work on your machine thanks to [Docker](https://docker.com)  
 
-but it can now work on your machine thanks to [Docker](https://docker.com)  
+For obvious security reasons I don't have the app Key and Secrets embeded in the code. If you want to run the app with your own crdentials you can setup two Environment variables named `TWIT_KEY` and `TWIT_SECRET`. With these, shelltwit will run as your registered twitter app. 
+
+You can also build the app with the provided [build.cmd](./build.cmd) file if you're running on Windows or [build.sh](./build.sh) script if you're on Mac or Linux. If you're not on Windows you'll also need to run the [publish.sh](./publish.sh).
+
+After that just open an terminal at the bin folder and run the application:  
+```dotnet
+dotnet Sebagomez.Shelltwit.dll
+```
 
 ## Docker
 

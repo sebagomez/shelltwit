@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using Sebagomez.Shelltwit.Misc;
+using Sebagomez.Shelltwit.Security;
 using Sebagomez.TwitterLib.API.Tweets;
 using Sebagomez.TwitterLib.Entities;
-using Sebagomez.TwitterLib.Helpers;
 
 namespace Sebagomez.Shelltwit
 {
@@ -25,39 +25,33 @@ namespace Sebagomez.Shelltwit
 
 				BaseAPI.SetMessageAction(message =>
 				{
-					Util.Print(message);
+					PrintActions.Print(message);
 				});
 
 				Option o = Option.GetOption(args);
 				if (o == null)
 					throw new Exception("Invalid flag");
 
-				o.Action(AuthenticatedUser.CurrentUser, args);
+				if (o.Short == "c")
+					o.Action(null, args); //No authentication needed
+				else
+					o.Action(CredentialsManager.LoadCredentials(), args);
 			}
 			catch (WebException wex)
 			{
-				Util.PrintError(wex.Message);
+				PrintActions.PrintError(wex.Message);
 
 				HttpWebResponse res = (HttpWebResponse)wex.Response;
 				if (res != null)
 				{
 					UpdateError errors = TwitterLib.Helpers.Util.Deserialize<UpdateError>(res.GetResponseStream());
-					errors.errors.ForEach(e => Util.PrintError(e.ToString()));
+					errors.errors.ForEach(e => PrintActions.PrintError(e.ToString()));
 				}
 			}
 			catch (Exception ex)
 			{
 				PrintException(ex);
-			}
-			finally
-			{
-#if DEBUG
-				if (Debugger.IsAttached)
-				{
-					Util.PrintWarning("Press <enter> to exit...");
-					Console.ReadLine();
-				}
-#endif
+				Environment.Exit(1);
 			}
 
 			Environment.Exit(0);
@@ -66,7 +60,7 @@ namespace Sebagomez.Shelltwit
 
 		private static void PrintException(Exception ex)
 		{
-			Util.PrintError(ex.Message);
+			PrintActions.PrintError(ex.Message);
 			Exception inner = ex.InnerException;
 			while (inner != null)
 			{
@@ -88,9 +82,9 @@ namespace Sebagomez.Shelltwit
 			if (!string.IsNullOrEmpty(build))
 				build = $"-{build}";
 
-			Util.Print($"{title} version {version}{build} running on {System.Runtime.InteropServices.RuntimeInformation.OSDescription}");
-			Util.Print(copyRight);
-			Util.Print("");
+			PrintActions.Print($"{title} version {version}{build} running on {System.Runtime.InteropServices.RuntimeInformation.OSDescription}");
+			PrintActions.Print(copyRight);
+			PrintActions.Print("");
 		}
 	}
 }

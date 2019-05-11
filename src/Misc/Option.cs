@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sebagomez.TwitterLib.Helpers;
 
-namespace Sebagomez.Shelltwit
+namespace Sebagomez.Shelltwit.Misc
 {
 	internal class Option
 	{
@@ -44,7 +44,7 @@ namespace Sebagomez.Shelltwit
 				Short = "c",
 				Long = "clear",
 				Description = "clears user stored credentials",
-				Action = (u, s) => Util.ClearCredentials()
+				Action = (u, s) => PrintActions.ClearCredentials()
 			};
 
 			return o;
@@ -59,7 +59,7 @@ namespace Sebagomez.Shelltwit
 				Description = "show user's timeline, optionally set how many twits to display (up to 200)",
 				Argument = "[count]",
 				IsDefault = true,
-				Action = (u, s) => Util.UserTimeLine(u,s)
+				Action = (u, s) => PrintActions.UserTimeLine(u, s)
 			};
 
 			return o;
@@ -73,7 +73,7 @@ namespace Sebagomez.Shelltwit
 				Long = "query",
 				Description = "query twits containing words",
 				Argument = "<query>",
-				Action = (u, s) => Util.UserSearch(u, s)
+				Action = (u, s) => PrintActions.UserSearch(u, s)
 			};
 
 			return o;
@@ -86,7 +86,7 @@ namespace Sebagomez.Shelltwit
 				Short = "m",
 				Long = "mentions",
 				Description = "show user's mentions",
-				Action = (u, s) => Util.UserMentions(u)
+				Action = (u, s) => PrintActions.UserMentions(u)
 			};
 
 			return o;
@@ -100,7 +100,7 @@ namespace Sebagomez.Shelltwit
 				Long = "user",
 				Description = "show another user's timeline",
 				Argument = "<handle>",
-				Action = (u, s) => Util.UserTwits(u, s)
+				Action = (u, s) => PrintActions.UserTwits(u, s)
 			};
 
 			return o;
@@ -114,7 +114,7 @@ namespace Sebagomez.Shelltwit
 				Long = "track",
 				Description = "live status with a specific track",
 				Argument = "<track>",
-				Action = (u, s) => Util.StreamingTrack(u, s)
+				Action = (u, s) => PrintActions.StreamingTrack(u, s)
 			};
 
 			return o;
@@ -128,7 +128,7 @@ namespace Sebagomez.Shelltwit
 				Long = "streamed",
 				Description = "streamed user timeline",
 				Argument = "<handle>",
-				Action = (u, s) => Util.StreamingTimeLine(u,s)
+				Action = (u, s) => PrintActions.StreamingTimeLine(u, s)
 			};
 
 			return o;
@@ -141,7 +141,7 @@ namespace Sebagomez.Shelltwit
 				Short = "l",
 				Long = "likes",
 				Description = "user's likes (fka favorites)",
-				Action = (u, s) => Util.UserLikes(u)
+				Action = (u, s) => PrintActions.UserLikes(u)
 			};
 
 			return o;
@@ -154,7 +154,7 @@ namespace Sebagomez.Shelltwit
 				Short = "h",
 				Long = "help",
 				Description = "show this help",
-				Action = (u, s) => Util.ShowUsage()
+				Action = (u, s) => PrintActions.ShowUsage()
 			};
 
 			return o;
@@ -164,7 +164,7 @@ namespace Sebagomez.Shelltwit
 		{
 			Option o = new Option()
 			{
-				Action = (u, s) => Util.UpdateStatus(u, s)
+				Action = (u, s) => PrintActions.UpdateStatus(u, s)
 			};
 
 			return o;
