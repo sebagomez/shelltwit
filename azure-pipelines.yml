@@ -16,10 +16,9 @@ steps:
 
 $version = $(Get-Item $file).VersionInfo.ProductVersion
 
-
 Write-Host $version
 
-Set-Content "Docker/versiont.txt" "Shelltwit v$($version)"'
+Set-Content "Docker/version.txt" "Shelltwit v$($version)"'
 
 - task: PublishBuildArtifacts@1
   inputs:
