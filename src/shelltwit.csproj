@@ -16,11 +16,12 @@
     <Authors>@sebagomez</Authors>
     <Copyright>Copyright 2019 @SebaGomez</Copyright>
     <PackageProjectUrl>https://github.com/sebagomez/shelltwit</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/sebagomez/twitterlib/master/src/twit.ico</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/sebagomez/shelltwit/master/res/shelltwit.ico</PackageIconUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>twitter</PackageTags>
+    <PackageTags>twitter,twitter-api</PackageTags>
     <!-- https://github.com/NuGet/Home/wiki/Packaging-License-within-the-nupkg-(Technical-Spec) -->
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <ApplicationIcon>shelltwit.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>

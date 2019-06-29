@@ -1,2 +1,6 @@
-dotnet build --force -c Release shelltwit.sln
-dotnet publish -c Release -o ..\bin shelltwit.sln 
+@echo off
+set Config=%1
+if %1. == . set Config=Release
+
+dotnet build --force -c %Config% shelltwit.sln
+dotnet publish -c %Config% -o ..\bin shelltwit.sln 
