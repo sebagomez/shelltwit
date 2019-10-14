@@ -4,10 +4,11 @@ variables:
   buildConfiguration: 'Release'
   dockerId: 'sebagomez'
 
+jobs:
 - job: macOS
   pool:
     vmImage: 'macOS-latest'
-    
+
   steps:
   - script: dotnet build --configuration $(buildConfiguration) ./shelltwit.sln
     displayName: 'dotnet build'
