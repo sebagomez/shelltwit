@@ -6,12 +6,12 @@
     <RootNamespace>Sebagomez.Shelltwit</RootNamespace>
     <AssemblyName>Sebagomez.Shelltwit</AssemblyName>
     <Description>Minimalist command line Twitter client. Post a twit, view your timeline and mentions.</Description>
-    <Version>8.5</Version>
+    <Version>8.5.1</Version>
     <StartupObject>Sebagomez.Shelltwit.Program</StartupObject>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>C:\Users\user\OneDrive\Documents\Personales\secure\sebagomez.snk</AssemblyOriginatorKeyFile>
-    <AssemblyVersion>8.5</AssemblyVersion>
-    <FileVersion>8.5</FileVersion>
+    <AssemblyVersion>8.5.1</AssemblyVersion>
+    <FileVersion>8.5.1</FileVersion>
     <RepositoryUrl>https://github.com/sebagomez/shelltwit</RepositoryUrl>
     <Authors>@sebagomez</Authors>
     <Copyright>Copyright 2019 @SebaGomez</Copyright>
@@ -39,12 +39,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="dein.Colorify" Version="2.4.0" />
-    <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.3" />
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="5.0.5" />
+    <PackageReference Include="dein.Colorify" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.4" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="5.2.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="Sebagomez.BitLyHelper" Version="1.1.3" />
-    <PackageReference Include="Sebagomez.TwitterLib" Version="1.2.1" />
+    <PackageReference Include="Sebagomez.TwitterLib" Version="1.2.4" />
   </ItemGroup>
 
   <ItemGroup>
