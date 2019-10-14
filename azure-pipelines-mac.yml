@@ -7,7 +7,7 @@ variables:
 jobs:
 - job: macOS
   pool:
-    vmImage: 'macOS-latest'
+    vmImage: 'macOS-10.14'
 
   steps:
   - script: dotnet build --configuration $(buildConfiguration) ./shelltwit.sln

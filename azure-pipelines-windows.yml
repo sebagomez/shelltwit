@@ -7,7 +7,7 @@ variables:
 jobs:
 - job: Windows
   pool:
-    vmImage: 'windows-latest'
+    vmImage: 'windows-2019'
 
   steps:
   - script: dotnet build --configuration $(buildConfiguration) ./shelltwit.sln
