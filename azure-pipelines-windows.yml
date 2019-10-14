@@ -4,6 +4,10 @@ variables:
   buildConfiguration: 'Release'
   dockerId: 'sebagomez'
 
+- job: Windows
+  pool:
+    vmImage: 'windows-latest'
+    
   steps:
   - script: dotnet build --configuration $(buildConfiguration) ./shelltwit.sln
     displayName: 'dotnet build'
