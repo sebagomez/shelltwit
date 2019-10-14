@@ -19,8 +19,8 @@ namespace Sebagomez.Shelltwit.Security
 
 		public static AuthenticatedUser LoadCredentials()
 		{
-			AuthenticatedUser user = null;
 			string username = GetLastUserName();
+			AuthenticatedUser user;
 			if (!string.IsNullOrEmpty(username))
 			{
 				user = AuthenticatedUser.Deserialize(GetUserDataPath(username));

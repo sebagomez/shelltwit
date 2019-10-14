@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.2-runtime
+FROM microsoft/dotnet:3.0-runtime
 
 LABEL maintainer="seba gomez <sebagomezcorrea@outlook.com>"
 
