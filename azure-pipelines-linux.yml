@@ -9,15 +9,15 @@ jobs:
   pool:
     vmImage: 'ubuntu-latest'
     
-steps:
-- script: dotnet build --configuration $(buildConfiguration) ./shelltwit.sln
-  displayName: 'dotnet build'
-- script: dotnet publish --configuration $(buildConfiguration) -o $(build.SourcesDirectory)/Docker/bin --no-build ./shelltwit.sln
-  displayName: 'dotnet publish'
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: '$file = "Docker/bin/Sebagomez.Shelltwit.dll"
+  steps:
+  - script: dotnet build --configuration $(buildConfiguration) ./shelltwit.sln
+    displayName: 'dotnet build'
+  - script: dotnet publish --configuration $(buildConfiguration) -o $(build.SourcesDirectory)/Docker/bin --no-build ./shelltwit.sln
+    displayName: 'dotnet publish'
+  - task: PowerShell@2
+    inputs:
+      targetType: 'inline'
+      script: '$file = "Docker/bin/Sebagomez.Shelltwit.dll"
 
 $version = $(Get-Item $file).VersionInfo.ProductVersion
 
@@ -25,7 +25,7 @@ Write-Host $version
 
 Set-Content "Docker/version.txt" "Shelltwit v$($version)"'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathtoPublish: '$(build.SourcesDirectory)/Docker' 
-    artifactName: 'deploy' 
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(build.SourcesDirectory)/Docker' 
+      artifactName: 'deploy' 
