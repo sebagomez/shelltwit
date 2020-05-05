@@ -22,8 +22,8 @@ Little more (?) info about it at the original [blog post](http://sgomez.blogspot
 
 ## Build
 
-As of April 29th 2019 there's a single .NET Core 2.2 solution, which reference newly created NuGet packages.
-After downloading the repo just build the sln with Visual Studio 2017 (15.9+).
+As of May 5th 2020 there's a single .NET Core 3.1 solution, which reference newly created NuGet packages.
+After downloading the repo just build the sln with Visual Studio 2019 (15.9+).
 
 This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), and it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/). It can now work on your machine thanks to [Docker](https://docker.com)  
 
@@ -65,8 +65,8 @@ docker run --rm mytwit --help
 ```
 
 ```
-🐤 Sebagomez.Shelltwit version 8.4.1.0 running on Microsoft Windows 10.0.18362
-Copyright 2019 @SebaGomez
+🐤 Sebagomez.Shelltwit version 8.5.2.0 running on Microsoft Windows 10.0.19041
+Copyright 2020 @SebaGomez
 
 Usage: twit [options] | <status> [<mediaPath>]
 
@@ -77,6 +77,8 @@ Options:
         -m|--mentions           show user's mentions
         -u|--user <handle>      show another user's timeline
         -k|--track <track>      live status with a specific track
+        -s|--streamed <handle>  streamed user timeline
+        -s|--streamed <handle>  streamed user timeline
         -s|--streamed <handle>  streamed user timeline
         -l|--likes              user's likes (fka favorites)
         -h|--help               show this help
