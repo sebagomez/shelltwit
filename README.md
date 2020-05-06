@@ -1,4 +1,4 @@
-![](res/shelltwit.png?raw=true)
+![](https://github.com/sebagomez/shelltwit/blob/master/res/shelltwit.png?raw=true)
 
 # shelltwit
 
@@ -12,10 +12,10 @@ shelltwit updates your twitter status while at the command line. It also has [bi
 ~~It's a good example of twitter API calls with xAuth.~~ As of Jun-05-2017 it uses [PIN-based](https://dev.twitter.com/oauth/pin-based) authorization
 
 shelltwit running on Windows
-![](res/Windows.gif?raw=true)
+![](https://github.com/sebagomez/shelltwit/blob/master/res/Windows.gif?raw=true)
 
-shelltwit running on Linux (WSL)
-![](res/Ubuntu.gif?raw=true)
+shelltwit running on Linux (WSL2)
+![](https://github.com/sebagomez/shelltwit/blob/master/res/Ubuntu.gif?raw=true)
 
 
 Little more (?) info about it at the original [blog post](http://sgomez.blogspot.com/2010/06/introducing-shelltwit.html)
@@ -44,11 +44,11 @@ In order to build your own container you must run the following command
 docker run -e "TWIT_KEY=<Your Twitter Key>" -e "TWIT_SECRET=<Your Twitter Secret>" -it --name twit sebagomez/shelltwit 
 ```
 
-![](res/PINAuthorization.png?raw=true)
+![](https://github.com/sebagomez/shelltwit/blob/master/res/PINAuthorization.png?raw=true)
 
 Copy and paste the provided URL in your favorite browser, authorize the app to access twitter on your behalf and copy and paste the provided PIN in the command line waiting for it.
 
-![](res/TwitterPIN.png?raw=true)
+![](https://github.com/sebagomez/shelltwit/blob/master/res/TwitterPIN.png?raw=true)
 
 Now you have a container with the needed credentials to access the Twitter API.
 
