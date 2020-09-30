@@ -9,7 +9,7 @@ ENV APPBUILD=$BUILD
 
 RUN mkdir twit
 
-WORKDIR twit
+WORKDIR /twit
 
 COPY ["bin", "/twit"]
 
