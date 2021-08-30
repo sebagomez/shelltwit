@@ -15,3 +15,5 @@ Docker/app/
 SecureData.txt
 launchSettings.json
 Docker/Docker.txt
+
+.DS_Store
