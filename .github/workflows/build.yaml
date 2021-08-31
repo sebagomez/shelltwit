@@ -1,0 +1,27 @@
+name: .NET Build
+
+on:
+  push:
+    branches: [ master ]
+    paths: 
+      - 'src/**'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      CONFIGURATION: Release
+      VERBOSITY: normal
+      NUGET_SOURCE: https://api.nuget.org/v3/index.json
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore --configuration $CONFIGURATION
