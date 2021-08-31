@@ -1,17 +1,10 @@
 [![.NET Build](https://github.com/sebagomez/shelltwit/actions/workflows/build.yaml/badge.svg?branch=master)](https://github.com/sebagomez/shelltwit/actions/workflows/build.yaml)
 [![Docker Build](https://github.com/sebagomez/shelltwit/actions/workflows/docker.yaml/badge.svg?branch=master)](https://github.com/sebagomez/shelltwit/actions/workflows/docker.yaml)  
+[![Join the chat at https://gitter.im/sebagomez/shelltwit](https://badges.gitter.im/sebagomez/shelltwit.svg)](https://gitter.im/sebagomez/shelltwit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ![](https://github.com/sebagomez/shelltwit/blob/master/res/shelltwit.png?raw=true)
 
 # shelltwit
-
-[![Join the chat at https://gitter.im/sebagomez/shelltwit](https://badges.gitter.im/sebagomez/shelltwit.svg)](https://gitter.im/sebagomez/shelltwit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Travis Build Status](https://travis-ci.org/sebagomez/shelltwit.svg?branch=master)](https://travis-ci.org/sebagomez/shelltwit)
-[![](https://images.microbadger.com/badges/image/sebagomez/shelltwit.svg)](https://microbadger.com/images/sebagomez/shelltwit)
-[![](https://images.microbadger.com/badges/version/sebagomez/shelltwit.svg)](https://microbadger.com/images/sebagomez/shelltwit)
-[![Build Status](https://sebagomez.visualstudio.com/shelltwit/_apis/build/status/sebagomez.shelltwit)](https://sebagomez.visualstudio.com/shelltwit/_build/latest?definitionId=4)
-
-
 
 shelltwit updates your twitter status while at the command line. It also has [bit.ly](http://bit.ly) integration for url shortening.
 ~~It's a good example of twitter API calls with xAuth.~~ As of Jun-05-2017 it uses [PIN-based](https://dev.twitter.com/oauth/pin-based) authorization
@@ -27,14 +20,14 @@ Little more (?) info about it at the original [blog post](http://sgomez.blogspot
 
 ## Build
 
-As of May 5th 2020 there's a single .NET Core 3.1 solution, which reference newly created NuGet packages.
-After downloading the repo just build the sln with Visual Studio 2019 (15.9+).
+The repo contains a single .NET 5 solution, which reference newly created [twitterlib](https://github.com/sebagomez/twitterlib) [NuGet package](https://www.nuget.org/packages/Sebagomez.TwitterLib/).
+After downloading the repo just build the sln with Visual Studio 2019.
 
 This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), and it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/). It can now work on your machine thanks to [Docker](https://docker.com)  
 
 For obvious security reasons I don't have the app Key and Secrets embeded in the code. If you want to run the app with your own crdentials you can setup two Environment variables named `TWIT_KEY` and `TWIT_SECRET`. With these, shelltwit will run as your registered twitter app. 
 
-You can also build the app with the provided [build.cmd](./build.cmd) file if you're running on Windows or [build.sh](./build.sh) script if you're on Mac or Linux. If you're not on Windows you'll also need to run the [publish.sh](./publish.sh).
+You can also build the app with the provided [build.cmd](./build.cmd) file if you're running on Windows or [build.sh](./build.sh) script if you're on Mac or Linux.
 
 After that just open an terminal at the bin folder and run the application:  
 ```dotnet
@@ -70,8 +63,8 @@ docker run --rm mytwit --help
 ```
 
 ```
-🐤 Sebagomez.Shelltwit version 8.5.2.0 running on Microsoft Windows 10.0.19041
-Copyright 2020 @SebaGomez
+🐤 Sebagomez.Shelltwit version 8.6.0.0 running on Linux 5.10.47-linuxkit #1 SMP Sat Jul 3 21:51:47 UTC 2021
+Copyright 2021 @SebaGomez
 
 Usage: twit [options] | <status> [<mediaPath>]
 
@@ -83,8 +76,6 @@ Options:
         -u|--user <handle>      show another user's timeline
         -k|--track <track>      live status with a specific track
         -s|--streamed <handle>  streamed user timeline
-        -s|--streamed <handle>  streamed user timeline
-        -s|--streamed <handle>  streamed user timeline
         -l|--likes              user's likes (fka favorites)
         -h|--help               show this help
 
@@ -93,4 +84,10 @@ status:
 
 mediaPath:
         full path, between brackets, to the media files (up to four) to upload.
+```
+
+_Edit: You can also use the following command to copy your existing credentials into your docker container_  
+```
+docker cp ./last.usr twit:/twit
+docker cp ./sebagomez.data twit:/twit
 ```

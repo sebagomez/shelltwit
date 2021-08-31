@@ -1,2 +1,5 @@
 #!/bin/bash
-dotnet build ./shelltwit.sln -c Release
+config=Release
+
+dotnet build -c $config ./shelltwit.sln
+dotnet publish -c $config -o ./bin shelltwit.sln 
