@@ -1,3 +1,6 @@
+[![.NET Build](https://github.com/sebagomez/shelltwit/actions/workflows/build.yaml/badge.svg?branch=master)](https://github.com/sebagomez/shelltwit/actions/workflows/build.yaml)
+[![Docker Build](https://github.com/sebagomez/shelltwit/actions/workflows/docker.yaml/badge.svg?branch=master)](https://github.com/sebagomez/shelltwit/actions/workflows/docker.yaml)  
+
 ![](https://github.com/sebagomez/shelltwit/blob/master/res/shelltwit.png?raw=true)
 
 # shelltwit
@@ -7,6 +10,8 @@
 [![](https://images.microbadger.com/badges/image/sebagomez/shelltwit.svg)](https://microbadger.com/images/sebagomez/shelltwit)
 [![](https://images.microbadger.com/badges/version/sebagomez/shelltwit.svg)](https://microbadger.com/images/sebagomez/shelltwit)
 [![Build Status](https://sebagomez.visualstudio.com/shelltwit/_apis/build/status/sebagomez.shelltwit)](https://sebagomez.visualstudio.com/shelltwit/_build/latest?definitionId=4)
+
+
 
 shelltwit updates your twitter status while at the command line. It also has [bit.ly](http://bit.ly) integration for url shortening.
 ~~It's a good example of twitter API calls with xAuth.~~ As of Jun-05-2017 it uses [PIN-based](https://dev.twitter.com/oauth/pin-based) authorization

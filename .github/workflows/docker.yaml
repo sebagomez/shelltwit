@@ -32,4 +32,4 @@ jobs:
         file: ./Dockerfile
         pull: true
         push: true
-        tags: latest,${{ env.build_number }}
+        tags: ${{ secrets.DOCKER_USERNAME }}/shelltwit:latest
