@@ -51,10 +51,10 @@ namespace Sebagomez.Shelltwit
 			catch (Exception ex)
 			{
 				PrintException(ex);
-				Environment.Exit(1);
+				System.Environment.Exit(1);
 			}
 
-			Environment.Exit(0);
+			System.Environment.Exit(0);
 		}
 
 
@@ -82,7 +82,7 @@ namespace Sebagomez.Shelltwit
 			if (!string.IsNullOrEmpty(build))
 				build = $"-{build}";
 
-			PrintActions.Print($"🐤 {title} version {version}{build} running on {System.Runtime.InteropServices.RuntimeInformation.OSDescription}");
+			PrintActions.Print($"🐤 {title} version {version}{build}");
 			PrintActions.Print(copyRight);
 			PrintActions.Print("");
 		}

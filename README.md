@@ -63,9 +63,9 @@ docker run --rm mytwit --help
 ```
 
 ```
-🐤 Sebagomez.Shelltwit version 8.6.0.0 running on Linux 5.10.47-linuxkit #1 SMP Sat Jul 3 21:51:47 UTC 2021
-Copyright 2021 @SebaGomez
-
+🐤 Sebagomez.Shelltwit version 9.0.0.0                                                                                                                  
+Copyright 2022 @SebaGomez                                                                                                                               
+                                                                                                                                                        
 Usage: twit [options] | <status> [<mediaPath>]
 
 Options:
@@ -77,6 +77,7 @@ Options:
         -k|--track <track>      live status with a specific track
         -s|--streamed <handle>  streamed user timeline
         -l|--likes              user's likes (fka favorites)
+        -d|--dm <handle> <message>      direct message to user
         -h|--help               show this help
 
 status:

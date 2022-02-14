@@ -29,13 +29,19 @@ namespace Sebagomez.Shelltwit.Security
 			}
 
 			string twitterKey = Environment.GetEnvironmentVariable(TWIT_KEY);
-			string twitterSecret = Environment.GetEnvironmentVariable(TWIT_SECRET);
-
-			if (!string.IsNullOrEmpty(twitterKey) && !string.IsNullOrEmpty(twitterSecret))
+			if (string.IsNullOrWhiteSpace(twitterKey))
 			{
-				user = AuthenticateUser(twitterKey, twitterSecret);
+				Console.WriteLine("Insert your app Twitter Key");
+				twitterKey = Console.ReadLine();
 			}
-			else
+			string twitterSecret = Environment.GetEnvironmentVariable(TWIT_SECRET);
+			if (string.IsNullOrWhiteSpace(twitterSecret))
+			{
+				Console.WriteLine("Insert your app Twitter Key Secret");
+				twitterSecret = Console.ReadLine();
+			}
+
+			if (string.IsNullOrEmpty(twitterKey) || string.IsNullOrEmpty(twitterSecret))
 			{
 				SetSettings();
 
@@ -45,9 +51,9 @@ namespace Sebagomez.Shelltwit.Security
 				twitterKey = vault.SHELLTWIT_KEY;
 				twitterSecret = vault.SHELLTWIT_SECRET;
 				Console.WriteLine(" done!");
-
-				user = AuthenticateUser(twitterKey, twitterSecret);
 			}
+
+			user = AuthenticateUser(twitterKey, twitterSecret);
 
 			if (user != null)
 			{
