@@ -177,11 +177,14 @@ namespace Sebagomez.Shelltwit.Misc
         public static void DirectMessage(AuthenticatedUser user, string[] args)
         {
             if (args.Length < 3)
-                throw new ArgumentNullException("screenname", "The user' screen name must be provided");
+                throw new ArgumentNullException("screenname", "The user' screen name (handle) must be provided");
 
-
+            Console.WriteLine($"Validating handle '{args[1]}'");
             UserTimelineOptions usrOptions = new UserTimelineOptions { ScreenName = args[1], User = user };
             List<Status> result = UserTimeline.GetUserTimeline(usrOptions).Result;
+
+            if (result.Count == 0)
+                throw new ArgumentNullException("handle", $"The handle '{args[1]}' does not seem like a valid user.");
 
             long userId = result[0].user.id;
 
@@ -192,6 +195,7 @@ namespace Sebagomez.Shelltwit.Misc
                 Text = string.Join(" ", args, 2, args.Length - 2)
             };
 
+            Console.WriteLine("Sending dm...");
             string response = DirectMessages.SendDM(options).Result;
 
             if (response != "OK")
