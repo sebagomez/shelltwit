@@ -50,6 +50,17 @@ namespace Sebagomez.Shelltwit.Misc
             ColorifyInstance.WriteLine($": {twit.ResolvedText}", Colors.txtDefault);
         }
 
+        static void PrintDMs(List<Event> dms)
+        {
+            dms.ForEach( dm => PrintDM(dm));
+        }
+
+        static void PrintDM(Event dm)
+        {
+            ColorifyInstance.Write($"{dm.message_create.target.recipient_id}", Colors.txtInfo);
+            ColorifyInstance.WriteLine($": {dm.message_create.message_data.text}", Colors.txtDefault);
+        }
+
         static void PrintTwits(SearchResult results)
         {
             if (results.statuses.Length == 0)
@@ -200,6 +211,14 @@ namespace Sebagomez.Shelltwit.Misc
 
             if (response != "OK")
                 PrintError($"Response was not OK: {response}");
+        }
+
+        public static void ListDMs(AuthenticatedUser user, string[] args)
+        {
+            DMListOptions options = new DMListOptions { User = user };
+            EventList result = DirectMessages.GetDMList(options).Result;
+
+            PrintDMs(result.events);
         }
 
         public static void ShowUsage()

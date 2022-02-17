@@ -184,6 +184,20 @@ namespace Sebagomez.Shelltwit.Misc
             return o;
         }
 
+        public static Option DMList()
+        {
+            Option o = new Option()
+            {
+                Short = "x",
+                Long = "dm-list",
+                Description = "last 20 DM messages",
+                Argument = "",
+                Action = (u, s) => PrintActions.ListDMs(u, s)
+            };
+
+            return o;
+        }
+
         public static IEnumerable<Option> GetAll()
         {
             yield return Clear();
@@ -195,6 +209,7 @@ namespace Sebagomez.Shelltwit.Misc
             yield return StreamedTimeline();
             yield return Likes();
             yield return DirectMessage();
+            yield return DMList();
             yield return Help();
         }
     }
