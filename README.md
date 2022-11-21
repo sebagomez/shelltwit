@@ -20,7 +20,7 @@ Little more (?) info about it at the original [blog post](http://sgomez.blogspot
 
 ## Build
 
-The repo contains a single .NET 5 solution, which reference newly created [twitterlib](https://github.com/sebagomez/twitterlib) [NuGet package](https://www.nuget.org/packages/Sebagomez.TwitterLib/).
+The repo contains a single .NET solution, which reference newly created [twitterlib](https://github.com/sebagomez/twitterlib) [NuGet package](https://www.nuget.org/packages/Sebagomez.TwitterLib/).
 After downloading the repo just build the sln with Visual Studio 2019.
 
 This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), and it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/). It can now work on your machine thanks to [Docker](https://docker.com)  
