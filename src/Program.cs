@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using Sebagomez.Shelltwit.Misc;
 using Sebagomez.Shelltwit.Security;
 using Sebagomez.TwitterLib.API.Tweets;
@@ -13,7 +14,7 @@ namespace Sebagomez.Shelltwit
 {
 	class Program
 	{
-		static void Main(string[] args)
+		static async Task Main(string[] args)
 		{
 			try
 			{
@@ -35,7 +36,7 @@ namespace Sebagomez.Shelltwit
 				if (o.Short == "c")
 					o.Action(null, args); //No authentication needed
 				else
-					o.Action(CredentialsManager.LoadCredentials(), args);
+					o.Action(await CredentialsManager.LoadCredentials(), args);
 			}
 			catch (WebException wex)
 			{
@@ -56,7 +57,6 @@ namespace Sebagomez.Shelltwit
 
 			System.Environment.Exit(0);
 		}
-
 
 		private static void PrintException(Exception ex)
 		{

@@ -6,7 +6,7 @@
 
 # shelltwit
 
-shelltwit updates your twitter status while at the command line. It also has [bit.ly](http://bit.ly) integration for url shortening.
+shelltwit updates your twitter status while at the command line. 
 ~~It's a good example of twitter API calls with xAuth.~~ As of Jun-05-2017 it uses [PIN-based](https://dev.twitter.com/oauth/pin-based) authorization
 
 shelltwit running on Windows
@@ -21,25 +21,23 @@ Little more (?) info about it at the original [blog post](http://sgomez.blogspot
 ## Build
 
 The repo contains a single .NET solution, which reference newly created [twitterlib](https://github.com/sebagomez/twitterlib) [NuGet package](https://www.nuget.org/packages/Sebagomez.TwitterLib/).
-After downloading the repo just build the sln with Visual Studio 2019.
+After downloading the repo just build the sln with Visual Studio 2019 (or higher). You can also use VSCode and use the ./build.sh script for building the project.
 
-This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), and it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/). It can now work on your machine thanks to [Docker](https://docker.com)  
+This build has been tested on Ubuntu [WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), Windows and MacOs, so it [works on my machine](https://blog.codinghorror.com/the-works-on-my-machine-certification-program/).  
 
-For obvious security reasons I don't have the app Key and Secrets embeded in the code. If you want to run the app with your own crdentials you can setup two Environment variables named `TWIT_KEY` and `TWIT_SECRET`. With these, shelltwit will run as your registered twitter app. 
-
-You can also build the app with the provided [build.cmd](./build.cmd) file if you're running on Windows or [build.sh](./build.sh) script if you're on Mac or Linux.
-
-After that just open an terminal at the bin folder and run the application:  
+After building the code just run it as you would usually run a dotnet console app:  
 ```dotnet
 dotnet Sebagomez.Shelltwit.dll
 ```
+
+For obvious security reasons I don't have the app Key and Secrets embeded in the code. If you want to run the app with your own crdentials you can setup two Environment variables named `TWITTER_API_KEY` and `TWITTER_API_SECRET`. With these, shelltwit will run as your registered twitter app. 
 
 ## Docker
 
 In order to build your own container you must run the following command
 
 ``` docker
-docker run -e "TWIT_KEY=<Your Twitter Key>" -e "TWIT_SECRET=<Your Twitter Secret>" -it --name twit sebagomez/shelltwit 
+docker run -e "TWITTER_API_KEY=<Your Twitter Key>" -e "TWITTER_API_SECRET=<Your Twitter Secret>" -it --name twit sebagomez/shelltwit 
 ```
 
 ![](https://github.com/sebagomez/shelltwit/blob/master/res/PINAuthorization.png?raw=true)
@@ -63,9 +61,9 @@ docker run --rm mytwit --help
 ```
 
 ```
-🐤 Sebagomez.Shelltwit version 9.0.0.0                                                                                                                  
-Copyright 2022 @SebaGomez                                                                                                                               
-                                                                                                                                                        
+🐤 Sebagomez.Shelltwit version 9.3.1.0                                                                                                                                                         
+Copyright 2022 @SebaGomez                                                                                                                                                                      
+                                                                                                                                                                                               
 Usage: twit [options] | <status> [<mediaPath>]
 
 Options:
@@ -78,6 +76,7 @@ Options:
         -s|--streamed <handle>  streamed user timeline
         -l|--likes              user's likes (fka favorites)
         -d|--dm <handle> <message>      direct message to user
+        -x|--dm-list            last 20 DM messages
         -h|--help               show this help
 
 status:

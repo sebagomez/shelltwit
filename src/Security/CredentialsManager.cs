@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Sebagomez.TwitterLib.API.OAuth;
@@ -17,7 +18,7 @@ namespace Sebagomez.Shelltwit.Security
 		static string s_userFileExt => ".data";
 		static string s_userFileTemplate => "{0}" + s_userFileExt;
 
-		public static AuthenticatedUser LoadCredentials()
+		public static async Task<AuthenticatedUser> LoadCredentials()
 		{
 			string username = GetLastUserName();
 			AuthenticatedUser user;
@@ -44,7 +45,7 @@ namespace Sebagomez.Shelltwit.Security
 			if (string.IsNullOrEmpty(twitterKey) || string.IsNullOrEmpty(twitterSecret))
 				throw new ApplicationException($"No {TWITTER_API_KEY} and/or {TWITTER_API_SECRET} set");
 
-			user = AuthenticateUser(twitterKey, twitterSecret);
+			user = await AuthenticateUser(twitterKey, twitterSecret);
 
 			if (user != null)
 			{
@@ -105,14 +106,14 @@ namespace Sebagomez.Shelltwit.Security
 			}
 		}
 
-		private static AuthenticatedUser AuthenticateUser(string twitterKey, string twitterSecret)
+		private static async Task<AuthenticatedUser> AuthenticateUser(string twitterKey, string twitterSecret)
 		{
 			AuthenticatedUser twiUser = new AuthenticatedUser
 			{
 				AppSettings = new AppCredentials() { AppKey = twitterKey, AppSecret = twitterSecret }
 			};
 			Console.Write("Getting Twitter authentication token...");
-			string token = OAuthAuthenticator.GetOAuthToken(twitterKey, twitterSecret).Result;
+			string token = await OAuthAuthenticator.GetOAuthToken(twitterKey, twitterSecret);
 			Console.WriteLine("done!");
 			Console.WriteLine("Please open your favorite browser and go to this URL to authenticate with Twitter:");
 			Console.WriteLine($"https://api.twitter.com/oauth/authorize?oauth_token={token}");
@@ -120,7 +121,7 @@ namespace Sebagomez.Shelltwit.Security
 			string pin = Console.ReadLine();
 
 			Console.Write("Getting Twitter access token...");
-			string accessToken = OAuthAuthenticator.GetPINToken(token, pin, twitterKey, twitterSecret).Result;
+			string accessToken = await OAuthAuthenticator.GetPINToken(token, pin, twitterKey, twitterSecret);
 			twiUser.ParseTokens(accessToken);
 			Console.WriteLine("done!");
 
