@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+	<!-- <Nullable>enable</Nullable> -->
+    <TargetFramework>net7.0</TargetFramework>
     <RootNamespace>Sebagomez.Shelltwit</RootNamespace>
     <AssemblyName>Sebagomez.Shelltwit</AssemblyName>
     <Description>Minimalist command line Twitter client. Post a twit, view your timeline and mentions.</Description>
@@ -40,11 +41,8 @@
 
   <ItemGroup>
     <PackageReference Include="dein.Colorify" Version="2.8.0" />
-    <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.5" />
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="5.2.9" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Sebagomez.BitLyHelper" Version="1.1.4" />
-    <PackageReference Include="Sebagomez.TwitterLib" Version="1.6.1" />
+    <PackageReference Include="Sebagomez.TwitterLib" Version="1.7.2" />
   </ItemGroup>
 
   <ItemGroup>

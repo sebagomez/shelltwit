@@ -10,8 +10,8 @@ namespace Sebagomez.Shelltwit.Security
 {
 	internal class CredentialsManager
 	{
-		static readonly string TWIT_KEY = "TWIT_KEY";
-		static readonly string TWIT_SECRET = "TWIT_SECRET";
+		static readonly string TWITTER_API_KEY = "TWITTER_API_KEY";
+		static readonly string TWITTER_API_SECRET = "TWITTER_API_SECRET";
 
 		static string s_lastUser => Path.Combine(AppContext.BaseDirectory, "last.usr");
 		static string s_userFileExt => ".data";
@@ -28,30 +28,21 @@ namespace Sebagomez.Shelltwit.Security
 					return user;
 			}
 
-			string twitterKey = Environment.GetEnvironmentVariable(TWIT_KEY);
-			if (string.IsNullOrWhiteSpace(twitterKey))
+			string twitterKey = Environment.GetEnvironmentVariable(TWITTER_API_KEY);
+			if (string.IsNullOrEmpty(twitterKey))
 			{
 				Console.WriteLine("Insert your app Twitter Key");
 				twitterKey = Console.ReadLine();
 			}
-			string twitterSecret = Environment.GetEnvironmentVariable(TWIT_SECRET);
-			if (string.IsNullOrWhiteSpace(twitterSecret))
+			string twitterSecret = Environment.GetEnvironmentVariable(TWITTER_API_SECRET);
+			if (string.IsNullOrEmpty(twitterSecret))
 			{
 				Console.WriteLine("Insert your app Twitter Key Secret");
 				twitterSecret = Console.ReadLine();
 			}
 
 			if (string.IsNullOrEmpty(twitterKey) || string.IsNullOrEmpty(twitterSecret))
-			{
-				SetSettings();
-
-				Console.Write("Getting credentials from the vault...");
-				VaultCredntials vault = new VaultCredntials();
-				vault.LoadCredentials();
-				twitterKey = vault.SHELLTWIT_KEY;
-				twitterSecret = vault.SHELLTWIT_SECRET;
-				Console.WriteLine(" done!");
-			}
+				throw new ApplicationException($"No {TWITTER_API_KEY} and/or {TWITTER_API_SECRET} set");
 
 			user = AuthenticateUser(twitterKey, twitterSecret);
 

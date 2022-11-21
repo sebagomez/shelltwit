@@ -168,17 +168,6 @@ namespace Sebagomez.Shelltwit.Misc
             }
 
             UpdateOptions updOptions = new UpdateOptions { Status = string.Join(" ", args), User = user };
-            updOptions.BitLyKey = System.Environment.GetEnvironmentVariable("BITLY-API-KEY");
-            updOptions.BitLyLogin = System.Environment.GetEnvironmentVariable("BITLY-API-LOGIN");
-            if ((!string.IsNullOrEmpty(updOptions.BitLyKey)) && (!string.IsNullOrEmpty(updOptions.BitLyLogin)))
-            {
-                try
-                {
-                    BitLyHelper.BitLyShortener shortener = new BitLyHelper.BitLyShortener(updOptions.BitLyLogin, updOptions.BitLyKey);
-                    updOptions.Status = shortener.GetShortenString(updOptions.Status).GetAwaiter().GetResult();
-                }
-                catch { }
-            }
             string response = Update.UpdateStatus(updOptions).GetAwaiter().GetResult();
 
             if (response != "OK")
